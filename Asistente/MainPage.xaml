@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.MainPage"
+             BackgroundColor="#080604">
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="20" RowSpacing="15">
+
+        <!-- 1. NÚCLEO TECNOLÓGICO Y ANILLOS HUD (ESTILO LÍNEAS IRREGULARES/AMBAR) -->
+        <Grid Grid.Row="0" HeightRequest="220" WidthRequest="220" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <!-- Resplandor de fondo -->
+            <Ellipse x:Name="GlowEffect"
+                     WidthRequest="160" HeightRequest="160"
+                     Fill="#FF6A00" Opacity="0.15"
+                     HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Anillo Exterior 1: Trazo punteado largo (Gira en sentido horario) -->
+            <Ellipse x:Name="OuterRing1"
+                     WidthRequest="210" HeightRequest="210"
+                     Stroke="#FF8C00" StrokeThickness="1.5"
+                     StrokeDashArray="12, 6, 2, 6"
+                     HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Anillo Exterior 2: Geometría irregular (Gira en sentido antihorario) -->
+            <Ellipse x:Name="OuterRing2"
+                     WidthRequest="180" HeightRequest="180"
+                     Stroke="#FF5500" StrokeThickness="2"
+                     StrokeDashArray="1, 8, 20, 5"
+                     HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Anillo Intermedio: Secciones segmentadas gruesas -->
+            <Ellipse x:Name="MidRing"
+                     WidthRequest="140" HeightRequest="140"
+                     Stroke="#FFAA00" StrokeThickness="3"
+                     StrokeDashArray="4, 12"
+                     HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Anillo Interno: Microlíneas rápidas -->
+            <Ellipse x:Name="InnerRing"
+                     WidthRequest="100" HeightRequest="100"
+                     Stroke="#FFD700" StrokeThickness="1"
+                     StrokeDashArray="2, 3"
+                     HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Núcleo Central Luminoso -->
+            <Border x:Name="CoreCenter"
+                    WidthRequest="60" HeightRequest="60"
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30"/>
+                </Border.StrokeShape>
+                <Border.Background>
+                    <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                        <GradientStop Color="#FFE5B4" Offset="0.0" />
+                        <GradientStop Color="#FF8C00" Offset="0.4" />
+                        <GradientStop Color="#FF3300" Offset="0.8" />
+                        <GradientStop Color="Transparent" Offset="1.0" />
+                    </RadialGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- Marco de esquinas HUD (Líneas decorativas) -->
+            <Path Data="M 0,20 L 0,0 L 20,0 M 200,0 L 220,0 L 220,20 M 220,200 L 220,220 L 200,220 M 0,200 L 0,220 L 20,220"
+                  Stroke="#FF8C00" StrokeThickness="1.5" Opacity="0.5"
+                  HorizontalOptions="Fill" VerticalOptions="Fill"/>
+        </Grid>
+
+        <!-- 2. TARJETA DE MENSAJE DE LA IA -->
+        <Frame Grid.Row="1" 
+               BackgroundColor="#120D08" 
+               BorderColor="#FF8C00" 
+               CornerRadius="12" 
+               HasShadow="False" 
+               Padding="15">
+            <Label x:Name="AiMessageLabel" 
+                   Text="Núcleo activado. Sincronizando datos con el servidor..." 
+                   FontSize="14" 
+                   TextColor="#FFD8B3" 
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
+
+        <!-- 3. LISTA DE TAREAS -->
+        <CollectionView Grid.Row="2" x:Name="TasksCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,4" 
+                           Padding="12" 
+                           CornerRadius="8" 
+                           BackgroundColor="#120D08" 
+                           BorderColor="#402810">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF"/>
+                                <Label Text="{Binding DueDate, StringFormat='Vence: {0:dd/MM/yyyy HH:mm}'}" FontSize="11" TextColor="#B38B6D"/>
+                            </VerticalStackLayout>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding IsCompleted}" Color="#FF8C00"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- 4. BOTONES DE ACCIÓN FUTURISTAS -->
+        <HorizontalStackLayout Grid.Row="3" Spacing="12" HorizontalOptions="Center">
+            <Button Text="+ Nueva Tarea" Clicked="OnAddTaskClicked" BackgroundColor="#FF8C00" TextColor="#080604" FontAttributes="Bold" CornerRadius="6"/>
+            <Button Text="Resumen de hoy" Clicked="OnGetSummaryClicked" BackgroundColor="#2A1B0E" BorderColor="#FF8C00" BorderWidth="1" TextColor="#FF8C00" FontAttributes="Bold" CornerRadius="6"/>
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>

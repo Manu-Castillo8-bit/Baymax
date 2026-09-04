@@ -9,9 +9,6 @@ namespace Asistente
         private bool _isAnimating = false;
         private Supabase.Client _supabase;
 
-        // ID de usuario activo por defecto (Ajusta según el usuario que esté usando la app)
-        private const int USUARIO_ACTIVO_ID = 1;
-
         public MainPage()
         {
             InitializeComponent();
@@ -112,16 +109,30 @@ namespace Asistente
 
         private async Task LoadTasksAsync()
         {
+            // Validar que exista un usuario logueado en la sesión
+            int currentUserId = UserSession.CurrentUserId;
+            if (currentUserId == 0)
+            {
+                AiMessageLabel.Text = "Sesión no detectada. Inicia sesión nuevamente.";
+                return;
+            }
+
             try
             {
-                var response = await _supabase.From<Tarea>().Get();
+                // Cargar únicamente las tareas del usuario activo
+                var response = await _supabase.From<Tarea>()
+                    .Where(t => t.IdUsuario == currentUserId)
+                    .Get();
+
                 var tasks = response.Models;
 
                 TasksCollectionView.ItemsSource = tasks;
                 int pendingCount = tasks.Count(t => t.Estado != "Completado");
 
                 await TriggerCorePulseAsync();
-                AiMessageLabel.Text = $"Estado del sistema: {pendingCount} tareas pendientes detectadas.";
+
+                string userName = string.IsNullOrEmpty(UserSession.CurrentUserName) ? "Operador" : UserSession.CurrentUserName;
+                AiMessageLabel.Text = $"Bienvenido {userName}. Estado: {pendingCount} tareas pendientes.";
             }
             catch (Exception)
             {
@@ -131,29 +142,49 @@ namespace Asistente
 
         private async void OnAddTaskClicked(object sender, EventArgs e)
         {
+            int currentUserId = UserSession.CurrentUserId;
+
+            if (currentUserId == 0)
+            {
+                await DisplayAlert("Error", "No hay una sesión de usuario activa. Inicia sesión.", "OK");
+                return;
+            }
+
             string titulo = await DisplayPromptAsync("Nueva Tarea", "¿Qué deseas registrar?");
             if (string.IsNullOrWhiteSpace(titulo)) return;
 
             var nuevaTarea = new Tarea
             {
-                IdUsuario = USUARIO_ACTIVO_ID,
+                IdUsuario = currentUserId, // <-- ASIGNA EL ID REAL DE LA SESIÓN
                 Titulo = titulo,
                 Descripcion = "Registrada desde la app mobile",
                 FechaVencimiento = DateTime.Now.AddDays(1),
                 Estado = "Pendiente"
             };
 
-            await _supabase.From<Tarea>().Insert(nuevaTarea);
-            await LoadTasksAsync();
+            try
+            {
+                await _supabase.From<Tarea>().Insert(nuevaTarea);
+                await LoadTasksAsync();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"No se pudo crear la tarea: {ex.Message}", "OK");
+            }
         }
 
         private async void OnGetSummaryClicked(object sender, EventArgs e)
         {
             await TriggerCorePulseAsync();
 
+            int currentUserId = UserSession.CurrentUserId;
+
             try
             {
-                var response = await _supabase.From<Tarea>().Get();
+                var response = await _supabase.From<Tarea>()
+                    .Where(t => t.IdUsuario == currentUserId)
+                    .Get();
+
                 var urgente = response.Models
                     .Where(t => t.Estado != "Completado" && t.FechaVencimiento.HasValue)
                     .OrderBy(t => t.FechaVencimiento)

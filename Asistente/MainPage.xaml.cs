@@ -272,17 +272,22 @@ namespace Asistente
             _syncService = new SyncService(dbPath, _supabase);
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
+       protected override async void OnAppearing()
+{
+    base.OnAppearing();
 
-            _isAnimating = true;
-            StartHudAnimations();
+    // Solicitar permiso de notificaciones en el teléfono si aún no se ha otorgado
+    if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+    {
+        await LocalNotificationCenter.Current.RequestNotificationPermission();
+    }
 
-            // Crear tabla local si no existe y cargar tareas
-            await _dbLocal.CreateTableAsync<TareaLocal>();
-            await InitializeAndSyncAsync();
-        }
+    _isAnimating = true;
+    StartHudAnimations();
+
+    await _dbLocal.CreateTableAsync<TareaLocal>();
+    await InitializeAndSyncAsync();
+}
         
 private void ProgramarNotificacionRecordatorio(int idTarea, string titulo, DateTime fechaVencimiento)
 {

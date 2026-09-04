@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.LoginPage"
+             Title="LoginPage">
+
+    <ScrollView VerticalOptions="Center">
+            <VerticalStackLayout Padding="30" Spacing="20" MaximumWidthRequest="400">
+
+                <!-- LOGO / ICONO HUD -->
+                <Grid HeightRequest="120" WidthRequest="120" HorizontalOptions="Center">
+                    <Ellipse Stroke="#FF8C00" StrokeThickness="2" StrokeDashArray="4,4"/>
+                    <Ellipse WidthRequest="80" HeightRequest="80" Fill="#FF6A00" Opacity="0.2"/>
+                    <Label Text="⚡" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Grid>
+
+                <Label Text="AUTENTICACIÓN DE SISTEMA" 
+                   TextColor="#FF8C00" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   CharacterSpacing="1.5"/>
+
+                <!-- CAMPO CORREO -->
+                <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
+                    <Entry x:Name="EmailEntry" 
+                       Placeholder="Correo Electrónico" 
+                       PlaceholderColor="#B38B6D" 
+                       TextColor="#FFFFFF" 
+                       Keyboard="Email"
+                       Margin="10,0"/>
+                </Border>
+
+                <!-- CAMPO CONTRASEÑA -->
+                <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
+                    <Entry x:Name="PasswordEntry" 
+                       Placeholder="Contraseña" 
+                       PlaceholderColor="#B38B6D" 
+                       TextColor="#FFFFFF" 
+                       IsPassword="True"
+                       Margin="10,0"/>
+                </Border>
+
+                <!-- BOTÓN INICIAR SESIÓN -->
+                <Button Text="INICIAR SESIÓN" 
+                    Clicked="OnLoginClicked" 
+                    BackgroundColor="#FF8C00" 
+                    TextColor="#080604" 
+                    FontAttributes="Bold" 
+              
+                    HeightRequest="48"/>
+
+                <!-- NAVEGACIÓN A REGISTRO -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                    <Label Text="¿No tienes acceso?" TextColor="#B38B6D"/>
+                    <Label Text="Registrar Usuario" TextColor="#FF8C00" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRegisterTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <Label x:Name="StatusLabel" TextColor="#FF3300" HorizontalOptions="Center" FontSize="12"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+</ContentPage>

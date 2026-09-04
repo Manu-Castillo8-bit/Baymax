@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.RegisterPage"
+             BackgroundColor="#080604">
+
+    <ScrollView VerticalOptions="Center">
+        <VerticalStackLayout Padding="30" Spacing="15" MaximumWidthRequest="400">
+
+            <Label Text="REGISTRO DE NUEVO USUARIO" 
+                   TextColor="#FF8C00" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   CharacterSpacing="1"/>
+
+            <!-- NOMBRE -->
+            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
+                <Entry x:Name="NameEntry" Placeholder="Nombre completo" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" Margin="10,0"/>
+            </Border>
+
+            <!-- CORREO -->
+            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1"  >
+                <Entry x:Name="EmailEntry" Placeholder="Correo electrónico" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" Keyboard="Email" Margin="10,0"/>
+            </Border>
+
+            <!-- CONTRASEÑA -->
+            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
+                <Entry x:Name="PasswordEntry" Placeholder="Contraseña" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" IsPassword="True" Margin="10,0"/>
+            </Border>
+
+            <!-- BOTÓN CREAR CUENTA -->
+            <Button Text="CREAR CUENTA" 
+                    Clicked="OnRegisterClicked" 
+                    BackgroundColor="#FF8C00" 
+                    TextColor="#080604" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8"
+                    Margin="0,10,0,0"/>
+
+            <Label x:Name="StatusLabel" TextColor="#FF3300" HorizontalOptions="Center" FontSize="12"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

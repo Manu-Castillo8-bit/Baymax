@@ -283,6 +283,38 @@ namespace Asistente
             await _dbLocal.CreateTableAsync<TareaLocal>();
             await InitializeAndSyncAsync();
         }
+        
+private void ProgramarNotificacionRecordatorio(int idTarea, string titulo, DateTime fechaVencimiento)
+{
+    try
+    {
+        // 1. Calcular la fecha: 1 día antes a la misma hora del vencimiento
+        DateTime fechaNotificacion = fechaVencimiento.AddDays(-1);
+
+        // 2. Solo programar si la fecha calculada aún no ha pasado
+        if (fechaNotificacion > DateTime.Now)
+        {
+            var request = new NotificationRequest
+            {
+                // Usamos el ID local de la tarea como NotificationId para evitar duplicados
+                NotificationId = idTarea, 
+                Title = "⏰ Recordatorio: Tarea Próxima",
+                Description = $"Mañana vence la tarea: '{titulo}'",
+                BadgeNumber = 1,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = fechaNotificacion
+                }
+            };
+
+            LocalNotificationCenter.Current.Show(request);
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine($"Error al programar notificación: {ex.Message}");
+    }
+}
 
 private void EnviarNotificacionPC(string titulo, string mensaje)
 {
@@ -426,40 +458,37 @@ private async Task InitializeAndSyncAsync()
             }
         }
 
-        private async void OnAddTaskClicked(object sender, EventArgs e)
-        {
-            int currentUserId = UserSession.CurrentUserId;
+       private async void OnAddTaskClicked(object sender, EventArgs e)
+{
+    int currentUserId = UserSession.CurrentUserId;
+    if (currentUserId == 0) return;
 
-            if (currentUserId == 0)
-            {
-                await DisplayAlert("Error", "No hay una sesión de usuario activa. Inicia sesión.", "OK");
-                return;
-            }
+    string titulo = await DisplayPromptAsync("Nueva Tarea", "¿Qué deseas registrar?");
+    if (string.IsNullOrWhiteSpace(titulo)) return;
 
-            string titulo = await DisplayPromptAsync("Nueva Tarea", "¿Qué deseas registrar?");
-            if (string.IsNullOrWhiteSpace(titulo)) return;
+    DateTime fechaVencimiento = DateTime.Now.AddDays(2); // Ejemplo: vence en 2 días
 
-            // 1. Crear el objeto de tarea local
-            var nuevaTareaLocal = new TareaLocal
-            {
-                IdUsuario = currentUserId,
-                Titulo = titulo,
-                Descripcion = "Registrada en modo offline/local",
-                FechaVencimiento = DateTime.Now.AddDays(1),
-                Estado = "Pendiente",
-                IsSynced = false, // Marcada para subir a Supabase cuando haya red
-                UltimaModificacion = DateTime.Now
-            };
+    var nuevaTareaLocal = new TareaLocal
+    {
+        IdUsuario = currentUserId,
+        Titulo = titulo,
+        Descripcion = "Registrada en modo offline/local",
+        FechaVencimiento = fechaVencimiento,
+        Estado = "Pendiente",
+        IsSynced = false,
+        UltimaModificacion = DateTime.Now
+    };
 
-            // 2. Guardar inmediatamente en SQLite
-            await _dbLocal.InsertAsync(nuevaTareaLocal);
+    // 1. Guardar en la base de datos local (SQLite genera autoincremental el Id)
+    await _dbLocal.InsertAsync(nuevaTareaLocal);
 
-            // 3. Actualizar la interfaz de inmediato (sin esperar respuesta del servidor)
-            await LoadTasksFromLocalDbAsync();
+    // 2. Programar la notificación para 1 día antes del vencimiento
+    ProgramarNotificacionRecordatorio(nuevaTareaLocal.Id, nuevaTareaLocal.Titulo, fechaVencimiento);
 
-            // 4. Lanzar sincronización silenciosa en segundo plano
-            _ = _syncService.SincronizarTareasAsync();
-        }
+    // 3. Actualizar la vista
+    await LoadTasksFromLocalDbAsync();
+    _ = _syncService.SincronizarTareasAsync();
+}
 
         private async void OnGetSummaryClicked(object sender, EventArgs e)
         {

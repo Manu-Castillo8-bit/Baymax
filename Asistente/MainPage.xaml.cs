@@ -1,4 +1,4 @@
-﻿using Supabase;
+﻿/*using Supabase;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -229,5 +229,235 @@ namespace Asistente
 
         [Column("estado")]
         public string? Estado { get; set; } = "Pendiente";
+    }
+}*/
+
+
+using SQLite;
+using Supabase;
+
+namespace Asistente
+{
+    public partial class MainPage : ContentPage
+    {
+        private bool _isAnimating = false;
+        private Supabase.Client _supabase;
+        
+        // Referencias a la base de datos local y al servicio de sincronización
+        private SQLiteAsyncConnection _dbLocal;
+        private SyncService _syncService;
+
+        public MainPage()
+        {
+            InitializeComponent();
+
+            string url = "https://mmvzkwklwibugzpyawmy.supabase.co";
+            string key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tdnprd2tsd2lidWd6cHlhd215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxODE0NTgsImV4cCI6MjEwMzc1NzQ1OH0.41uyn16H27UbRaV1aKBGGPonFw_48Q1rdsHV2TKcQp8";
+
+            var options = new SupabaseOptions
+            {
+                AutoRefreshToken = true,
+                AutoConnectRealtime = true
+            };
+
+            _supabase = new Supabase.Client(url, key, options);
+
+            // 1. Inicializar la ruta local de SQLite
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "asistente.db3");
+            _dbLocal = new SQLiteAsyncConnection(dbPath);
+            
+            // 2. Inicializar el servicio de sincronización
+            _syncService = new SyncService(dbPath, _supabase);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            _isAnimating = true;
+            StartHudAnimations();
+
+            // Crear tabla local si no existe y cargar tareas
+            await _dbLocal.CreateTableAsync<TareaLocal>();
+            await InitializeAndSyncAsync();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _isAnimating = false;
+        }
+
+        #region 1. ANIMACIONES DE LA INTERFAZ HUD (Sin cambios)
+
+        private async void StartHudAnimations()
+        {
+            _ = RotateElementLoop(OuterRing1, 12000, true);
+            _ = RotateElementLoop(OuterRing2, 8000, false);
+            _ = RotateElementLoop(MidRing, 15000, true);
+            _ = RotateElementLoop(InnerRing, 4000, false);
+
+            while (_isAnimating)
+            {
+                await Task.WhenAll(
+                    CoreCenter.ScaleTo(1.15, 1200, Easing.SinInOut),
+                    GlowEffect.ScaleTo(1.3, 1200, Easing.SinInOut),
+                    GlowEffect.FadeTo(0.3, 1200, Easing.SinInOut)
+                );
+
+                if (!_isAnimating) break;
+
+                await Task.WhenAll(
+                    CoreCenter.ScaleTo(1.0, 1200, Easing.SinInOut),
+                    GlowEffect.ScaleTo(1.0, 1200, Easing.SinInOut),
+                    GlowEffect.FadeTo(0.15, 1200, Easing.SinInOut)
+                );
+            }
+        }
+
+        private async Task RotateElementLoop(VisualElement element, uint duration, bool clockwise)
+        {
+            while (_isAnimating)
+            {
+                element.Rotation = 0;
+                double targetRotation = clockwise ? 360 : -360;
+                await element.RotateTo(targetRotation, duration, Easing.Linear);
+            }
+        }
+
+        private async Task TriggerCorePulseAsync()
+        {
+            await Task.WhenAll(
+                CoreCenter.ScaleTo(1.4, 150, Easing.CubicOut),
+                GlowEffect.ScaleTo(1.8, 150, Easing.CubicOut)
+            );
+            await Task.WhenAll(
+                CoreCenter.ScaleTo(1.0, 200, Easing.CubicIn),
+                GlowEffect.ScaleTo(1.0, 200, Easing.CubicIn)
+            );
+        }
+
+        #endregion
+
+        #region 2. OPERACIONES OFFLINE-FIRST Y SINCRONIZACIÓN
+
+        private async Task InitializeAndSyncAsync()
+        {
+            try
+            {
+                // Cargar inmediatamente desde la base de datos local (Respuesta instantánea)
+                await LoadTasksFromLocalDbAsync();
+
+                // Intentar inicializar Supabase y ejecutar sincronización en segundo plano
+                await _supabase.InitializeAsync();
+                _ = _syncService.SincronizarTareasAsync().ContinueWith(async _ => 
+                {
+                    // Recargar pantalla en el hilo de UI si hubo cambios descargados del servidor
+                    MainThread.BeginInvokeOnMainThread(async () => await LoadTasksFromLocalDbAsync());
+                });
+            }
+            catch (Exception)
+            {
+                AiMessageLabel.Text = "Modo fuera de línea activo. Operando localmente.";
+            }
+        }
+
+        private async Task LoadTasksFromLocalDbAsync()
+        {
+            int currentUserId = UserSession.CurrentUserId;
+            if (currentUserId == 0)
+            {
+                AiMessageLabel.Text = "Sesión no detectada. Inicia sesión nuevamente.";
+                return;
+            }
+
+            try
+            {
+                // Consulta LECTURA a SQLite Local
+                var tasks = await _dbLocal.Table<TareaLocal>()
+                    .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted)
+                    .ToListAsync();
+
+                TasksCollectionView.ItemsSource = tasks;
+                int pendingCount = tasks.Count(t => t.Estado != "Completado");
+
+                await TriggerCorePulseAsync();
+                
+                string userName = string.IsNullOrEmpty(UserSession.CurrentUserName) ? "Operador" : UserSession.CurrentUserName;
+                AiMessageLabel.Text = $"Bienvenido {userName}. [Local] Tareas pendientes: {pendingCount}";
+            }
+            catch (Exception ex)
+            {
+                AiMessageLabel.Text = $"Error local: {ex.Message}";
+            }
+        }
+
+        private async void OnAddTaskClicked(object sender, EventArgs e)
+        {
+            int currentUserId = UserSession.CurrentUserId;
+
+            if (currentUserId == 0)
+            {
+                await DisplayAlert("Error", "No hay una sesión de usuario activa. Inicia sesión.", "OK");
+                return;
+            }
+
+            string titulo = await DisplayPromptAsync("Nueva Tarea", "¿Qué deseas registrar?");
+            if (string.IsNullOrWhiteSpace(titulo)) return;
+
+            // 1. Crear el objeto de tarea local
+            var nuevaTareaLocal = new TareaLocal
+            {
+                IdUsuario = currentUserId,
+                Titulo = titulo,
+                Descripcion = "Registrada en modo offline/local",
+                FechaVencimiento = DateTime.Now.AddDays(1),
+                Estado = "Pendiente",
+                IsSynced = false, // Marcada para subir a Supabase cuando haya red
+                UltimaModificacion = DateTime.Now
+            };
+
+            // 2. Guardar inmediatamente en SQLite
+            await _dbLocal.InsertAsync(nuevaTareaLocal);
+
+            // 3. Actualizar la interfaz de inmediato (sin esperar respuesta del servidor)
+            await LoadTasksFromLocalDbAsync();
+
+            // 4. Lanzar sincronización silenciosa en segundo plano
+            _ = _syncService.SincronizarTareasAsync();
+        }
+
+        private async void OnGetSummaryClicked(object sender, EventArgs e)
+        {
+            await TriggerCorePulseAsync();
+            int currentUserId = UserSession.CurrentUserId;
+
+            try
+            {
+                // Consulta de resumen desde SQLite
+                var tasks = await _dbLocal.Table<TareaLocal>()
+                    .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted && t.Estado != "Completado")
+                    .ToListAsync();
+
+                var urgente = tasks.Where(t => t.FechaVencimiento.HasValue)
+                    .OrderBy(t => t.FechaVencimiento)
+                    .FirstOrDefault();
+
+                if (urgente != null)
+                {
+                    AiMessageLabel.Text = $"Prioridad crítica: '{urgente.Titulo}' (Vence: {urgente.FechaVencimiento:dd/MM/yyyy}).";
+                }
+                else
+                {
+                    AiMessageLabel.Text = "Sin tareas pendientes en la base de datos local.";
+                }
+            }
+            catch (Exception)
+            {
+                AiMessageLabel.Text = "Error al calcular el resumen local.";
+            }
+        }
+
+        #endregion
     }
 }

@@ -341,26 +341,35 @@ namespace Asistente
 
         #region 2. OPERACIONES OFFLINE-FIRST Y SINCRONIZACIÓN
 
-        private async Task InitializeAndSyncAsync()
-        {
-            try
-            {
-                // Cargar inmediatamente desde la base de datos local (Respuesta instantánea)
-                await LoadTasksFromLocalDbAsync();
+private async Task InitializeAndSyncAsync()
+{
+    // 1. Cargar SIEMPRE datos de SQLite primero (Funciona 100% offline)
+    await LoadTasksFromLocalDbAsync();
 
-                // Intentar inicializar Supabase y ejecutar sincronización en segundo plano
-                await _supabase.InitializeAsync();
-                _ = _syncService.SincronizarTareasAsync().ContinueWith(async _ => 
-                {
-                    // Recargar pantalla en el hilo de UI si hubo cambios descargados del servidor
-                    MainThread.BeginInvokeOnMainThread(async () => await LoadTasksFromLocalDbAsync());
-                });
-            }
-            catch (Exception)
+    // 2. Verificar si realmente hay conexión antes de hablar con Supabase
+    if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+    {
+        try
+        {
+            await _supabase.InitializeAsync();
+            
+            // Sincronizar en segundo plano
+            _ = _syncService.SincronizarTareasAsync().ContinueWith(_ => 
             {
-                AiMessageLabel.Text = "Modo fuera de línea activo. Operando localmente.";
-            }
+                MainThread.BeginInvokeOnMainThread(async () => await LoadTasksFromLocalDbAsync());
+            });
         }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error de red al conectar con Supabase: {ex.Message}");
+        }
+    }
+    else
+    {
+        // Mensaje limpio para el usuario indicando el modo Offline
+        AiMessageLabel.Text = "Modo fuera de línea activo. Operando localmente.";
+    }
+}
 
         private async Task LoadTasksFromLocalDbAsync()
         {

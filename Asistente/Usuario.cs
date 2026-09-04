@@ -3,6 +3,7 @@ using Supabase.Postgrest.Models;
 
 namespace Asistente
 {
+    // 1. Modelo para la tabla 'usuario' en Supabase
     [Table("usuario")]
     public class Usuario : BaseModel
     {
@@ -25,6 +26,30 @@ namespace Asistente
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
     }
 
+    // 2. Modelo para la tabla 'tarea' en Supabase (necesario para SyncService)
+    [Table("tarea")]
+    public class Tarea : BaseModel
+    {
+        [PrimaryKey("id_tarea", false)]
+        public int IdTarea { get; set; }
+
+        [Column("id_usuario")]
+        public int IdUsuario { get; set; }
+
+        [Column("titulo")]
+        public string Titulo { get; set; } = string.Empty;
+
+        [Column("descripcion")]
+        public string? Descripcion { get; set; }
+
+        [Column("fecha_vencimiento")]
+        public DateTime? FechaVencimiento { get; set; }
+
+        [Column("estado")]
+        public string? Estado { get; set; } = "Pendiente";
+    }
+
+    // 3. Sesión del usuario activo
     public static class UserSession
     {
         public static int CurrentUserId { get; set; }

@@ -235,6 +235,8 @@ namespace Asistente
 
 using SQLite;
 using Supabase;
+using Plugin.LocalNotification; // <-- Asegúrate de incluir esta referencia arriba
+
 
 namespace Asistente
 {
@@ -282,6 +284,29 @@ namespace Asistente
             await InitializeAndSyncAsync();
         }
 
+private void EnviarNotificacionPC(string titulo, string mensaje)
+{
+    try
+    {
+        var request = new NotificationRequest
+        {
+            NotificationId = new Random().Next(1000, 9999),
+            Title = titulo,
+            Description = mensaje,
+            BadgeNumber = 1,
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Now.AddSeconds(1) // Se dispara de inmediato
+            }
+        };
+
+        LocalNotificationCenter.Current.Show(request);
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine($"Error al enviar notificación: {ex.Message}");
+    }
+}
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Plugin.LocalNotification; // <-- Agregar este namespace
 
 namespace Asistente
 {
@@ -9,15 +9,12 @@ namespace Asistente
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseLocalNotification() // <-- Habilitar Notificaciones
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
 
             return builder.Build();
         }

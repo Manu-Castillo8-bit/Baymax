@@ -235,7 +235,8 @@ namespace Asistente
 
 using SQLite;
 using Supabase;
-using Plugin.LocalNotification; // <-- Asegúrate de incluir esta referencia arriba
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.Core.Models;
 
 
 namespace Asistente
@@ -488,7 +489,7 @@ private async Task InitializeAndSyncAsync()
     await _dbLocal.InsertAsync(nuevaTareaLocal);
 
     // 2. Programar la notificación para 1 día antes del vencimiento
-    ProgramarNotificacionRecordatorio(nuevaTareaLocal.Id, nuevaTareaLocal.Titulo, fechaVencimiento);
+    ProgramarNotificacionRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, fechaVencimiento);
 
     // 3. Actualizar la vista
     await LoadTasksFromLocalDbAsync();

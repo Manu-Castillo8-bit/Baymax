@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.NuevaTareaPage"
+             BackgroundColor="#080604"
+             Shell.NavBarIsVisible="False"
+             Title="Nueva Tarea">
+    <ScrollView>
+        <Grid Padding="20" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" RowSpacing="15">
+
+            <!-- Encabezado -->
+            <Label Grid.Row="0"
+                   Text="➕ Registrar Nueva Tarea"
+                   FontSize="22" FontAttributes="Bold"
+                   TextColor="#FF8C00"
+                   HorizontalOptions="Center"/>
+
+            <!-- Título de la tarea -->
+            <VerticalStackLayout Grid.Row="1" Spacing="6">
+                <Label Text="Título de la tarea" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                <Entry x:Name="TituloEntry"
+                       Placeholder="¿Qué deseas registrar?"
+                       PlaceholderColor="#B38B6D"
+                       BackgroundColor="#120D08"
+                       TextColor="#FFFFFF"/>
+            </VerticalStackLayout>
+
+            <!-- Fecha de vencimiento -->
+            <VerticalStackLayout Grid.Row="2" Spacing="6">
+                <Label Text="Fecha de vencimiento" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                <DatePicker x:Name="FechaVencimientoPicker"
+                            BackgroundColor="#120D08"
+                            TextColor="#FFAA00"/>
+            </VerticalStackLayout>
+
+            <!-- Frecuencia de recordatorio -->
+            <VerticalStackLayout Grid.Row="3" Spacing="6">
+                <Label Text="Cada cuánto quieres recibir el recordatorio" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                <Label Text="Selecciona la frecuencia de tus notificaciones:" FontSize="12" TextColor="#B38B6D"/>
+                <Picker x:Name="FrecuenciaPicker"
+                        BackgroundColor="#120D08"
+                        Title="Frecuencia de recordatorio"
+                        TextColor="#FFFFFF"/>
+            </VerticalStackLayout>
+
+            <!-- Botón Guardar -->
+            <Button Grid.Row="4"
+                    Text="✔ Guardar Tarea"
+                    Clicked="OnGuardarClicked"
+                    BackgroundColor="#FF8C00"
+                    TextColor="#080604"
+                    FontAttributes="Bold"
+                    CornerRadius="6"/>
+
+            <!-- Botón Cancelar -->
+            <Button Grid.Row="5"
+                    Text="Cancelar"
+                    Clicked="OnCancelarClicked"
+                    BackgroundColor="#2A1B0E"
+                    BorderColor="#FF8C00"
+                    BorderWidth="1"
+                    TextColor="#FF8C00"
+                    CornerRadius="6"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

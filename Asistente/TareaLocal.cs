@@ -13,6 +13,7 @@ namespace Asistente
         public string Titulo { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public DateTime? FechaVencimiento { get; set; }
+        public int? FrecuenciaRecordatorioHoras { get; set; } // Cada cuántas horas recordar (0 = sin recordatorio)
         public string Estado { get; set; } = "Pendiente";
 
         // Banderas para control de sincronización

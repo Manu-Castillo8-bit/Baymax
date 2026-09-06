@@ -94,6 +94,7 @@
                             <VerticalStackLayout Grid.Column="0">
                                 <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF"/>
                                 <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}" FontSize="11" TextColor="#B38B6D"/>
+                                <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}" FontSize="10" TextColor="#FFAA00"/>
                             </VerticalStackLayout>
                             <Label Grid.Column="1" Text="{Binding Estado}" TextColor="#FF8C00" FontSize="12" VerticalOptions="Center"/>
                         </Grid>
@@ -103,10 +104,22 @@
         </CollectionView>
 
         <!-- 4. BOTONES DE ACCIÓN -->
-        <HorizontalStackLayout Grid.Row="3" Spacing="12" HorizontalOptions="Center">
-            <Button Text="+ Nueva Tarea" Clicked="OnAddTaskClicked" BackgroundColor="#FF8C00" TextColor="#080604" FontAttributes="Bold" CornerRadius="6"/>
-            <Button Text="Resumen de hoy" Clicked="OnGetSummaryClicked" BackgroundColor="#2A1B0E" BorderColor="#FF8C00" BorderWidth="1" TextColor="#FF8C00" FontAttributes="Bold" CornerRadius="6"/>
-        </HorizontalStackLayout>
+        <Grid Grid.Row="3" RowDefinitions="Auto, Auto" RowSpacing="10">
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button Text="+ Nueva Tarea" Clicked="OnAddTaskClicked" BackgroundColor="#FF8C00" TextColor="#080604" FontAttributes="Bold" CornerRadius="6"/>
+                <Button Text="Resumen de hoy" Clicked="OnGetSummaryClicked" BackgroundColor="#2A1B0E" BorderColor="#FF8C00" BorderWidth="1" TextColor="#FF8C00" FontAttributes="Bold" CornerRadius="6"/>
+            </HorizontalStackLayout>
+
+            <Button Grid.Row="1"
+                    Text="🔄 Actualizar / Sincronizar"
+                    Clicked="OnRefreshClicked"
+                    BackgroundColor="#2A1B0E"
+                    BorderColor="#FF8C00"
+                    BorderWidth="1"
+                    TextColor="#FFAA00"
+                    FontAttributes="Bold"
+                    CornerRadius="6"/>
+        </Grid>
 
     </Grid>
 </ContentPage>

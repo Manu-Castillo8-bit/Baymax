@@ -45,6 +45,9 @@ namespace Asistente
         [Column("fecha_vencimiento")]
         public DateTime? FechaVencimiento { get; set; }
 
+        [Column("frecuencia_recordatorio_horas")]
+        public int? FrecuenciaRecordatorioHoras { get; set; }
+
         [Column("estado")]
         public string? Estado { get; set; } = "Pendiente";
     }

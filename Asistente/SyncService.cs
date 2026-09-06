@@ -45,6 +45,7 @@ namespace Asistente
                         Titulo = local.Titulo,
                         Descripcion = local.Descripcion,
                         FechaVencimiento = local.FechaVencimiento,
+                        FrecuenciaRecordatorioHoras = local.FrecuenciaRecordatorioHoras,
                         Estado = local.Estado
                     };
 
@@ -78,6 +79,7 @@ namespace Asistente
                             Titulo = server.Titulo,
                             Descripcion = server.Descripcion,
                             FechaVencimiento = server.FechaVencimiento,
+                            FrecuenciaRecordatorioHoras = server.FrecuenciaRecordatorioHoras,
                             Estado = server.Estado ?? "Pendiente",
                             IsSynced = true
                         });
@@ -86,7 +88,27 @@ namespace Asistente
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error de sync: {ex.Message}");
+                // Mostrar el error de forma visible (no tragárselo en silencio)
+                string mensaje = $"Error al sincronizar con el servidor: {ex.Message}";
+                System.Diagnostics.Debug.WriteLine(mensaje);
+                try
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        var page = Application.Current?.Windows.FirstOrDefault()?.Page;
+                        if (page != null)
+                        {
+                            await page.DisplayAlertAsync("Error de sincronización",
+                                "No se pudo sincronizar las tareas con el servidor.\n" +
+                                "Revisa que la base de datos en Supabase esté bien configurada.\n\nDetalle: " + ex.Message,
+                                "OK");
+                        }
+                    });
+                }
+                catch (Exception ex2)
+                {
+                    System.Diagnostics.Debug.WriteLine($"No se pudo mostrar el aviso de error: {ex2.Message}");
+                }
             }
         }
     }

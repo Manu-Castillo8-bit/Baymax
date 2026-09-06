@@ -250,6 +250,10 @@ namespace Asistente
         private SQLiteAsyncConnection _dbLocal;
         private SyncService _syncService;
 
+        // Temporizador para sincronización automática periódica
+        private IDispatcherTimer _syncTimer;
+        private bool _isSyncing = false;
+
         public MainPage()
         {
             InitializeComponent();
@@ -286,7 +290,7 @@ namespace Asistente
             BadgeNumber = 1,
             Schedule = new NotificationRequestSchedule
             {
-                NotifyTime = DateTime.Now.AddSeconds(5) // Llegará en 5 segundos
+                NotifyTime = DateTimeOffset.Now.AddSeconds(5) // Llegará en 5 segundos
             }
         };
 
@@ -316,33 +320,64 @@ namespace Asistente
 
     await _dbLocal.CreateTableAsync<TareaLocal>();
     await InitializeAndSyncAsync();
+
+    // Sincronización automática cada 30 segundos mientras la app está visible
+    _syncTimer = Dispatcher.CreateTimer();
+    _syncTimer.Interval = TimeSpan.FromSeconds(30);
+    _syncTimer.Tick += OnAutoSyncTick;
+    _syncTimer.Start();
+}
+
+private async void OnAutoSyncTick(object sender, EventArgs e)
+{
+    // Evitar sincronizaciones simultáneas
+    if (_isSyncing) return;
+    _isSyncing = true;
+    try
+    {
+        await RefreshAllAsync();
+    }
+    finally
+    {
+        _isSyncing = false;
+    }
 }
         
-private void ProgramarNotificacionRecordatorio(int idTarea, string titulo, DateTime fechaVencimiento)
+private void ProgramarNotificacionRecordatorio(int idTarea, string titulo, DateTime? fechaVencimiento, int frecuenciaHoras)
 {
     try
     {
-        // 1. Calcular la fecha: 1 día antes a la misma hora del vencimiento
-        DateTime fechaNotificacion = fechaVencimiento.AddDays(-1);
-
-        // 2. Solo programar si la fecha calculada aún no ha pasado
-        if (fechaNotificacion > DateTime.Now)
+        var request = new NotificationRequest
         {
-            var request = new NotificationRequest
-            {
-                // Usamos el ID local de la tarea como NotificationId para evitar duplicados
-                NotificationId = idTarea, 
-                Title = "⏰ Recordatorio: Tarea Próxima",
-                Description = $"Mañana vence la tarea: '{titulo}'",
-                BadgeNumber = 1,
-                Schedule = new NotificationRequestSchedule
-                {
-                    NotifyTime = fechaNotificacion
-                }
-            };
+            NotificationId = idTarea, // ID local de la tarea para evitar duplicados y poder cancelarla
+            Title = "⏰ Recordatorio: Tarea Próxima",
+            Description = $"La tarea: '{titulo}' está pendiente.",
+            BadgeNumber = 1,
+            Schedule = new NotificationRequestSchedule()
+        };
 
-            LocalNotificationCenter.Current.Show(request);
+        if (frecuenciaHoras > 0)
+        {
+            // Modo recurrente: recordar cada X horas hasta el vencimiento
+            request.Schedule.NotifyTime = DateTimeOffset.Now.AddSeconds(5); // primera notificación casi inmediata
+            request.Schedule.RepeatType = NotificationRepeat.TimeInterval;
+            request.Schedule.NotifyRepeatInterval = TimeSpan.FromHours(frecuenciaHoras);
         }
+        else if (fechaVencimiento.HasValue)
+        {
+            // Modo simple: avisar 1 día antes del vencimiento (sin repetición)
+            DateTime fechaNotificacion = fechaVencimiento.Value.AddDays(-1);
+            if (fechaNotificacion <= DateTime.Now) return;
+
+            request.Schedule.NotifyTime = new DateTimeOffset(fechaNotificacion);
+            request.Schedule.RepeatType = NotificationRepeat.No;
+        }
+        else
+        {
+            return; // sin fecha y sin frecuencia: no hay nada que programar
+        }
+
+        LocalNotificationCenter.Current.Show(request);
     }
     catch (Exception ex)
     {
@@ -362,7 +397,7 @@ private void EnviarNotificacionPC(string titulo, string mensaje)
             BadgeNumber = 1,
             Schedule = new NotificationRequestSchedule
             {
-                NotifyTime = DateTime.Now.AddSeconds(1) // Se dispara de inmediato
+                NotifyTime = DateTimeOffset.Now.AddSeconds(1) // Se dispara de inmediato
             }
         };
 
@@ -377,6 +412,14 @@ private void EnviarNotificacionPC(string titulo, string mensaje)
         {
             base.OnDisappearing();
             _isAnimating = false;
+
+            // Detener la sincronización automática al salir de la página
+            if (_syncTimer != null)
+            {
+                _syncTimer.Stop();
+                _syncTimer.Tick -= OnAutoSyncTick;
+                _syncTimer = null;
+            }
         }
 
         #region 1. ANIMACIONES DE LA INTERFAZ HUD (Sin cambios)
@@ -497,17 +540,22 @@ private async Task InitializeAndSyncAsync()
     int currentUserId = UserSession.CurrentUserId;
     if (currentUserId == 0) return;
 
-    string titulo = await DisplayPromptAsync("Nueva Tarea", "¿Qué deseas registrar?");
-    if (string.IsNullOrWhiteSpace(titulo)) return;
+    // Abrir la pantalla de registro de tarea (fecha de vencimiento + frecuencia de recordatorio)
+    // Usamos TaskCompletionSource: la página modal no se comunica vía eventos asíncronos que
+    // puedan congelar la UI; simplemente esperamos su resultado.
+    var pagina = new NuevaTareaPage();
+    await Navigation.PushModalAsync(pagina);
 
-    DateTime fechaVencimiento = DateTime.Now.AddDays(2); // Ejemplo: vence en 2 días
+    var datos = await pagina.ResultadoTask;
+    if (datos == null) return; // El usuario canceló
 
     var nuevaTareaLocal = new TareaLocal
     {
         IdUsuario = currentUserId,
-        Titulo = titulo,
-        Descripcion = "Registrada en modo offline/local",
-        FechaVencimiento = fechaVencimiento,
+        Titulo = datos.Titulo,
+        Descripcion = "Registrada desde la app",
+        FechaVencimiento = datos.FechaVencimiento,
+        FrecuenciaRecordatorioHoras = datos.FrecuenciaRecordatorioHoras,
         Estado = "Pendiente",
         IsSynced = false,
         UltimaModificacion = DateTime.Now
@@ -516,12 +564,45 @@ private async Task InitializeAndSyncAsync()
     // 1. Guardar en la base de datos local (SQLite genera autoincremental el Id)
     await _dbLocal.InsertAsync(nuevaTareaLocal);
 
-    // 2. Programar la notificación para 1 día antes del vencimiento
-    ProgramarNotificacionRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, fechaVencimiento);
+    // 2. Programar las notificaciones de recordatorio con la frecuencia elegida
+    ProgramarNotificacionRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
 
     // 3. Actualizar la vista
     await LoadTasksFromLocalDbAsync();
     _ = _syncService.SincronizarTareasAsync();
+}
+
+private async void OnRefreshClicked(object sender, EventArgs e)
+{
+    // Botón de actualizar: recarga desde local y sincroniza con Supabase si hay internet
+    await RefreshAllAsync();
+}
+
+private async Task RefreshAllAsync()
+{
+    try
+    {
+        AiMessageLabel.Text = "Actualizando...";
+
+        // 1. Sincronizar con Supabase (sube pendientes y baja las del servidor)
+        if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+        {
+            await _supabase.InitializeAsync();
+            await _syncService.SincronizarTareasAsync();
+        }
+        else
+        {
+            AiMessageLabel.Text = "Sin conexión. Mostrando datos locales.";
+        }
+
+        // 2. Recargar la lista desde SQLite local
+        await LoadTasksFromLocalDbAsync();
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlertAsync("Error", $"No se pudo actualizar: {ex.Message}", "OK");
+        AiMessageLabel.Text = "Error al actualizar los datos.";
+    }
 }
 
         private async void OnGetSummaryClicked(object sender, EventArgs e)

@@ -4,6 +4,13 @@
              x:Class="Asistente.MainPage"
              BackgroundColor="#080604">
 
+<Button Text="🔔 Probar Notificación (5 seg)"
+        Clicked="OnTestNotificationClicked"
+        BackgroundColor="#3A3D52"
+        TextColor="White"
+        CornerRadius="10"
+        Margin="0,10,0,0" />
+
     <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="20" RowSpacing="15">
 
         <!-- 1. NÚCLEO TECNOLÓGICO Y ANILLOS HUD -->

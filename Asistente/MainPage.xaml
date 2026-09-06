@@ -82,21 +82,42 @@
         </Frame>
 
         <!-- 3. LISTA DE TAREAS (CAMPOS MAPEADOS) -->
-        <CollectionView Grid.Row="2" x:Name="TasksCollectionView">
+        <CollectionView Grid.Row="2" x:Name="TasksCollectionView"
+                        SelectionMode="Single"
+                        SelectionChanged="OnTaskTapped">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,4" 
-                           Padding="12" 
-                           CornerRadius="8" 
-                           BackgroundColor="#120D08" 
+                    <Frame Margin="0,4"
+                           Padding="12"
+                           CornerRadius="8"
+                           BackgroundColor="#120D08"
                            BorderColor="#402810">
                         <Grid ColumnDefinitions="*, Auto">
-                            <VerticalStackLayout Grid.Column="0">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
                                 <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF"/>
                                 <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}" FontSize="11" TextColor="#B38B6D"/>
                                 <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}" FontSize="10" TextColor="#FFAA00"/>
+                                <Label Text="{Binding Estado}" TextColor="#FF8C00" FontSize="12"/>
                             </VerticalStackLayout>
-                            <Label Grid.Column="1" Text="{Binding Estado}" TextColor="#FF8C00" FontSize="12" VerticalOptions="Center"/>
+
+                            <!-- Botones CRUD -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Button Text="Completar" Clicked="OnToggleCompleteClicked"
+                                        BackgroundColor="#1A160F"
+                                        BorderColor="#FFAA00" BorderWidth="1"
+                                        TextColor="#FFAA00" FontSize="11" Padding="8,4"
+                                        CornerRadius="4"/>
+                                <Button Text="✏️" Clicked="OnEditTaskClicked"
+                                        BackgroundColor="#1A160F"
+                                        BorderColor="#FF8C00" BorderWidth="1"
+                                        TextColor="#FF8C00" FontSize="12" Padding="8,4"
+                                        CornerRadius="4"/>
+                                <Button Text="🗑️" Clicked="OnDeleteTaskClicked"
+                                        BackgroundColor="#1A160F"
+                                        BorderColor="#FF3300" BorderWidth="1"
+                                        TextColor="#FF3300" FontSize="12" Padding="8,4"
+                                        CornerRadius="4"/>
+                            </VerticalStackLayout>
                         </Grid>
                     </Frame>
                 </DataTemplate>

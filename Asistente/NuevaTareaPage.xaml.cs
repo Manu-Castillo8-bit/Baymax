@@ -1,3 +1,5 @@
+using SQLite;
+
 namespace Asistente
 {
     public class DatosNuevaTarea
@@ -9,9 +11,12 @@ namespace Asistente
 
     public partial class NuevaTareaPage : ContentPage
     {
-        // Permite que la página que la abrió espere el resultado de forma segura
-        private readonly TaskCompletionSource<DatosNuevaTarea> _tcs = new();
-        public Task<DatosNuevaTarea> ResultadoTask => _tcs.Task;
+        private readonly SQLiteAsyncConnection _dbLocal;
+        private readonly SyncService _syncService;
+        private readonly int _userId;
+
+        // Tarea en modo edición (si viene null, es nueva)
+        private readonly TareaLocal _tareaEditando;
 
         // Opciones de frecuencia en horas (aparecen en el mismo orden en el Picker)
         private readonly List<KeyValuePair<int, string>> _opcionesFrecuencia = new()
@@ -31,23 +36,52 @@ namespace Asistente
             new KeyValuePair<int, string>(168, "Cada 7 días (una vez por semana)")
         };
 
-        public NuevaTareaPage()
+        public NuevaTareaPage(SQLiteAsyncConnection dbLocal, SyncService syncService, int userId, TareaLocal tareaEditar = null)
         {
             InitializeComponent();
+
+            _dbLocal = dbLocal;
+            _syncService = syncService;
+            _userId = userId;
+            _tareaEditando = tareaEditar;
 
             // Dar opciones al Picker de frecuencia
             foreach (var opcion in _opcionesFrecuencia)
             {
                 FrecuenciaPicker.Items.Add(opcion.Value);
             }
-            // Valor por defecto: "Cada 4 horas" (índice 5, horas = 4)
-            FrecuenciaPicker.SelectedIndex = 5;
 
             // Fechas por defecto: hoy o mañana
             DateTime hoy = DateTime.Today;
             FechaVencimientoPicker.MinimumDate = hoy;
             FechaVencimientoPicker.MaximumDate = hoy.AddYears(5);
-            FechaVencimientoPicker.Date = hoy.AddDays(2);
+
+            if (_tareaEditando != null)
+            {
+                // Modo edición: precargar datos
+                TituloEntry.Text = _tareaEditando.Titulo;
+                if (_tareaEditando.FechaVencimiento.HasValue)
+                {
+                    FechaVencimientoPicker.Date = _tareaEditando.FechaVencimiento.Value;
+                }
+                else
+                {
+                    FechaVencimientoPicker.Date = hoy.AddDays(2);
+                }
+
+                // Seleccionar la frecuencia correspondiente (o "Sin recordatorio")
+                int horas = _tareaEditando.FrecuenciaRecordatorioHoras ?? 0;
+                int idx = _opcionesFrecuencia.FindIndex(o => o.Key == horas);
+                FrecuenciaPicker.SelectedIndex = idx >= 0 ? idx : 0;
+
+                BotonGuardar.Text = "✔ Guardar Cambios";
+            }
+            else
+            {
+                // Valor por defecto para tarea nueva: "Cada 4 horas" (índice 5, horas = 4)
+                FrecuenciaPicker.SelectedIndex = 5;
+                FechaVencimientoPicker.Date = hoy.AddDays(2);
+            }
         }
 
         private async void OnGuardarClicked(object sender, EventArgs e)
@@ -65,21 +99,54 @@ namespace Asistente
                 horas = _opcionesFrecuencia[FrecuenciaPicker.SelectedIndex].Key;
             }
 
-            var resultado = new DatosNuevaTarea
+            if (_tareaEditando == null)
             {
-                Titulo = titulo,
-                FechaVencimiento = FechaVencimientoPicker.Date ?? DateTime.Today,
-                FrecuenciaRecordatorioHoras = horas
-            };
+                // ---- Crear nueva tarea ----
+                var nuevaTareaLocal = new TareaLocal
+                {
+                    IdUsuario = _userId,
+                    Titulo = titulo,
+                    Descripcion = "Registrada desde la app",
+                    FechaVencimiento = FechaVencimientoPicker.Date ?? DateTime.Today,
+                    FrecuenciaRecordatorioHoras = horas,
+                    Estado = "Pendiente",
+                    IsSynced = false,
+                    UltimaModificacion = DateTime.Now
+                };
 
-            _tcs.TrySetResult(resultado);
+                await _dbLocal.InsertAsync(nuevaTareaLocal);
+
+                // Programar notificaciones de recordatorio con la frecuencia elegida
+                NotificadorTareas.ProgramarRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
+
+                // Sincronizar en segundo plano
+                _ = _syncService.SincronizarTareasAsync();
+            }
+            else
+            {
+                // ---- Editar tarea existente ----
+                _tareaEditando.Titulo = titulo;
+                _tareaEditando.FechaVencimiento = FechaVencimientoPicker.Date ?? DateTime.Today;
+                _tareaEditando.FrecuenciaRecordatorioHoras = horas;
+                _tareaEditando.UltimaModificacion = DateTime.Now;
+
+                await _dbLocal.UpdateAsync(_tareaEditando);
+
+                // Reprogramar la notificación con los nuevos datos
+                NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);
+                NotificadorTareas.ProgramarRecordatorio(_tareaEditando.IdLocal, _tareaEditando.Titulo, _tareaEditando.FechaVencimiento, _tareaEditando.FrecuenciaRecordatorioHoras ?? 0);
+
+                // Sincronizar en segundo plano
+                _ = _syncService.SincronizarTareasAsync();
+            }
+
+            // Volver a la MainPage (que recargará la lista en OnAppearing)
             await Navigation.PopModalAsync();
         }
 
         private async void OnCancelarClicked(object sender, EventArgs e)
         {
-            // Devolver null para indicar que se canceló (sin disparar nada más)
-            _tcs.TrySetResult(null);
+            // Solo volver a la MainPage. No se toca ninguna base de datos ni notificación.
             await Navigation.PopModalAsync();
         }
     }

@@ -343,48 +343,6 @@ private async void OnAutoSyncTick(object sender, EventArgs e)
     }
 }
         
-private void ProgramarNotificacionRecordatorio(int idTarea, string titulo, DateTime? fechaVencimiento, int frecuenciaHoras)
-{
-    try
-    {
-        var request = new NotificationRequest
-        {
-            NotificationId = idTarea, // ID local de la tarea para evitar duplicados y poder cancelarla
-            Title = "⏰ Recordatorio: Tarea Próxima",
-            Description = $"La tarea: '{titulo}' está pendiente.",
-            BadgeNumber = 1,
-            Schedule = new NotificationRequestSchedule()
-        };
-
-        if (frecuenciaHoras > 0)
-        {
-            // Modo recurrente: recordar cada X horas hasta el vencimiento
-            request.Schedule.NotifyTime = DateTimeOffset.Now.AddSeconds(5); // primera notificación casi inmediata
-            request.Schedule.RepeatType = NotificationRepeat.TimeInterval;
-            request.Schedule.NotifyRepeatInterval = TimeSpan.FromHours(frecuenciaHoras);
-        }
-        else if (fechaVencimiento.HasValue)
-        {
-            // Modo simple: avisar 1 día antes del vencimiento (sin repetición)
-            DateTime fechaNotificacion = fechaVencimiento.Value.AddDays(-1);
-            if (fechaNotificacion <= DateTime.Now) return;
-
-            request.Schedule.NotifyTime = new DateTimeOffset(fechaNotificacion);
-            request.Schedule.RepeatType = NotificationRepeat.No;
-        }
-        else
-        {
-            return; // sin fecha y sin frecuencia: no hay nada que programar
-        }
-
-        LocalNotificationCenter.Current.Show(request);
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"Error al programar notificación: {ex.Message}");
-    }
-}
-
 private void EnviarNotificacionPC(string titulo, string mensaje)
 {
     try
@@ -540,36 +498,83 @@ private async Task InitializeAndSyncAsync()
     int currentUserId = UserSession.CurrentUserId;
     if (currentUserId == 0) return;
 
-    // Abrir la pantalla de registro de tarea (fecha de vencimiento + frecuencia de recordatorio)
-    // Usamos TaskCompletionSource: la página modal no se comunica vía eventos asíncronos que
-    // puedan congelar la UI; simplemente esperamos su resultado.
-    var pagina = new NuevaTareaPage();
+    // Abrir la pantalla de registro. La modal gestiona el guardado y las notificaciones;
+    // al volver, OnAppearing recarga la lista. Sin eventos ni TCS que puedan congelar la UI.
+    var pagina = new NuevaTareaPage(_dbLocal, _syncService, currentUserId);
     await Navigation.PushModalAsync(pagina);
+}
 
-    var datos = await pagina.ResultadoTask;
-    if (datos == null) return; // El usuario canceló
-
-    var nuevaTareaLocal = new TareaLocal
+private async void OnTaskTapped(object sender, SelectionChangedEventArgs e)
+{
+    if (e.CurrentSelection?.FirstOrDefault() is TareaLocal tarea)
     {
-        IdUsuario = currentUserId,
-        Titulo = datos.Titulo,
-        Descripcion = "Registrada desde la app",
-        FechaVencimiento = datos.FechaVencimiento,
-        FrecuenciaRecordatorioHoras = datos.FrecuenciaRecordatorioHoras,
-        Estado = "Pendiente",
-        IsSynced = false,
-        UltimaModificacion = DateTime.Now
-    };
+        TasksCollectionView.SelectedItem = null; // quitar selección para permitir re-tap
+        await EditarTareaAsync(tarea);
+    }
+}
 
-    // 1. Guardar en la base de datos local (SQLite genera autoincremental el Id)
-    await _dbLocal.InsertAsync(nuevaTareaLocal);
+private async Task EditarTareaAsync(TareaLocal tarea)
+{
+    int currentUserId = UserSession.CurrentUserId;
+    if (currentUserId == 0) return;
 
-    // 2. Programar las notificaciones de recordatorio con la frecuencia elegida
-    ProgramarNotificacionRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
-
-    // 3. Actualizar la vista
+    var pagina = new NuevaTareaPage(_dbLocal, _syncService, currentUserId, tarea);
+    await Navigation.PushModalAsync(pagina);
     await LoadTasksFromLocalDbAsync();
-    _ = _syncService.SincronizarTareasAsync();
+}
+
+private async void OnEditTaskClicked(object sender, EventArgs e)
+{
+    if ((sender as Button)?.BindingContext is TareaLocal tarea)
+    {
+        await EditarTareaAsync(tarea);
+    }
+}
+
+private async void OnToggleCompleteClicked(object sender, EventArgs e)
+{
+    if ((sender as Button)?.BindingContext is TareaLocal tarea)
+    {
+        tarea.Estado = (tarea.Estado == "Completado") ? "Pendiente" : "Completado";
+        tarea.UltimaModificacion = DateTime.Now;
+        await _dbLocal.UpdateAsync(tarea);
+
+        if (tarea.Estado == "Completado")
+        {
+            // Al completar la tarea ya no hacen falta recordatorios
+            NotificadorTareas.CancelarRecordatorio(tarea.IdLocal);
+        }
+        else
+        {
+            NotificadorTareas.ProgramarRecordatorio(tarea.IdLocal, tarea.Titulo, tarea.FechaVencimiento, tarea.FrecuenciaRecordatorioHoras ?? 0);
+        }
+
+        await LoadTasksFromLocalDbAsync();
+        _ = _syncService.SincronizarTareasAsync();
+    }
+}
+
+private async void OnDeleteTaskClicked(object sender, EventArgs e)
+{
+    if ((sender as Button)?.BindingContext is TareaLocal tarea)
+    {
+        bool confirmado = await DisplayAlertAsync("Eliminar tarea",
+            $"¿Seguro que deseas eliminar la tarea '{tarea.Titulo}'?",
+            "Eliminar", "Cancelar");
+        if (!confirmado) return;
+
+        // Borrado lógico: marcar como eliminada para que la sincronización la borre
+        // de Supabase y de los otros dispositivos.
+        tarea.IsDeleted = true;
+        tarea.UltimaModificacion = DateTime.Now;
+        await _dbLocal.UpdateAsync(tarea);
+
+        // Cancelar recordatorios de la tarea
+        NotificadorTareas.CancelarRecordatorio(tarea.IdLocal);
+
+        await LoadTasksFromLocalDbAsync();
+        _ = _syncService.SincronizarTareasAsync();
+    }
 }
 
 private async void OnRefreshClicked(object sender, EventArgs e)

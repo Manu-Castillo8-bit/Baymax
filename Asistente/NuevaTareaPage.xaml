@@ -44,7 +44,8 @@
             </VerticalStackLayout>
 
             <!-- Botón Guardar -->
-            <Button Grid.Row="4"
+            <Button x:Name="BotonGuardar"
+                    Grid.Row="4"
                     Text="✔ Guardar Tarea"
                     Clicked="OnGuardarClicked"
                     BackgroundColor="#FF8C00"

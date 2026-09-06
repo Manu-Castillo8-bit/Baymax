@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,6 +70,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
+              "RelativeToolTip": "Asistente\\MainPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-02T15:09:38.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
               "Title": "SyncService.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\SyncService.cs",
@@ -79,19 +92,6 @@
               "ViewState": "AgIAADQAAAAAAAAAAAAUwDsAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-04T13:50:45.641Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
-              "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
-              "RelativeToolTip": "Asistente\\MainPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-02T15:09:38.041Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",

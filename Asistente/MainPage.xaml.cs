@@ -273,6 +273,34 @@ namespace Asistente
             _syncService = new SyncService(dbPath, _supabase);
         }
 
+        private void OnTestNotificationClicked(object sender, EventArgs e)
+{
+    try
+    {
+        // Programar notificación a los 5 segundos
+        var request = new NotificationRequest
+        {
+            NotificationId = 9999, // ID fijo de prueba
+            Title = "🧪 Prueba Exitosa",
+            Description = "¡Las notificaciones están funcionando correctamente en tu dispositivo!",
+            BadgeNumber = 1,
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Now.AddSeconds(5) // Llegará en 5 segundos
+            }
+        };
+
+        LocalNotificationCenter.Current.Show(request);
+
+        // Aviso visual para el usuario
+        DisplayAlert("Prueba en marcha", "La notificación se disparará en 5 segundos. Puedes minimizar la app.", "OK");
+    }
+    catch (Exception ex)
+    {
+        DisplayAlert("Error de Notificación", ex.Message, "OK");
+    }
+}
+
        protected override async void OnAppearing()
 {
     base.OnAppearing();

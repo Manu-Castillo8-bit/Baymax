@@ -246,13 +246,32 @@ namespace Asistente
         private bool _isAnimating = false;
         private Supabase.Client _supabase;
         
-        // Referencias a la base de datos local y al servicio de sincronización
         private SQLiteAsyncConnection _dbLocal;
         private SyncService _syncService;
 
-        // Temporizador para sincronización automática periódica
         private IDispatcherTimer _syncTimer;
         private bool _isSyncing = false;
+
+        // Popup: tarea que se está editando (null = nueva)
+        private TareaLocal _tareaEditando;
+
+        // Opciones de frecuencia en horas
+        private readonly List<KeyValuePair<int, string>> _opcionesFrecuencia = new()
+        {
+            new KeyValuePair<int, string>(0, "Sin recordatorio"),
+            new KeyValuePair<int, string>(1, "Cada 1 hora"),
+            new KeyValuePair<int, string>(2, "Cada 2 horas"),
+            new KeyValuePair<int, string>(3, "Cada 3 horas"),
+            new KeyValuePair<int, string>(4, "Cada 4 horas"),
+            new KeyValuePair<int, string>(6, "Cada 6 horas"),
+            new KeyValuePair<int, string>(8, "Cada 8 horas"),
+            new KeyValuePair<int, string>(10, "Cada 10 horas"),
+            new KeyValuePair<int, string>(12, "Cada 12 horas"),
+            new KeyValuePair<int, string>(24, "Cada 1 día (24 horas)"),
+            new KeyValuePair<int, string>(48, "Cada 2 días (48 horas)"),
+            new KeyValuePair<int, string>(72, "Cada 3 días (72 horas)"),
+            new KeyValuePair<int, string>(168, "Cada 7 días (una vez por semana)")
+        };
 
         public MainPage()
         {
@@ -269,12 +288,20 @@ namespace Asistente
 
             _supabase = new Supabase.Client(url, key, options);
 
-            // 1. Inicializar la ruta local de SQLite
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "asistente.db3");
             _dbLocal = new SQLiteAsyncConnection(dbPath);
             
-            // 2. Inicializar el servicio de sincronización
             _syncService = new SyncService(dbPath, _supabase);
+
+            // Inicializar opciones del picker de frecuencia del popup
+            foreach (var opcion in _opcionesFrecuencia)
+            {
+                PopupFrecuenciaPicker.Items.Add(opcion.Value);
+            }
+
+            DateTime hoy = DateTime.Today;
+            PopupFechaPicker.MinimumDate = hoy;
+            PopupFechaPicker.MaximumDate = hoy.AddYears(5);
         }
 
         private void OnTestNotificationClicked(object sender, EventArgs e)
@@ -493,41 +520,54 @@ private async Task InitializeAndSyncAsync()
             }
         }
 
-       private async void OnAddTaskClicked(object sender, EventArgs e)
+       private void OnAddTaskClicked(object sender, EventArgs e)
 {
     int currentUserId = UserSession.CurrentUserId;
     if (currentUserId == 0) return;
 
-    // Abrir la pantalla de registro. La modal gestiona el guardado y las notificaciones;
-    // al volver, OnAppearing recarga la lista. Sin eventos ni TCS que puedan congelar la UI.
-    var pagina = new NuevaTareaPage(_dbLocal, _syncService, currentUserId);
-    await Navigation.PushModalAsync(pagina);
+    _tareaEditando = null;
+    PopupHeaderLabel.Text = "Registrar Nueva Tarea";
+    PopupTituloEntry.Text = string.Empty;
+    PopupFechaPicker.Date = DateTime.Today.AddDays(2);
+    PopupFrecuenciaPicker.SelectedIndex = 5;
+    PopupBotonGuardar.Text = "✔ Guardar Tarea";
+    PopupTituloEntry.Focus();
+    TareaPopupOverlay.IsVisible = true;
 }
 
-private async void OnTaskTapped(object sender, SelectionChangedEventArgs e)
+private void OnTaskTapped(object sender, SelectionChangedEventArgs e)
 {
     if (e.CurrentSelection?.FirstOrDefault() is TareaLocal tarea)
     {
-        TasksCollectionView.SelectedItem = null; // quitar selección para permitir re-tap
-        await EditarTareaAsync(tarea);
+        TasksCollectionView.SelectedItem = null;
+        EditarTareaAsync(tarea);
     }
 }
 
-private async Task EditarTareaAsync(TareaLocal tarea)
+private void EditarTareaAsync(TareaLocal tarea)
 {
     int currentUserId = UserSession.CurrentUserId;
     if (currentUserId == 0) return;
 
-    var pagina = new NuevaTareaPage(_dbLocal, _syncService, currentUserId, tarea);
-    await Navigation.PushModalAsync(pagina);
-    await LoadTasksFromLocalDbAsync();
+    _tareaEditando = tarea;
+    PopupHeaderLabel.Text = "Editar Tarea";
+    PopupTituloEntry.Text = tarea.Titulo;
+    PopupFechaPicker.Date = tarea.FechaVencimiento ?? DateTime.Today.AddDays(2);
+
+    int horas = tarea.FrecuenciaRecordatorioHoras ?? 0;
+    int idx = _opcionesFrecuencia.FindIndex(o => o.Key == horas);
+    PopupFrecuenciaPicker.SelectedIndex = idx >= 0 ? idx : 0;
+
+    PopupBotonGuardar.Text = "✔ Guardar Cambios";
+    PopupTituloEntry.Focus();
+    TareaPopupOverlay.IsVisible = true;
 }
 
-private async void OnEditTaskClicked(object sender, EventArgs e)
+private void OnEditTaskClicked(object sender, EventArgs e)
 {
     if ((sender as Button)?.BindingContext is TareaLocal tarea)
     {
-        await EditarTareaAsync(tarea);
+        EditarTareaAsync(tarea);
     }
 }
 
@@ -639,6 +679,65 @@ private async Task RefreshAllAsync()
             {
                 AiMessageLabel.Text = "Error al calcular el resumen local.";
             }
+        }
+
+        #endregion
+
+        #region 3. POPUP NUEVA TAREA / EDITAR TAREA
+
+        private async void OnPopupGuardarClicked(object sender, EventArgs e)
+        {
+            string titulo = PopupTituloEntry.Text?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(titulo))
+            {
+                await DisplayAlertAsync("Tarea sin título", "Escribe un título para la tarea.", "OK");
+                return;
+            }
+
+            int horas = 0;
+            if (PopupFrecuenciaPicker.SelectedIndex >= 0 && PopupFrecuenciaPicker.SelectedIndex < _opcionesFrecuencia.Count)
+            {
+                horas = _opcionesFrecuencia[PopupFrecuenciaPicker.SelectedIndex].Key;
+            }
+
+            if (_tareaEditando == null)
+            {
+                var nuevaTareaLocal = new TareaLocal
+                {
+                    IdUsuario = UserSession.CurrentUserId,
+                    Titulo = titulo,
+                    Descripcion = "Registrada desde la app",
+                    FechaVencimiento = PopupFechaPicker.Date,
+                    FrecuenciaRecordatorioHoras = horas,
+                    Estado = "Pendiente",
+                    IsSynced = false,
+                    UltimaModificacion = DateTime.Now
+                };
+
+                await _dbLocal.InsertAsync(nuevaTareaLocal);
+                NotificadorTareas.ProgramarRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
+                _ = _syncService.SincronizarTareasAsync();
+            }
+            else
+            {
+                _tareaEditando.Titulo = titulo;
+                _tareaEditando.FechaVencimiento = PopupFechaPicker.Date;
+                _tareaEditando.FrecuenciaRecordatorioHoras = horas;
+                _tareaEditando.UltimaModificacion = DateTime.Now;
+
+                await _dbLocal.UpdateAsync(_tareaEditando);
+                NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);
+                NotificadorTareas.ProgramarRecordatorio(_tareaEditando.IdLocal, _tareaEditando.Titulo, _tareaEditando.FechaVencimiento, _tareaEditando.FrecuenciaRecordatorioHoras ?? 0);
+                _ = _syncService.SincronizarTareasAsync();
+            }
+
+            TareaPopupOverlay.IsVisible = false;
+            await LoadTasksFromLocalDbAsync();
+        }
+
+        private void OnPopupCancelarClicked(object sender, EventArgs e)
+        {
+            TareaPopupOverlay.IsVisible = false;
         }
 
         #endregion

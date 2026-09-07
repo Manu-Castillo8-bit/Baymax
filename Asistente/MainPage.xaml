@@ -4,142 +4,215 @@
              x:Class="Asistente.MainPage"
              BackgroundColor="#080604">
 
-<Button Text="🔔 Probar Notificación (5 seg)"
-        Clicked="OnTestNotificationClicked"
-        BackgroundColor="#3A3D52"
-        TextColor="White"
-        CornerRadius="10"
-        Margin="0,10,0,0" />
+    <Grid>
+        <!-- Contenido principal -->
+        <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="20" RowSpacing="15">
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="20" RowSpacing="15">
+          <!--  <Button Text="🔔 Probar Notificación (5 seg)"
+                    Clicked="OnTestNotificationClicked"
+                    BackgroundColor="#3A3D52"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Margin="0,10,0,0" /> -->
 
-        <!-- 1. NÚCLEO TECNOLÓGICO Y ANILLOS HUD -->
-        <Grid Grid.Row="0" HeightRequest="220" WidthRequest="220" HorizontalOptions="Center" VerticalOptions="Center">
+            <!-- 1. NÚCLEO TECNOLÓGICO Y ANILLOS HUD -->
+            <Grid Grid.Row="0" HeightRequest="220" WidthRequest="220" HorizontalOptions="Center" VerticalOptions="Center">
 
-            <Ellipse x:Name="GlowEffect"
-                     WidthRequest="160" HeightRequest="160"
-                     Fill="#FF6A00" Opacity="0.15"
-                     HorizontalOptions="Center" VerticalOptions="Center" />
+                <Ellipse x:Name="GlowEffect"
+                         WidthRequest="160" HeightRequest="160"
+                         Fill="#FF6A00" Opacity="0.15"
+                         HorizontalOptions="Center" VerticalOptions="Center" />
 
-            <Ellipse x:Name="OuterRing1"
-                     WidthRequest="210" HeightRequest="210"
-                     Stroke="#FF8C00" StrokeThickness="1.5"
-                     StrokeDashArray="12, 6, 2, 6"
-                     HorizontalOptions="Center" VerticalOptions="Center" />
+                <Ellipse x:Name="OuterRing1"
+                         WidthRequest="210" HeightRequest="210"
+                         Stroke="#FF8C00" StrokeThickness="1.5"
+                         StrokeDashArray="12, 6, 2, 6"
+                         HorizontalOptions="Center" VerticalOptions="Center" />
 
-            <Ellipse x:Name="OuterRing2"
-                     WidthRequest="180" HeightRequest="180"
-                     Stroke="#FF5500" StrokeThickness="2"
-                     StrokeDashArray="1, 8, 20, 5"
-                     HorizontalOptions="Center" VerticalOptions="Center" />
+                <Ellipse x:Name="OuterRing2"
+                         WidthRequest="180" HeightRequest="180"
+                         Stroke="#FF5500" StrokeThickness="2"
+                         StrokeDashArray="1, 8, 20, 5"
+                         HorizontalOptions="Center" VerticalOptions="Center" />
 
-            <Ellipse x:Name="MidRing"
-                     WidthRequest="140" HeightRequest="140"
-                     Stroke="#FFAA00" StrokeThickness="3"
-                     StrokeDashArray="4, 12"
-                     HorizontalOptions="Center" VerticalOptions="Center" />
+                <Ellipse x:Name="MidRing"
+                         WidthRequest="140" HeightRequest="140"
+                         Stroke="#FFAA00" StrokeThickness="3"
+                         StrokeDashArray="4, 12"
+                         HorizontalOptions="Center" VerticalOptions="Center" />
 
-            <Ellipse x:Name="InnerRing"
-                     WidthRequest="100" HeightRequest="100"
-                     Stroke="#FFD700" StrokeThickness="1"
-                     StrokeDashArray="2, 3"
-                     HorizontalOptions="Center" VerticalOptions="Center" />
+                <Ellipse x:Name="InnerRing"
+                         WidthRequest="100" HeightRequest="100"
+                         Stroke="#FFD700" StrokeThickness="1"
+                         StrokeDashArray="2, 3"
+                         HorizontalOptions="Center" VerticalOptions="Center" />
 
-            <Border x:Name="CoreCenter"
-                    WidthRequest="60" HeightRequest="60"
-                    HorizontalOptions="Center" VerticalOptions="Center"
-                    StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="30"/>
-                </Border.StrokeShape>
-                <Border.Background>
-                    <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
-                        <GradientStop Color="#FFE5B4" Offset="0.0" />
-                        <GradientStop Color="#FF8C00" Offset="0.4" />
-                        <GradientStop Color="#FF3300" Offset="0.8" />
-                        <GradientStop Color="Transparent" Offset="1.0" />
-                    </RadialGradientBrush>
-                </Border.Background>
-            </Border>
+                <Border x:Name="CoreCenter"
+                        WidthRequest="60" HeightRequest="60"
+                        HorizontalOptions="Center" VerticalOptions="Center"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                            <GradientStop Color="#FFE5B4" Offset="0.0" />
+                            <GradientStop Color="#FF8C00" Offset="0.4" />
+                            <GradientStop Color="#FF3300" Offset="0.8" />
+                            <GradientStop Color="Transparent" Offset="1.0" />
+                        </RadialGradientBrush>
+                    </Border.Background>
+                </Border>
 
-            <Path Data="M 0,20 L 0,0 L 20,0 M 200,0 L 220,0 L 220,20 M 220,200 L 220,220 L 200,220 M 0,200 L 0,220 L 20,220"
-                  Stroke="#FF8C00" StrokeThickness="1.5" Opacity="0.5"
-                  HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                <Path Data="M 0,20 L 0,0 L 20,0 M 200,0 L 220,0 L 220,20 M 220,200 L 220,220 L 200,220 M 0,200 L 0,220 L 20,220"
+                      Stroke="#FF8C00" StrokeThickness="1.5" Opacity="0.5"
+                      HorizontalOptions="Fill" VerticalOptions="Fill"/>
+            </Grid>
+
+            <!-- 2. MENSAJE DEL ASISTENTE -->
+            <Frame Grid.Row="1"
+                   BackgroundColor="#120D08"
+                   BorderColor="#FF8C00"
+                   CornerRadius="12"
+                   HasShadow="False"
+                   Padding="15">
+                <Label x:Name="AiMessageLabel"
+                       Text="Núcleo activado. Sincronizando datos con el servidor..."
+                       FontSize="14"
+                       TextColor="#FFD8B3"
+                       HorizontalTextAlignment="Center"/>
+            </Frame>
+
+            <!-- 3. LISTA DE TAREAS (CAMPOS MAPEADOS) -->
+            <CollectionView Grid.Row="2" x:Name="TasksCollectionView"
+                            SelectionMode="Single"
+                            SelectionChanged="OnTaskTapped">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,4"
+                               Padding="12"
+                               CornerRadius="8"
+                               BackgroundColor="#120D08"
+                               BorderColor="#402810">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                    <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF"/>
+                                    <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}" FontSize="11" TextColor="#B38B6D"/>
+                                    <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}" FontSize="10" TextColor="#FFAA00"/>
+                                    <Label Text="{Binding Estado}" TextColor="#FF8C00" FontSize="12"/>
+                                </VerticalStackLayout>
+
+                                <!-- Botones CRUD -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Button Text="Completar" Clicked="OnToggleCompleteClicked"
+                                            BackgroundColor="#1A160F"
+                                            BorderColor="#FFAA00" BorderWidth="1"
+                                            TextColor="#FFAA00" FontSize="11" Padding="8,4"
+                                            CornerRadius="4"/>
+                                    <Button Text="✏️" Clicked="OnEditTaskClicked"
+                                            BackgroundColor="#1A160F"
+                                            BorderColor="#FF8C00" BorderWidth="1"
+                                            TextColor="#FF8C00" FontSize="12" Padding="8,4"
+                                            CornerRadius="4"/>
+                                    <Button Text="🗑️" Clicked="OnDeleteTaskClicked"
+                                            BackgroundColor="#1A160F"
+                                            BorderColor="#FF3300" BorderWidth="1"
+                                            TextColor="#FF3300" FontSize="12" Padding="8,4"
+                                            CornerRadius="4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- 4. BOTONES DE ACCIÓN -->
+            <Grid Grid.Row="3" RowDefinitions="Auto, Auto" RowSpacing="10">
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                    <Button Text="+ Nueva Tarea" Clicked="OnAddTaskClicked" BackgroundColor="#FF8C00" TextColor="#080604" FontAttributes="Bold" CornerRadius="6"/>
+                    <Button Text="Resumen de hoy" Clicked="OnGetSummaryClicked" BackgroundColor="#2A1B0E" BorderColor="#FF8C00" BorderWidth="1" TextColor="#FF8C00" FontAttributes="Bold" CornerRadius="6"/>
+                </HorizontalStackLayout>
+
+                <Button Grid.Row="1"
+                        Text="🔄 Actualizar / Sincronizar"
+                        Clicked="OnRefreshClicked"
+                        BackgroundColor="#2A1B0E"
+                        BorderColor="#FF8C00"
+                        BorderWidth="1"
+                        TextColor="#FFAA00"
+                        FontAttributes="Bold"
+                        CornerRadius="6"/>
+            </Grid>
+
         </Grid>
 
-        <!-- 2. MENSAJE DEL ASISTENTE -->
-        <Frame Grid.Row="1" 
-               BackgroundColor="#120D08" 
-               BorderColor="#FF8C00" 
-               CornerRadius="12" 
-               HasShadow="False" 
-               Padding="15">
-            <Label x:Name="AiMessageLabel" 
-                   Text="Núcleo activado. Sincronizando datos con el servidor..." 
-                   FontSize="14" 
-                   TextColor="#FFD8B3" 
-                   HorizontalTextAlignment="Center"/>
-        </Frame>
+        <!-- OVERLAY POPUP: Nueva tarea / Editar tarea -->
+        <Grid x:Name="TareaPopupOverlay" IsVisible="False" BackgroundColor="#080604">
+            <!-- Fondo oscuro sólido que cubre toda la página -->
 
-        <!-- 3. LISTA DE TAREAS (CAMPOS MAPEADOS) -->
-        <CollectionView Grid.Row="2" x:Name="TasksCollectionView"
-                        SelectionMode="Single"
-                        SelectionChanged="OnTaskTapped">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="0,4"
-                           Padding="12"
-                           CornerRadius="8"
-                           BackgroundColor="#120D08"
-                           BorderColor="#402810">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <VerticalStackLayout Grid.Column="0" Spacing="3">
-                                <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF"/>
-                                <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}" FontSize="11" TextColor="#B38B6D"/>
-                                <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}" FontSize="10" TextColor="#FFAA00"/>
-                                <Label Text="{Binding Estado}" TextColor="#FF8C00" FontSize="12"/>
-                            </VerticalStackLayout>
+            <!-- Contenido del popup -->
+            <ScrollView>
+                <Grid Padding="30" RowSpacing="15" VerticalOptions="Center"
+                      RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
 
-                            <!-- Botones CRUD -->
-                            <VerticalStackLayout Grid.Column="1" Spacing="6">
-                                <Button Text="Completar" Clicked="OnToggleCompleteClicked"
-                                        BackgroundColor="#1A160F"
-                                        BorderColor="#FFAA00" BorderWidth="1"
-                                        TextColor="#FFAA00" FontSize="11" Padding="8,4"
-                                        CornerRadius="4"/>
-                                <Button Text="✏️" Clicked="OnEditTaskClicked"
-                                        BackgroundColor="#1A160F"
-                                        BorderColor="#FF8C00" BorderWidth="1"
-                                        TextColor="#FF8C00" FontSize="12" Padding="8,4"
-                                        CornerRadius="4"/>
-                                <Button Text="🗑️" Clicked="OnDeleteTaskClicked"
-                                        BackgroundColor="#1A160F"
-                                        BorderColor="#FF3300" BorderWidth="1"
-                                        TextColor="#FF3300" FontSize="12" Padding="8,4"
-                                        CornerRadius="4"/>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    <!-- Encabezado -->
+                    <Label Grid.Row="0"
+                           x:Name="PopupHeaderLabel"
+                           Text="Registrar Nueva Tarea"
+                           FontSize="20" FontAttributes="Bold"
+                           TextColor="#FF8C00"
+                           HorizontalOptions="Center"/>
 
-        <!-- 4. BOTONES DE ACCIÓN -->
-        <Grid Grid.Row="3" RowDefinitions="Auto, Auto" RowSpacing="10">
-            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
-                <Button Text="+ Nueva Tarea" Clicked="OnAddTaskClicked" BackgroundColor="#FF8C00" TextColor="#080604" FontAttributes="Bold" CornerRadius="6"/>
-                <Button Text="Resumen de hoy" Clicked="OnGetSummaryClicked" BackgroundColor="#2A1B0E" BorderColor="#FF8C00" BorderWidth="1" TextColor="#FF8C00" FontAttributes="Bold" CornerRadius="6"/>
-            </HorizontalStackLayout>
+                    <!-- Título de la tarea -->
+                    <VerticalStackLayout Grid.Row="1" Spacing="6">
+                        <Label Text="Título de la tarea" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                        <Entry x:Name="PopupTituloEntry"
+                               Placeholder="¿Qué deseas registrar?"
+                               PlaceholderColor="#B38B6D"
+                               BackgroundColor="#120D08"
+                               TextColor="#FFFFFF"/>
+                    </VerticalStackLayout>
 
-            <Button Grid.Row="1"
-                    Text="🔄 Actualizar / Sincronizar"
-                    Clicked="OnRefreshClicked"
-                    BackgroundColor="#2A1B0E"
-                    BorderColor="#FF8C00"
-                    BorderWidth="1"
-                    TextColor="#FFAA00"
-                    FontAttributes="Bold"
-                    CornerRadius="6"/>
+                    <!-- Fecha de vencimiento -->
+                    <VerticalStackLayout Grid.Row="2" Spacing="6">
+                        <Label Text="Fecha de vencimiento" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                        <DatePicker x:Name="PopupFechaPicker"
+                                    BackgroundColor="#120D08"
+                                    TextColor="#FFAA00"/>
+                    </VerticalStackLayout>
+
+                    <!-- Frecuencia de recordatorio -->
+                    <VerticalStackLayout Grid.Row="3" Spacing="6">
+                        <Label Text="Cada cuánto quieres recibir el recordatorio" FontAttributes="Bold" TextColor="#FFD8B3" FontSize="14"/>
+                        <Label Text="Selecciona la frecuencia de tus notificaciones:" FontSize="12" TextColor="#B38B6D"/>
+                        <Picker x:Name="PopupFrecuenciaPicker"
+                                BackgroundColor="#120D08"
+                                Title="Frecuencia de recordatorio"
+                                TextColor="#FFFFFF"/>
+                    </VerticalStackLayout>
+
+                    <!-- Botón Guardar -->
+                    <Button x:Name="PopupBotonGuardar"
+                            Grid.Row="4"
+                            Text="✔ Guardar Tarea"
+                            Clicked="OnPopupGuardarClicked"
+                            BackgroundColor="#FF8C00"
+                            TextColor="#080604"
+                            FontAttributes="Bold"
+                            CornerRadius="6"/>
+
+                    <!-- Botón Cancelar -->
+                    <Button Grid.Row="5"
+                            Text="Cancelar"
+                            Clicked="OnPopupCancelarClicked"
+                            BackgroundColor="#2A1B0E"
+                            BorderColor="#FF8C00"
+                            BorderWidth="1"
+                            TextColor="#FF8C00"
+                            CornerRadius="6"/>
+
+                </Grid>
+            </ScrollView>
         </Grid>
 
     </Grid>

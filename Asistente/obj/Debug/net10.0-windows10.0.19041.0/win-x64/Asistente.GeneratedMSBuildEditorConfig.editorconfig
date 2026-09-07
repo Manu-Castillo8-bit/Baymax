@@ -69,16 +69,6 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/User/Desktop/Asistente/Asistente/NuevaTareaPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = Asistente.NuevaTareaPage.xaml
-build_metadata.AdditionalFiles.TargetPath = NuevaTareaPage.xaml
-build_metadata.AdditionalFiles.RelativePath = NuevaTareaPage.xaml
-build_metadata.AdditionalFiles.Inflator = SourceGen
-build_metadata.AdditionalFiles.NoWarn = 
-build_metadata.AdditionalFiles.EnableDiagnostics = 
-build_metadata.AdditionalFiles.LineInfo = 
-
 [C:/Users/User/Desktop/Asistente/Asistente/RegisterPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Asistente.RegisterPage.xaml

@@ -1,0 +1,165 @@
+﻿using SQLite;
+using Microsoft.Maui.ApplicationModel;
+
+namespace Asistente
+{
+    public class DatosNuevaTarea
+    {
+        public string Titulo { get; set; } = string.Empty;
+        public DateTime FechaVencimiento { get; set; }
+        public int FrecuenciaRecordatorioHoras { get; set; } = 0;
+    }
+
+    public partial class NuevaTareaPage : ContentPage
+    {
+        private readonly SQLiteAsyncConnection _dbLocal;
+        private readonly SyncService _syncService;
+        private readonly int _userId;
+        private readonly TareaLocal _tareaEditando;
+
+        private readonly List<KeyValuePair<int, string>> _opcionesFrecuencia = new()
+        {
+            new KeyValuePair<int, string>(0, "Sin recordatorio"),
+            new KeyValuePair<int, string>(1, "Cada 1 hora"),
+            new KeyValuePair<int, string>(2, "Cada 2 horas"),
+            new KeyValuePair<int, string>(3, "Cada 3 horas"),
+            new KeyValuePair<int, string>(4, "Cada 4 horas"),
+            new KeyValuePair<int, string>(6, "Cada 6 horas"),
+            new KeyValuePair<int, string>(8, "Cada 8 horas"),
+            new KeyValuePair<int, string>(10, "Cada 10 horas"),
+            new KeyValuePair<int, string>(12, "Cada 12 horas"),
+            new KeyValuePair<int, string>(24, "Cada 1 día (24 horas)"),
+            new KeyValuePair<int, string>(48, "Cada 2 días (48 horas)"),
+            new KeyValuePair<int, string>(72, "Cada 3 días (72 horas)"),
+            new KeyValuePair<int, string>(168, "Cada 7 días (una vez por semana)")
+        };
+
+        public NuevaTareaPage(SQLiteAsyncConnection dbLocal, SyncService syncService, int userId, TareaLocal tareaEditar = null)
+        {
+            InitializeComponent();
+
+            _dbLocal = dbLocal;
+            _syncService = syncService;
+            _userId = userId;
+            _tareaEditando = tareaEditar;
+
+            foreach (var opcion in _opcionesFrecuencia)
+            {
+                FrecuenciaPicker.Items.Add(opcion.Value);
+            }
+
+            DateTime hoy = DateTime.Today;
+            FechaVencimientoPicker.MinimumDate = hoy;
+            FechaVencimientoPicker.MaximumDate = hoy.AddYears(5);
+
+            if (_tareaEditando != null)
+            {
+                TituloEntry.Text = _tareaEditando.Titulo;
+                if (_tareaEditando.FechaVencimiento.HasValue)
+                {
+                    FechaVencimientoPicker.Date = _tareaEditando.FechaVencimiento.Value;
+                }
+                else
+                {
+                    FechaVencimientoPicker.Date = hoy.AddDays(2);
+                }
+
+                int horas = _tareaEditando.FrecuenciaRecordatorioHoras ?? 0;
+                int idx = _opcionesFrecuencia.FindIndex(o => o.Key == horas);
+                FrecuenciaPicker.SelectedIndex = idx >= 0 ? idx : 0;
+
+                BotonGuardar.Text = "✓ Guardar Cambios";
+            }
+            else
+            {
+                FrecuenciaPicker.SelectedIndex = 5;
+                FechaVencimientoPicker.Date = hoy.AddDays(2);
+            }
+        }
+
+        private async void OnGuardarClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                BotonGuardar.IsEnabled = false;
+
+                string titulo = TituloEntry.Text?.Trim() ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(titulo))
+                {
+                    await DisplayAlert("Tarea sin título", "Escribe un título para la tarea.", "OK");
+                    BotonGuardar.IsEnabled = true;
+                    return;
+                }
+
+                int horas = 0;
+                if (FrecuenciaPicker.SelectedIndex >= 0 && FrecuenciaPicker.SelectedIndex < _opcionesFrecuencia.Count)
+                {
+                    horas = _opcionesFrecuencia[FrecuenciaPicker.SelectedIndex].Key;
+                }
+
+                // Navegar INMEDIATAMENTE sin esperar guarado
+                MainThread.BeginInvokeOnMainThread(() => 
+                { 
+                    _ = Navigation.PopAsync(); 
+                });
+
+                // Guardar en background después de navegar
+                if (_tareaEditando == null)
+                {
+                    var nuevaTareaLocal = new TareaLocal
+                    {
+                        IdUsuario = _userId,
+                        Titulo = titulo,
+                        Descripcion = "Registrada desde la app",
+                        FechaVencimiento = FechaVencimientoPicker.Date ?? DateTime.Today,
+                        FrecuenciaRecordatorioHoras = horas,
+                        Estado = "Pendiente",
+                        IsSynced = false,
+                        UltimaModificacion = DateTime.Now
+                    };
+
+                    await _dbLocal.InsertAsync(nuevaTareaLocal);
+                    NotificadorTareas.ProgramarRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, 
+                        nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
+                }
+                else
+                {
+                    _tareaEditando.Titulo = titulo;
+                    _tareaEditando.FechaVencimiento = FechaVencimientoPicker.Date ?? DateTime.Today;
+                    _tareaEditando.FrecuenciaRecordatorioHoras = horas;
+                    _tareaEditando.UltimaModificacion = DateTime.Now;
+
+                    await _dbLocal.UpdateAsync(_tareaEditando);
+                    NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);
+                    NotificadorTareas.ProgramarRecordatorio(_tareaEditando.IdLocal, _tareaEditando.Titulo, 
+                        _tareaEditando.FechaVencimiento, _tareaEditando.FrecuenciaRecordatorioHoras ?? 0);
+                }
+
+                _ = _syncService.SincronizarTareasAsync();
+            }
+            catch (Exception ex)
+            {
+                BotonGuardar.IsEnabled = true;
+                await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
+            }
+        }
+
+        private async void OnCancelarClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn) btn.IsEnabled = false;
+
+                MainThread.BeginInvokeOnMainThread(() => 
+                { 
+                    _ = Navigation.PopAsync(); 
+                });
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"No se pudo volver: {ex.Message}", "OK");
+                if (sender is Button btn) btn.IsEnabled = true;
+            }
+        }
+    }
+}

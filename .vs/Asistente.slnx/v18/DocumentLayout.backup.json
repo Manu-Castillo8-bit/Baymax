@@ -77,7 +77,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -92,10 +92,6 @@
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "AndroidManifest.xml",
@@ -105,8 +101,7 @@
               "RelativeToolTip": "Asistente\\Platforms\\Android\\AndroidManifest.xml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2026-09-07T16:46:03.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T16:46:03.468Z"
             },
             {
               "$type": "Document",
@@ -118,13 +113,12 @@
               "RelativeToolTip": "..\\..\\..\\..\\Program Files\\dotnet\\packs\\Microsoft.Android.Sdk.Windows\\36.1.69\\tools\\Xamarin.Android.Aapt2.targets",
               "ViewState": "AgIAAMcAAAAAAAAAAAAEwNcAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-09-07T16:45:57.07Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T16:45:57.07Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Asistente",
+              "Title": "Asistente.csproj",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
               "RelativeDocumentMoniker": "Asistente\\Asistente.csproj",
               "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
@@ -133,10 +127,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-09-07T15:51:55.428Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             },
             {
               "$type": "Document",
@@ -148,8 +138,7 @@
               "RelativeToolTip": "Asistente\\MainPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-02T15:09:38.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T15:09:38.041Z"
             },
             {
               "$type": "Document",
@@ -161,8 +150,7 @@
               "RelativeToolTip": "Asistente\\App.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-07T15:50:05.221Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T15:50:05.221Z"
             },
             {
               "$type": "Document",
@@ -174,8 +162,7 @@
               "RelativeToolTip": "Asistente\\AppShell.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T15:50:43.164Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T15:50:43.164Z"
             },
             {
               "$type": "Document",
@@ -187,8 +174,7 @@
               "RelativeToolTip": "Asistente\\AppShell.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-07T15:50:32.523Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T15:50:32.523Z"
             },
             {
               "$type": "Document",
@@ -199,8 +185,7 @@
               "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
               "RelativeToolTip": "Asistente\\Asistente.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-09-07T15:49:01.412Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T15:49:01.412Z"
             },
             {
               "$type": "Document",
@@ -224,8 +209,7 @@
               "RelativeToolTip": "Asistente\\App.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T01:54:01.44Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-04T01:54:01.44Z"
             },
             {
               "$type": "Document",
@@ -249,8 +233,7 @@
               "RelativeToolTip": "Asistente\\MauiProgram.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T14:20:15.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-04T14:20:15.72Z"
             },
             {
               "$type": "Document",
@@ -262,8 +245,7 @@
               "RelativeToolTip": "Asistente\\LoginPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-03T23:32:46.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T23:32:46.957Z"
             },
             {
               "$type": "Document",
@@ -287,8 +269,7 @@
               "RelativeToolTip": "Asistente\\RegisterPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-04T01:53:16.8Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-04T01:53:16.8Z"
             },
             {
               "$type": "Document",
@@ -313,6 +294,14 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAxwJYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-04T01:49:05.626Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             }
           ]
         }

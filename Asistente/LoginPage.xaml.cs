@@ -13,10 +13,7 @@ namespace Asistente
         {
             InitializeComponent();
 
-            string url = "https://mmvzkwklwibugzpyawmy.supabase.co";
-            string key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tdnprd2tsd2lidWd6cHlhd215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxODE0NTgsImV4cCI6MjEwMzc1NzQ1OH0.41uyn16H27UbRaV1aKBGGPonFw_48Q1rdsHV2TKcQp8";
-
-            _supabase = new Supabase.Client(url, key, new SupabaseOptions { AutoRefreshToken = true });
+            _supabase = new Supabase.Client(Configuracion.SupabaseUrl, Configuracion.SupabaseAnonKey, new SupabaseOptions { AutoRefreshToken = true });
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
@@ -59,6 +56,7 @@ namespace Asistente
                             UserSession.CurrentUserId = user.IdUsuario;
                             UserSession.CurrentUserName = user.Nombre;
                             UserSession.CurrentAuthId = authId;
+                            UserSession.CurrentJwt = session.AccessToken ?? "";
 
                             // B. Respaldar en la BD local SQLite para permitir inicios de sesión Offline
                             var usuarioLocal = new UsuarioLocal

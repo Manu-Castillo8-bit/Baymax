@@ -256,13 +256,25 @@
                             FontAttributes="Bold"
                             CornerRadius="6"/>
 
+                   
                     <!-- Resumen -->
-                    <Button Text="Resumen de hoy"
+                    <!--        <Button Text="Resumen de hoy"
                             Clicked="OnGetSummaryClicked"
                             BackgroundColor="#172554"
                             BorderColor="#245B78"
                             BorderWidth="1"
                             TextColor="#22D3EE"
+                            FontAttributes="Bold"
+                            CornerRadius="6"/> -->
+
+                    <!-- Asistente IA -->
+                    <Button x:Name="AgenteBoton"
+                            Text="🤖 Asistente IA"
+                            Clicked="OnAgenteClicked"
+                            BackgroundColor="#7C3AED"
+                            BorderColor="#A78BFA"
+                            BorderWidth="1"
+                            TextColor="#FFFFFF"
                             FontAttributes="Bold"
                             CornerRadius="6"/>
 
@@ -390,6 +402,63 @@
                 </Grid>
 
             </ScrollView>
+
+        </Grid>
+
+        <!-- ========================================= -->
+        <!-- POPUP AGENTE IA                           -->
+        <!-- ========================================= -->
+
+        <Grid x:Name="AgentePopupOverlay"
+              IsVisible="False"
+              BackgroundColor="#0B1120">
+
+            <Grid Padding="30"
+                  RowSpacing="15"
+                  VerticalOptions="Center"
+                  RowDefinitions="Auto, Auto, Auto, Auto">
+
+                <!-- ENCABEZADO -->
+                <Label Grid.Row="0"
+                       Text="🤖 Asistente IA"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#A78BFA"
+                       HorizontalOptions="Center"/>
+
+                <!-- INDICADOR DE CARGA -->
+                <ActivityIndicator Grid.Row="1"
+                                   x:Name="AgenteActivityIndicator"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   Color="#A78BFA"
+                                   WidthRequest="40"
+                                   HeightRequest="40"
+                                   HorizontalOptions="Center"/>
+
+                <!-- MENSAJE / RESULTADO -->
+                <Label Grid.Row="2"
+                       x:Name="AgenteResultadoLabel"
+                       Text="Analizando tus tareas..."
+                       FontSize="14"
+                       TextColor="#E2E8F0"
+                       VerticalTextAlignment="Start"
+                       LineBreakMode="WordWrap"
+                       MaxLines="0"
+                       MinimumWidthRequest="260"
+                       HorizontalTextAlignment="Start"/>
+
+                <!-- CERRAR -->
+                <Button Grid.Row="3"
+                        Text="Cerrar"
+                        Clicked="OnAgentePopupCerrarClicked"
+                        BackgroundColor="#172554"
+                        BorderColor="#245B78"
+                        BorderWidth="1"
+                        TextColor="#22D3EE"
+                        CornerRadius="6"/>
+
+            </Grid>
 
         </Grid>
 

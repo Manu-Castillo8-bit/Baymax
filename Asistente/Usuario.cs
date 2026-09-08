@@ -58,5 +58,8 @@ namespace Asistente
         public static int CurrentUserId { get; set; }
         public static string CurrentUserName { get; set; } = string.Empty;
         public static string CurrentAuthId { get; set; } = string.Empty;
+
+        // Token JWT del usuario (para llamar Edge Functions autenticadas)
+        public static string CurrentJwt { get; set; } = string.Empty;
     }
 }

@@ -248,6 +248,7 @@ namespace Asistente
         
         private SQLiteAsyncConnection _dbLocal;
         private SyncService _syncService;
+        private AgenteIAServicio _agenteIA;
 
         private IDispatcherTimer _syncTimer;
         private bool _isSyncing = false;
@@ -277,21 +278,19 @@ namespace Asistente
         {
             InitializeComponent();
 
-            string url = "https://mmvzkwklwibugzpyawmy.supabase.co";
-            string key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tdnprd2tsd2lidWd6cHlhd215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxODE0NTgsImV4cCI6MjEwMzc1NzQ1OH0.41uyn16H27UbRaV1aKBGGPonFw_48Q1rdsHV2TKcQp8";
-
             var options = new SupabaseOptions
             {
                 AutoRefreshToken = true,
                 AutoConnectRealtime = true
             };
 
-            _supabase = new Supabase.Client(url, key, options);
+            _supabase = new Supabase.Client(Configuracion.SupabaseUrl, Configuracion.SupabaseAnonKey, options);
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "asistente.db3");
             _dbLocal = new SQLiteAsyncConnection(dbPath);
             
             _syncService = new SyncService(dbPath, _supabase);
+            _agenteIA = new AgenteIAServicio(_supabase);
 
             // Inicializar opciones del picker de frecuencia del popup
             foreach (var opcion in _opcionesFrecuencia)
@@ -577,6 +576,7 @@ private async void OnToggleCompleteClicked(object sender, EventArgs e)
     {
         tarea.Estado = (tarea.Estado == "Completado") ? "Pendiente" : "Completado";
         tarea.UltimaModificacion = DateTime.Now;
+        tarea.IsSynced = false; // <-- marcar para re-sincronizar el cambio de estado
         await _dbLocal.UpdateAsync(tarea);
 
         if (tarea.Estado == "Completado")
@@ -681,6 +681,74 @@ private async Task RefreshAllAsync()
             }
         }
 
+        private async void OnAgenteClicked(object sender, EventArgs e)
+        {
+            if (UserSession.CurrentUserId == 0)
+            {
+                await DisplayAlertAsync("Sesión no detectada", "Inicia sesión nuevamente para usar el asistente.", "OK");
+                return;
+            }
+
+            // Prevenir doble toque mientras trabaja
+            AgenteBoton.IsEnabled = false;
+
+            AgentePopupOverlay.IsVisible = true;
+            AgenteResultadoLabel.Text = "Analizando tus tareas...";
+            AgenteActivityIndicator.IsRunning = true;
+            AgenteActivityIndicator.IsVisible = true;
+
+            try
+            {
+                // Asegurar que la edición de fechas se suba a Supabase antes de analizar
+                await RefreshAllAsync();
+
+                var resultado = await _agenteIA.AnalizarTareasAsync();
+
+                if (resultado == null)
+                {
+                    AgenteResultadoLabel.Text = "No obtuve respuesta del agente. Intenta nuevamente.";
+                    return;
+                }
+
+                var texto = new System.Text.StringBuilder();
+                texto.AppendLine($"Hola {resultado.Nombre ?? "Operador"}. Tienes {resultado.Pendientes} tareas pendientes.");
+                texto.AppendLine();
+                texto.AppendLine("📋 PLAN:");
+                texto.AppendLine(resultado.Plan ?? "Sin plan.");
+
+                if (resultado.Prioridades is { Count: > 0 })
+                {
+                    texto.AppendLine();
+                    texto.AppendLine("🎯 PRIORIDADES:");
+                    foreach (var p in resultado.Prioridades)
+                    {
+                        texto.AppendLine($"• {p.Titulo}");
+                        if (!string.IsNullOrWhiteSpace(p.Razon))
+                        {
+                            texto.AppendLine($"   ↳ {p.Razon}");
+                        }
+                    }
+                }
+
+                AgenteResultadoLabel.Text = texto.ToString();
+            }
+            catch (Exception ex)
+            {
+                AgenteResultadoLabel.Text = $"No pude contactar al agente:\n{ex.Message}";
+            }
+            finally
+            {
+                AgenteActivityIndicator.IsRunning = false;
+                AgenteActivityIndicator.IsVisible = false;
+                AgenteBoton.IsEnabled = true;
+            }
+        }
+
+        private void OnAgentePopupCerrarClicked(object sender, EventArgs e)
+        {
+            AgentePopupOverlay.IsVisible = false;
+        }
+
         #endregion
 
         #region 3. POPUP NUEVA TAREA / EDITAR TAREA
@@ -724,6 +792,7 @@ private async Task RefreshAllAsync()
                 _tareaEditando.FechaVencimiento = PopupFechaPicker.Date;
                 _tareaEditando.FrecuenciaRecordatorioHoras = horas;
                 _tareaEditando.UltimaModificacion = DateTime.Now;
+                _tareaEditando.IsSynced = false; // <-- marcar para re-sincronizar la edición
 
                 await _dbLocal.UpdateAsync(_tareaEditando);
                 NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);

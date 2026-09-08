@@ -59,6 +59,7 @@ namespace Asistente
                 {
                     var tareaServer = new Tarea
                     {
+                        IdTarea = local.IdTareaServer ?? 0,
                         IdUsuario = local.IdUsuario,
                         Titulo = local.Titulo,
                         Descripcion = local.Descripcion,
@@ -67,15 +68,31 @@ namespace Asistente
                         Estado = local.Estado
                     };
 
-                    var res = await _supabase.From<Tarea>().Insert(tareaServer);
-                    var insertada = res.Models.FirstOrDefault();
-
-                    if (insertada != null)
+                    if (local.IdTareaServer.HasValue)
                     {
-                        local.IdTareaServer = insertada.IdTarea;
-                        local.IsSynced = true;
-                        await _dbLocal.UpdateAsync(local);
+                        // Ya existía en el servidor: actualizarla (no crear duplicado)
+                        await _supabase.From<Tarea>()
+                            .Where(x => x.IdTarea == local.IdTareaServer.Value)
+                            .Set(x => x.Titulo, local.Titulo)
+                            .Set(x => x.Descripcion, local.Descripcion)
+                            .Set(x => x.FechaVencimiento, local.FechaVencimiento)
+                            .Set(x => x.FrecuenciaRecordatorioHoras, local.FrecuenciaRecordatorioHoras)
+                            .Set(x => x.Estado, local.Estado)
+                            .Update();
                     }
+                    else
+                    {
+                        // Tarea nueva: insertarla en el servidor
+                        var res = await _supabase.From<Tarea>().Insert(tareaServer);
+                        var insertada = res.Models.FirstOrDefault();
+                        if (insertada != null)
+                        {
+                            local.IdTareaServer = insertada.IdTarea;
+                        }
+                    }
+
+                    local.IsSynced = true;
+                    await _dbLocal.UpdateAsync(local);
                 }
 
                 // 2. Descargar tareas más recientes desde Supabase y actualizar SQLite

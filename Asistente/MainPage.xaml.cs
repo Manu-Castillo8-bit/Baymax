@@ -505,13 +505,19 @@ private async Task InitializeAndSyncAsync()
                     .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted)
                     .ToListAsync();
 
-                TasksCollectionView.ItemsSource = tasks;
-                int pendingCount = tasks.Count(t => t.Estado != "Completado");
+                var pendientes = tasks.Where(t => t.Estado != "Completado").ToList();
+                var completadas = tasks.Where(t => t.Estado == "Completado").ToList();
+
+                PendingTasksCollectionView.ItemsSource = pendientes;
+                CompletedTasksCollectionView.ItemsSource = completadas;
+
+                PendingCountLabel.Text = $"Pendientes ({pendientes.Count})";
+                CompletedCountLabel.Text = $"Completadas ({completadas.Count})";
 
                 await TriggerCorePulseAsync();
                 
                 string userName = string.IsNullOrEmpty(UserSession.CurrentUserName) ? "Operador" : UserSession.CurrentUserName;
-                AiMessageLabel.Text = $"Bienvenido {userName}. [Local] Tareas pendientes: {pendingCount}";
+                AiMessageLabel.Text = $"Bienvenido {userName}. [Local] Tareas pendientes: {pendientes.Count}, completadas: {completadas.Count}";
             }
             catch (Exception ex)
             {
@@ -538,7 +544,10 @@ private void OnTaskTapped(object sender, SelectionChangedEventArgs e)
 {
     if (e.CurrentSelection?.FirstOrDefault() is TareaLocal tarea)
     {
-        TasksCollectionView.SelectedItem = null;
+        if (sender is CollectionView cv)
+        {
+            cv.SelectedItem = null;
+        }
         EditarTareaAsync(tarea);
     }
 }

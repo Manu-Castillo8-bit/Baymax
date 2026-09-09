@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\Asistente\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -85,7 +85,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -137,7 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "LoginPage.xaml",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml",
               "RelativeDocumentMoniker": "Asistente\\LoginPage.xaml",
@@ -149,8 +149,12 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Asistente",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
               "RelativeDocumentMoniker": "Asistente\\Asistente.csproj",
@@ -159,10 +163,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-09-07T15:49:01.412Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",

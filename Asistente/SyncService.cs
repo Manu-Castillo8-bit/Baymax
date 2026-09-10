@@ -22,6 +22,32 @@ namespace Asistente
         {
             if (e.NetworkAccess == NetworkAccess.Internet)
             {
+                // Si el usuario inició sesión sin internet, al recuperar conexión
+                // re-autenticamos con Supabase para que el token JWT quede activo
+                // (así la IA y el resto de servicios online funcionan sin relogin).
+                if (string.IsNullOrEmpty(UserSession.CurrentJwt) &&
+                    !string.IsNullOrEmpty(UserSession.OfflineEmail) &&
+                    !string.IsNullOrEmpty(UserSession.OfflinePassword))
+                {
+                    try
+                    {
+                        await _supabase.InitializeAsync();
+                        var session = await _supabase.Auth.SignIn(UserSession.OfflineEmail, UserSession.OfflinePassword);
+
+                        if (session?.User != null)
+                        {
+                            UserSession.CurrentJwt = session.AccessToken ?? "";
+                            UserSession.CurrentAuthId = session.User.Id;
+                            UserSession.OfflineEmail = string.Empty;
+                            UserSession.OfflinePassword = string.Empty;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error al re-autenticar tras recuperar conexión: {ex.Message}");
+                    }
+                }
+
                 await SincronizarTareasAsync();
             }
         }

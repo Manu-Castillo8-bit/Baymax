@@ -61,5 +61,10 @@ namespace Asistente
 
         // Token JWT del usuario (para llamar Edge Functions autenticadas)
         public static string CurrentJwt { get; set; } = string.Empty;
+
+        // Credenciales temporales (solo en memoria) para re-autenticación
+        // con Supabase al recuperar conexión (nunca se guardan en disco)
+        public static string OfflineEmail { get; set; } = string.Empty;
+        public static string OfflinePassword { get; set; } = string.Empty;
     }
 }

@@ -464,13 +464,22 @@ private async Task InitializeAndSyncAsync()
     // 1. Cargar SIEMPRE datos de SQLite primero (Funciona 100% offline)
     await LoadTasksFromLocalDbAsync();
 
-    // 2. Verificar si realmente hay conexión antes de hablar con Supabase
+    // 2. Reprogramar las notificaciones de tareas pendientes: al reabrir la app
+    //    el SO pudo limpiar las programadas, y al estar en modo offline tampoco
+    //    dependen del internet, así se aseguran en su tiempo establecido.
+    await NotificadorTareas.ReprogramarRecordatoriosPendientesAsync();
+
+    // 3. Verificar si realmente hay conexión antes de hablar con Supabase
     if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
     {
         try
         {
             await _supabase.InitializeAsync();
-            
+
+            // Si el usuario entró con sesión offline, re-autenticar ahora que hay
+            // conexión para que el token JWT quede activo y la IA funcione sin relogin.
+            await ReautenticarSiNecesarioAsync();
+
             // Sincronizar en segundo plano
             _ = _syncService.SincronizarTareasAsync().ContinueWith(_ => 
             {
@@ -488,6 +497,36 @@ private async Task InitializeAndSyncAsync()
         AiMessageLabel.Text = "Modo fuera de línea activo. Operando localmente.";
     }
 }
+
+        /// <summary>
+        /// Si hay conexión y el usuario inició sesión en modo offline (sin JWT),
+        /// re-autentica contra Supabase para activar el token y permitir el uso
+        /// de la IA y servicios online sin cerrar sesión ni volver a entrar.
+        /// </summary>
+        private async Task ReautenticarSiNecesarioAsync()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(UserSession.CurrentJwt) &&
+                    !string.IsNullOrEmpty(UserSession.OfflineEmail) &&
+                    !string.IsNullOrEmpty(UserSession.OfflinePassword) &&
+                    Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+                {
+                    var session = await _supabase.Auth.SignIn(UserSession.OfflineEmail, UserSession.OfflinePassword);
+                    if (session?.User != null)
+                    {
+                        UserSession.CurrentJwt = session.AccessToken ?? "";
+                        UserSession.CurrentAuthId = session.User.Id;
+                        UserSession.OfflineEmail = string.Empty;
+                        UserSession.OfflinePassword = string.Empty;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al re-autenticar tras recuperar conexión: {ex.Message}");
+            }
+        }
 
         private async Task LoadTasksFromLocalDbAsync()
         {
@@ -642,6 +681,7 @@ private async Task RefreshAllAsync()
         if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
             await _supabase.InitializeAsync();
+            await ReautenticarSiNecesarioAsync();
             await _syncService.SincronizarTareasAsync();
         }
         else

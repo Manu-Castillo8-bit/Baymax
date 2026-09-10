@@ -57,6 +57,8 @@ namespace Asistente
                             UserSession.CurrentUserName = user.Nombre;
                             UserSession.CurrentAuthId = authId;
                             UserSession.CurrentJwt = session.AccessToken ?? "";
+                            UserSession.OfflineEmail = string.Empty;
+                            UserSession.OfflinePassword = string.Empty;
 
                             // B. Respaldar en la BD local SQLite para permitir inicios de sesión Offline
                             var usuarioLocal = new UsuarioLocal
@@ -106,6 +108,11 @@ namespace Asistente
                             UserSession.CurrentUserId = usuarioLocal.IdUsuario;
                             UserSession.CurrentUserName = usuarioLocal.Nombre;
                             UserSession.CurrentAuthId = usuarioLocal.AuthUserId;
+                            UserSession.CurrentJwt = string.Empty;
+                            // Guardar credenciales (solo en memoria) para re-autenticarse
+                            // con Supabase al recuperar conexión
+                            UserSession.OfflineEmail = usuarioLocal.Correo;
+                            UserSession.OfflinePassword = password;
 
                             Application.Current.MainPage = new MainPage();
                         }

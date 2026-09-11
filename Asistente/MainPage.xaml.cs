@@ -256,6 +256,9 @@ namespace Asistente
         // Popup: tarea que se está editando (null = nueva)
         private TareaLocal _tareaEditando;
 
+        // Filtro actual de visualización
+        private string _filtroActual = "Pendientes";
+
         // Opciones de frecuencia en horas
         private readonly List<KeyValuePair<int, string>> _opcionesFrecuencia = new()
         {
@@ -301,6 +304,9 @@ namespace Asistente
             DateTime hoy = DateTime.Today;
             PopupFechaPicker.MinimumDate = hoy;
             PopupFechaPicker.MaximumDate = hoy.AddYears(5);
+
+            // Inicializar estilo de botones de filtro
+            ActualizarEstiloBotonesFiltro();
         }
 
         private void OnTestNotificationClicked(object sender, EventArgs e)
@@ -547,11 +553,23 @@ private async Task InitializeAndSyncAsync()
                 var pendientes = tasks.Where(t => t.Estado != "Completado").ToList();
                 var completadas = tasks.Where(t => t.Estado == "Completado").ToList();
 
-                PendingTasksCollectionView.ItemsSource = pendientes;
-                CompletedTasksCollectionView.ItemsSource = completadas;
+                // Actualizar textos de los botones de filtro
+                BtnFiltroPendientes.Text = $"Pendientes ({pendientes.Count})";
+                BtnFiltroCompletadas.Text = $"Completadas ({completadas.Count})";
 
-                PendingCountLabel.Text = $"Pendientes ({pendientes.Count})";
-                CompletedCountLabel.Text = $"Completadas ({completadas.Count})";
+                // Mostrar según el filtro activo
+                if (_filtroActual == "Pendientes")
+                {
+                    TasksCollectionView.ItemsSource = pendientes;
+                    EmptyViewLabel.Text = "Sin tareas pendientes";
+                    TareasCountLabel.Text = $"Mostrando: {pendientes.Count} pendiente(s)";
+                }
+                else
+                {
+                    TasksCollectionView.ItemsSource = completadas;
+                    EmptyViewLabel.Text = "Sin tareas completadas";
+                    TareasCountLabel.Text = $"Mostrando: {completadas.Count} completada(s)";
+                }
 
                 await TriggerCorePulseAsync();
                 
@@ -669,6 +687,60 @@ private async void OnRefreshClicked(object sender, EventArgs e)
 {
     // Botón de actualizar: recarga desde local y sincroniza con Supabase si hay internet
     await RefreshAllAsync();
+}
+
+private void OnFiltroPendientesClicked(object sender, EventArgs e)
+{
+    _filtroActual = "Pendientes";
+    ActualizarEstiloBotonesFiltro();
+    _ = LoadTasksFromLocalDbAsync();
+}
+
+private void OnFiltroCompletadasClicked(object sender, EventArgs e)
+{
+    _filtroActual = "Completadas";
+    ActualizarEstiloBotonesFiltro();
+    _ = LoadTasksFromLocalDbAsync();
+}
+
+private void ActualizarEstiloBotonesFiltro()
+{
+    if (_filtroActual == "Pendientes")
+    {
+        // Botón pendientes activo (resaltado)
+        BtnFiltroPendientes.BackgroundColor = Color.FromArgb("#0E7490");
+        BtnFiltroPendientes.BorderColor = Color.FromArgb("#67E8F9");
+        BtnFiltroPendientes.TextColor = Color.FromArgb("#FFFFFF");
+        BtnFiltroPendientes.BorderWidth = 2;
+        BtnFiltroPendientes.FontAttributes = FontAttributes.Bold;
+        ShadowPendientes.Opacity = 0.5F;
+
+        // Botón completadas inactivo
+        BtnFiltroCompletadas.BackgroundColor = Color.FromArgb("#111C30");
+        BtnFiltroCompletadas.BorderColor = Color.FromArgb("#1E3A5F");
+        BtnFiltroCompletadas.TextColor = Color.FromArgb("#94A3B8");
+        BtnFiltroCompletadas.BorderWidth = 1;
+        BtnFiltroCompletadas.FontAttributes = FontAttributes.None;
+        ShadowCompletadas.Opacity = 0;
+    }
+    else
+    {
+        // Botón completadas activo (resaltado)
+        BtnFiltroCompletadas.BackgroundColor = Color.FromArgb("#065F46");
+        BtnFiltroCompletadas.BorderColor = Color.FromArgb("#6EE7B7");
+        BtnFiltroCompletadas.TextColor = Color.FromArgb("#FFFFFF");
+        BtnFiltroCompletadas.BorderWidth = 2;
+        BtnFiltroCompletadas.FontAttributes = FontAttributes.Bold;
+        ShadowCompletadas.Opacity = 0.5F;
+
+        // Botón pendientes inactivo
+        BtnFiltroPendientes.BackgroundColor = Color.FromArgb("#111C30");
+        BtnFiltroPendientes.BorderColor = Color.FromArgb("#1E3A5F");
+        BtnFiltroPendientes.TextColor = Color.FromArgb("#94A3B8");
+        BtnFiltroPendientes.BorderWidth = 1;
+        BtnFiltroPendientes.FontAttributes = FontAttributes.None;
+        ShadowPendientes.Opacity = 0;
+    }
 }
 
 private async Task RefreshAllAsync()

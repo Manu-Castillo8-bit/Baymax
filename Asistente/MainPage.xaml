@@ -144,252 +144,175 @@
             <!-- ========================================= -->
 
             <Grid Grid.Row="2"
-                  ColumnDefinitions="*, *"
-                  ColumnSpacing="12">
+                  RowDefinitions="Auto, Auto, *"
+                  RowSpacing="8">
 
-                <!-- ======= COLUMNA: PENDIENTES ======= -->
-                <Grid Grid.Column="0"
-                      RowDefinitions="Auto, *"
-                      RowSpacing="8">
+                <!-- BOTONES DE FILTRO -->
+                <Grid Grid.Row="0"
+                      ColumnDefinitions="*, *"
+                      ColumnSpacing="12">
 
-                    <Label x:Name="PendingCountLabel"
-                           Grid.Row="0"
-                           Text="Pendientes (0)"
-                           FontAttributes="Bold"
-                           FontSize="15"
-                           TextColor="#22D3EE"
-                           HorizontalOptions="Start"/>
+                    <Button x:Name="BtnFiltroPendientes"
+                            Grid.Column="0"
+                            Text="Pendientes (0)"
+                            Clicked="OnFiltroPendientesClicked"
+                            BackgroundColor="#0E7490"
+                            BorderColor="#67E8F9"
+                            BorderWidth="2"
+                            TextColor="#FFFFFF"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HeightRequest="46"
+                            CornerRadius="23"
+                            Padding="0,0">
+                        <Button.Shadow>
+                            <Shadow x:Name="ShadowPendientes"
+                                    Brush="#67E8F9"
+                                    Opacity="0.5"
+                                    Radius="14"
+                                    Offset="0,0"/>
+                        </Button.Shadow>
+                    </Button>
 
-                    <CollectionView x:Name="PendingTasksCollectionView"
-                                    Grid.Row="1"
-                                    SelectionMode="Single"
-                                    SelectionChanged="OnTaskTapped">
-
-                        <CollectionView.EmptyView>
-                            <Label Text="Sin tareas pendientes"
-                                   FontSize="13"
-                                   TextColor="#64748B"
-                                   HorizontalTextAlignment="Center"
-                                   Margin="0,20"/>
-                        </CollectionView.EmptyView>
-
-                        <CollectionView.ItemTemplate>
-
-                            <DataTemplate>
-
-                                <Frame Margin="0,4"
-                                       Padding="12"
-                                       CornerRadius="8"
-                                       BackgroundColor="#111827"
-                                       BorderColor="#245B78">
-
-                                    <Grid ColumnDefinitions="*, Auto">
-
-                                        <!-- Información de tarea -->
-                                        <VerticalStackLayout Grid.Column="0"
-                                                             Spacing="3">
-
-                                            <Label Text="{Binding Titulo}"
-                                                   FontAttributes="Bold"
-                                                   FontSize="15"
-                                                   TextColor="#E2E8F0"/>
-
-                                            <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}"
-                                                   FontSize="11"
-                                                   TextColor="#64748B"/>
-
-                                            <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}"
-                                                   FontSize="10"
-                                                   TextColor="#E2E8F0"/>
-
-                                        </VerticalStackLayout>
-
-                                        <!-- ============================= -->
-                                        <!-- BOTONES CRUD                   -->
-                                        <!-- ============================= -->
-
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Spacing="6">
-
-                                            <!-- Completar / Reabrir -->
-                                            <Button Text="Completar"
-                                                    Clicked="OnToggleCompleteClicked"
-                                                    BackgroundColor="#172554"
-                                                    BorderColor="#22D3EE"
-                                                    BorderWidth="1"
-                                                    TextColor="#22D3EE"
-                                                    FontSize="11"
-                                                    Padding="8,4"
-                                                    CornerRadius="4">
-                                                <Button.Triggers>
-                                                    <DataTrigger TargetType="Button"
-                                                                 Binding="{Binding Estado}"
-                                                                 Value="Completado">
-                                                        <Setter Property="Text" Value="Reabrir"/>
-                                                        <Setter Property="BackgroundColor" Value="#052E16"/>
-                                                        <Setter Property="BorderColor" Value="#34D399"/>
-                                                        <Setter Property="TextColor" Value="#34D399"/>
-                                                    </DataTrigger>
-                                                </Button.Triggers>
-                                            </Button>
-
-                                            <!-- Editar -->
-                                            <Button Text="✏️"
-                                                    Clicked="OnEditTaskClicked"
-                                                    BackgroundColor="#111C30"
-                                                    BorderColor="#245B78"
-                                                    BorderWidth="1"
-                                                    TextColor="#38BDF8"
-                                                    FontSize="12"
-                                                    Padding="8,4"
-                                                    CornerRadius="4"/>
-
-                                            <!-- Eliminar -->
-                                            <Button Text="🗑️"
-                                                    Clicked="OnDeleteTaskClicked"
-                                                    BackgroundColor="#172554"
-                                                    BorderColor="#3B82F6"
-                                                    BorderWidth="1"
-                                                    TextColor="#3B82F6"
-                                                    FontSize="12"
-                                                    Padding="8,4"
-                                                    CornerRadius="4"/>
-
-                                        </VerticalStackLayout>
-
-                                    </Grid>
-
-                                </Frame>
-
-                            </DataTemplate>
-
-                        </CollectionView.ItemTemplate>
-
-                    </CollectionView>
+                    <Button x:Name="BtnFiltroCompletadas"
+                            Grid.Column="1"
+                            Text="Completadas (0)"
+                            Clicked="OnFiltroCompletadasClicked"
+                            BackgroundColor="#111C30"
+                            BorderColor="#245B78"
+                            BorderWidth="1"
+                            TextColor="#94A3B8"
+                            FontSize="14"
+                            HeightRequest="46"
+                            CornerRadius="23"
+                            Padding="0,0">
+                        <Button.Shadow>
+                            <Shadow x:Name="ShadowCompletadas"
+                                    Brush="#6EE7B7"
+                                    Opacity="0"
+                                    Radius="14"
+                                    Offset="0,0"/>
+                        </Button.Shadow>
+                    </Button>
 
                 </Grid>
 
-                <!-- ======= COLUMNA: COMPLETADAS ======= -->
-                <Grid Grid.Column="1"
-                      RowDefinitions="Auto, *"
-                      RowSpacing="8">
+                <!-- CONTADOR -->
+                <Label x:Name="TareasCountLabel"
+                       Grid.Row="1"
+                       Text="Mostrando: Pendientes"
+                       FontSize="12"
+                       TextColor="#64748B"
+                       HorizontalOptions="Center"/>
 
-                    <Label x:Name="CompletedCountLabel"
-                           Grid.Row="0"
-                           Text="Completadas (0)"
-                           FontAttributes="Bold"
-                           FontSize="15"
-                           TextColor="#34D399"
-                           HorizontalOptions="Start"/>
+                <!-- COLLECTIONVIEW ÚNICO -->
+                <CollectionView x:Name="TasksCollectionView"
+                                Grid.Row="2"
+                                SelectionMode="Single"
+                                SelectionChanged="OnTaskTapped">
 
-                    <CollectionView x:Name="CompletedTasksCollectionView"
-                                    Grid.Row="1"
-                                    SelectionMode="Single"
-                                    SelectionChanged="OnTaskTapped">
+                    <CollectionView.EmptyView>
+                        <Label x:Name="EmptyViewLabel"
+                               Text="Sin tareas pendientes"
+                               FontSize="13"
+                               TextColor="#64748B"
+                               HorizontalTextAlignment="Center"
+                               Margin="0,20"/>
+                    </CollectionView.EmptyView>
 
-                        <CollectionView.EmptyView>
-                            <Label Text="Sin tareas completadas"
-                                   FontSize="13"
-                                   TextColor="#64748B"
-                                   HorizontalTextAlignment="Center"
-                                   Margin="0,20"/>
-                        </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
 
-                        <CollectionView.ItemTemplate>
+                        <DataTemplate>
 
-                            <DataTemplate>
+                            <Frame Margin="0,4"
+                                   Padding="12"
+                                   CornerRadius="8"
+                                   BackgroundColor="#111827"
+                                   BorderColor="#245B78">
 
-                                <Frame Margin="0,4"
-                                       Padding="12"
-                                       CornerRadius="8"
-                                       BackgroundColor="#0D1F16"
-                                       BorderColor="#34D399">
+                                <Grid ColumnDefinitions="*, Auto">
 
-                                    <Grid ColumnDefinitions="*, Auto">
+                                    <!-- Información de tarea -->
+                                    <VerticalStackLayout Grid.Column="0"
+                                                         Spacing="3">
 
-                                        <!-- Información de tarea -->
-                                        <VerticalStackLayout Grid.Column="0"
-                                                             Spacing="3">
+                                        <Label Text="{Binding Titulo}"
+                                               FontAttributes="Bold"
+                                               FontSize="15"
+                                               TextColor="#E2E8F0"/>
 
-                                            <Label Text="{Binding Titulo}"
-                                                   FontAttributes="Bold"
-                                                   FontSize="15"
-                                                   TextColor="#D1FAE5"/>
+                                        <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}"
+                                               FontSize="11"
+                                               TextColor="#64748B"/>
 
-                                            <Label Text="{Binding FechaVencimiento, StringFormat='Vence: {0:dd/MM/yyyy}'}"
-                                                   FontSize="11"
-                                                   TextColor="#64748B"/>
+                                        <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}"
+                                               FontSize="10"
+                                               TextColor="#E2E8F0"/>
 
-                                            <Label Text="{Binding FrecuenciaRecordatorioHoras, StringFormat='🔔 Recordar cada {0} horas', TargetNullValue='Sin recordatorio'}"
-                                                   FontSize="10"
-                                                   TextColor="#D1FAE5"/>
+                                    </VerticalStackLayout>
 
-                                        </VerticalStackLayout>
+                                    <!-- ============================= -->
+                                    <!-- BOTONES CRUD                   -->
+                                    <!-- ============================= -->
 
-                                        <!-- ============================= -->
-                                        <!-- BOTONES CRUD                   -->
-                                        <!-- ============================= -->
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="6">
 
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Spacing="6">
+                                        <!-- Completar / Reabrir -->
+                                        <Button Text="Completar"
+                                                Clicked="OnToggleCompleteClicked"
+                                                BackgroundColor="#172554"
+                                                BorderColor="#22D3EE"
+                                                BorderWidth="1"
+                                                TextColor="#22D3EE"
+                                                FontSize="11"
+                                                Padding="8,4"
+                                                CornerRadius="4">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                             Binding="{Binding Estado}"
+                                                             Value="Completado">
+                                                    <Setter Property="Text" Value="Reabrir"/>
+                                                    <Setter Property="BackgroundColor" Value="#052E16"/>
+                                                    <Setter Property="BorderColor" Value="#34D399"/>
+                                                    <Setter Property="TextColor" Value="#34D399"/>
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                        </Button>
 
-                                            <!-- Completar / Reabrir -->
-                                            <Button Text="Completar"
-                                                    Clicked="OnToggleCompleteClicked"
-                                                    BackgroundColor="#172554"
-                                                    BorderColor="#22D3EE"
-                                                    BorderWidth="1"
-                                                    TextColor="#22D3EE"
-                                                    FontSize="11"
-                                                    Padding="8,4"
-                                                    CornerRadius="4">
-                                                <Button.Triggers>
-                                                    <DataTrigger TargetType="Button"
-                                                                 Binding="{Binding Estado}"
-                                                                 Value="Completado">
-                                                        <Setter Property="Text" Value="Reabrir"/>
-                                                        <Setter Property="BackgroundColor" Value="#052E16"/>
-                                                        <Setter Property="BorderColor" Value="#34D399"/>
-                                                        <Setter Property="TextColor" Value="#34D399"/>
-                                                    </DataTrigger>
-                                                </Button.Triggers>
-                                            </Button>
+                                        <!-- Editar -->
+                                        <Button Text="Editar"
+                                                Clicked="OnEditTaskClicked"
+                                                BackgroundColor="#111C30"
+                                                BorderColor="#245B78"
+                                                BorderWidth="1"
+                                                TextColor="#38BDF8"
+                                                FontSize="11"
+                                                Padding="8,4"
+                                                CornerRadius="4"/>
 
-                                            <!-- Editar -->
-                                            <Button Text="✏️"
-                                                    Clicked="OnEditTaskClicked"
-                                                    BackgroundColor="#111C30"
-                                                    BorderColor="#245B78"
-                                                    BorderWidth="1"
-                                                    TextColor="#38BDF8"
-                                                    FontSize="12"
-                                                    Padding="8,4"
-                                                    CornerRadius="4"/>
+                                        <!-- Eliminar -->
+                                        <Button Text="Eliminar"
+                                                Clicked="OnDeleteTaskClicked"
+                                                BackgroundColor="#172554"
+                                                BorderColor="#3B82F6"
+                                                BorderWidth="1"
+                                                TextColor="#3B82F6"
+                                                FontSize="11"
+                                                Padding="8,4"
+                                                CornerRadius="4"/>
 
-                                            <!-- Eliminar -->
-                                            <Button Text="🗑️"
-                                                    Clicked="OnDeleteTaskClicked"
-                                                    BackgroundColor="#172554"
-                                                    BorderColor="#3B82F6"
-                                                    BorderWidth="1"
-                                                    TextColor="#3B82F6"
-                                                    FontSize="12"
-                                                    Padding="8,4"
-                                                    CornerRadius="4"/>
+                                    </VerticalStackLayout>
 
-                                        </VerticalStackLayout>
+                                </Grid>
 
-                                    </Grid>
+                            </Frame>
 
-                                </Frame>
+                        </DataTemplate>
 
-                            </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                        </CollectionView.ItemTemplate>
-
-                    </CollectionView>
-
-                </Grid>
+                </CollectionView>
 
             </Grid>
 

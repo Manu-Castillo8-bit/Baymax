@@ -58,5 +58,10 @@ namespace Asistente
                 StatusLabel.Text = $"Error al registrar: {ex.Message}";
             }
         }
+
+        private void OnShowPasswordToggled(object sender, CheckedChangedEventArgs e)
+        {
+            PasswordEntry.IsPassword = !e.Value;
+        }
     }
 }

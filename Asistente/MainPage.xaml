@@ -378,6 +378,28 @@
 
 
         <!-- ========================================= -->
+        <!-- BOTÓN CERRAR SESIÓN (ESQUINA SUP. IZQUIERDA) -->
+        <!-- ========================================= -->
+
+        <Button Text="⏻"
+                Clicked="OnLogoutClicked"
+                BackgroundColor="#450A0A"
+                BorderColor="#F87171"
+                BorderWidth="1"
+                TextColor="#F87171"
+                FontAttributes="Bold"
+                FontSize="14"
+                WidthRequest="34"
+                HeightRequest="34"
+                Padding="0,0"
+                CornerRadius="17"
+                Margin="12,12,0,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                ToolTipProperties.Text="Cerrar sesión"/>
+
+
+        <!-- ========================================= -->
         <!-- POPUP NUEVA TAREA / EDITAR TAREA          -->
         <!-- ========================================= -->
 

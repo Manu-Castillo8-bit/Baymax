@@ -2,43 +2,58 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Asistente.RegisterPage"
-             BackgroundColor="#080604">
+             BackgroundColor="#0B1120">
 
     <ScrollView VerticalOptions="Center">
         <VerticalStackLayout Padding="30" Spacing="15" MaximumWidthRequest="400">
 
-            <Label Text="REGISTRO DE NUEVO USUARIO" 
-                   TextColor="#FF8C00" 
-                   FontSize="18" 
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" 
+            <!-- TÍTULO -->
+            <Label Text="REGISTRO DE NUEVO USUARIO"
+                   TextColor="#22D3EE"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
                    CharacterSpacing="1"/>
 
             <!-- NOMBRE -->
-            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
-                <Entry x:Name="NameEntry" Placeholder="Nombre completo" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" Margin="10,0"/>
+            <Border Stroke="#245B78" BackgroundColor="#111C30" StrokeThickness="1">
+                <Entry x:Name="NameEntry" Placeholder="Nombre completo" PlaceholderColor="#64748B" TextColor="#FFFFFF" Margin="10,0"/>
             </Border>
 
             <!-- CORREO -->
-            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1"  >
-                <Entry x:Name="EmailEntry" Placeholder="Correo electrónico" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" Keyboard="Email" Margin="10,0"/>
+            <Border Stroke="#245B78" BackgroundColor="#111C30" StrokeThickness="1">
+                <Entry x:Name="EmailEntry" Placeholder="Correo electrónico" PlaceholderColor="#64748B" TextColor="#FFFFFF" Keyboard="Email" Margin="10,0"/>
             </Border>
 
             <!-- CONTRASEÑA -->
-            <Border Stroke="#402810" BackgroundColor="#120D08" StrokeThickness="1" >
-                <Entry x:Name="PasswordEntry" Placeholder="Contraseña" PlaceholderColor="#B38B6D" TextColor="#FFFFFF" IsPassword="True" Margin="10,0"/>
+            <Border Stroke="#245B78" BackgroundColor="#111C30" StrokeThickness="1">
+                <Entry x:Name="PasswordEntry" Placeholder="Contraseña" PlaceholderColor="#64748B" TextColor="#FFFFFF" IsPassword="True" Margin="10,0"/>
             </Border>
 
+            <!-- VER CONTRASEÑA -->
+            <HorizontalStackLayout Spacing="8" HorizontalOptions="Start">
+                <CheckBox x:Name="ShowPasswordCheck"
+                          Color="#22D3EE"
+                          BackgroundColor="Transparent"
+                          VerticalOptions="Center"
+                          CheckedChanged="OnShowPasswordToggled"/>
+                <Label Text="Ver contraseña"
+                       TextColor="#94A3B8"
+                       FontSize="14"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
             <!-- BOTÓN CREAR CUENTA -->
-            <Button Text="CREAR CUENTA" 
-                    Clicked="OnRegisterClicked" 
-                    BackgroundColor="#FF8C00" 
-                    TextColor="#080604" 
-                    FontAttributes="Bold" 
+            <Button Text="CREAR CUENTA"
+                    Clicked="OnRegisterClicked"
+                    BackgroundColor="#2563EB"
+                    TextColor="#FFFFFF"
+                    FontAttributes="Bold"
                     CornerRadius="8"
+                    HeightRequest="48"
                     Margin="0,10,0,0"/>
 
-            <Label x:Name="StatusLabel" TextColor="#FF3300" HorizontalOptions="Center" FontSize="12"/>
+            <Label x:Name="StatusLabel" TextColor="#F87171" HorizontalOptions="Center" FontSize="12"/>
 
         </VerticalStackLayout>
     </ScrollView>

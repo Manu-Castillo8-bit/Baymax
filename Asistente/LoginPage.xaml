@@ -44,14 +44,38 @@
                        Margin="10,0"/>
                 </Border>
 
+                <!-- VER CONTRASEÑA -->
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Start">
+                    <CheckBox x:Name="ShowPasswordCheck"
+                              Color="#22D3EE"
+                              BackgroundColor="Transparent"
+                              VerticalOptions="Center"
+                              CheckedChanged="OnShowPasswordToggled"/>
+                    <Label Text="Ver contraseña"
+                           TextColor="#94A3B8"
+                           FontSize="14"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
                 <!-- BOTÓN INICIAR SESIÓN -->
-                <Button Text="INICIAR SESIÓN" 
-                    Clicked="OnLoginClicked" 
-                    BackgroundColor="#2563EB" 
-                    TextColor="#080604" 
-                    FontAttributes="Bold" 
-              
-                    HeightRequest="48"/>
+                <Grid HeightRequest="48">
+                    <Button x:Name="LoginButton"
+                        Text="INICIAR SESIÓN" 
+                        Clicked="OnLoginClicked" 
+                        BackgroundColor="#2563EB" 
+                        TextColor="#080604" 
+                        FontAttributes="Bold" 
+                        HeightRequest="48"/>
+
+                    <ActivityIndicator x:Name="LoginActivityIndicator"
+                                       IsVisible="False"
+                                       IsRunning="False"
+                                       Color="#FFFFFF"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       WidthRequest="26"
+                                       HeightRequest="26"/>
+                </Grid>
 
                 <!-- NAVEGACIÓN A REGISTRO -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">

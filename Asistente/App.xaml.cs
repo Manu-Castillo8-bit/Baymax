@@ -7,7 +7,12 @@ namespace Asistente
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
+
+            // Si hay una sesión guardada, entrar directo a las tareas
+            if (UserSession.CargarSesionGuardada())
+                MainPage = new NavigationPage(new MainPage());
+            else
+                MainPage = new NavigationPage(new LoginPage());
         }
 
        

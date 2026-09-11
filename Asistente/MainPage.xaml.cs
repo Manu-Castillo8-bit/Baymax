@@ -689,6 +689,22 @@ private async void OnRefreshClicked(object sender, EventArgs e)
     await RefreshAllAsync();
 }
 
+private async void OnLogoutClicked(object sender, EventArgs e)
+{
+    bool confirmado = await DisplayAlertAsync("Cerrar sesión",
+        "¿Seguro que deseas cerrar sesión?",
+        "Cerrar sesión", "Cancelar");
+    if (!confirmado) return;
+
+    // Detener la sincronización automática y las animaciones
+    OnDisappearing();
+
+    // Limpiar la sesión activa y la guardada (para volver a pedir login)
+    UserSession.LimpiarSesion();
+
+    Application.Current.MainPage = new NavigationPage(new LoginPage());
+}
+
 private void OnFiltroPendientesClicked(object sender, EventArgs e)
 {
     _filtroActual = "Pendientes";

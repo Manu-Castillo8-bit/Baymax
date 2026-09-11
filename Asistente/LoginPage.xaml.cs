@@ -19,6 +19,30 @@ namespace Asistente
         private async void OnLoginClicked(object sender, EventArgs e)
         {
             StatusLabel.Text = "";
+
+            // Animación de carga en el botón
+            MostrarCarga(true);
+
+            try
+            {
+                await EjecutarLoginAsync();
+            }
+            finally
+            {
+                MostrarCarga(false);
+            }
+        }
+
+        private void MostrarCarga(bool cargando)
+        {
+            LoginActivityIndicator.IsVisible = cargando;
+            LoginActivityIndicator.IsRunning = cargando;
+            LoginButton.IsEnabled = !cargando;
+            LoginButton.Text = cargando ? "CARGANDO..." : "INICIAR SESIÓN";
+        }
+
+        private async Task EjecutarLoginAsync()
+        {
             string email = EmailEntry.Text?.Trim().ToLower() ?? "";
             string password = PasswordEntry.Text ?? "";
 
@@ -73,6 +97,9 @@ namespace Asistente
 
                             await dbLocal.InsertOrReplaceAsync(usuarioLocal);
 
+                            // C. Guardar la sesión para entrar directo la próxima vez
+                            UserSession.GuardarSesion();
+
                             Application.Current.MainPage = new MainPage();
                         }
                         else
@@ -114,6 +141,9 @@ namespace Asistente
                             UserSession.OfflineEmail = usuarioLocal.Correo;
                             UserSession.OfflinePassword = password;
 
+                            // Guardar la sesión para entrar directo la próxima vez
+                            UserSession.GuardarSesion();
+
                             Application.Current.MainPage = new MainPage();
                         }
                         else
@@ -131,6 +161,11 @@ namespace Asistente
                     StatusLabel.Text = $"Error de inicio de sesión local: {ex.Message}";
                 }
             }
+        }
+
+        private void OnShowPasswordToggled(object sender, CheckedChangedEventArgs e)
+        {
+            PasswordEntry.IsPassword = !e.Value;
         }
 
         private async void OnRegisterTapped(object sender, EventArgs e)

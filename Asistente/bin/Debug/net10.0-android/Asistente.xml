@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Asistente</name>
+    </assembly>
+    <members>
+        <member name="M:Asistente.MainPage.ReautenticarSiNecesarioAsync">
+            <summary>
+            Si hay conexión y el usuario inició sesión en modo offline (sin JWT),
+            re-autentica contra Supabase para activar el token y permitir el uso
+            de la IA y servicios online sin cerrar sesión ni volver a entrar.
+            </summary>
+        </member>
+        <member name="T:Asistente.NotificadorTareas">
+            <summary>
+            Utilidades compartidas para programar notificaciones de recordatorio de tareas.
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.ReprogramarRecordatoriosPendientesAsync">
+            <summary>
+            Reprograma en el sistema operativo todas las notificaciones de las tareas
+            pendientes guardadas en la BD local. Debe ejecutarse al abrir la app para
+            restaurar recordatorios que el SO pudo haber limpiado al cerrar la app.
+            Funciona sin conexión (las notificaciones son locales, no requieren internet).
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.ProgramarRecordatorioCiclico(System.Int32,System.String,System.Int32,System.DateTime)">
+            <summary>
+            Programa un recordatorio cíclico respetando la cadencia original:
+            calcula la siguiente ocurrencia futura alineada al intervalo elegido,
+            partiendo de la última modificación de la tarea.
+            </summary>
+        </member>
+        <member name="T:Asistente.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

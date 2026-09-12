@@ -1,12 +1,12 @@
 [Setup]
 AppId={{B1E3A4D7-5F2C-4A8B-9D1E-6C7F3A2B5E8D}
 AppName=Asistente
-AppVersion=1.0
+AppVersion=1.1
 AppPublisher=Asistente
 DefaultDirName={autopf}\Asistente
 DefaultGroupName=Asistente
 OutputDir=C:\Users\User\Desktop\Asistente\Installer
-OutputBaseFilename=Asistente-Setup-1.0
+OutputBaseFilename=Asistente-Setup-1.1
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern

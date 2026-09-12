@@ -31,6 +31,13 @@
             partiendo de la última modificación de la tarea.
             </summary>
         </member>
+        <member name="M:Asistente.NotificadorTareas.MostrarNotificacionInmediata(System.String,System.String)">
+            <summary>
+            Muestra una notificación inmediata de confirmación (por ejemplo al crear
+            o editar una tarea). Funciona sin conexión: en Windows usa el toast nativo
+            del SO y en el resto de plataformas el centro de notificaciones local.
+            </summary>
+        </member>
         <member name="T:Asistente.Resource">
             <summary>
             Android Resource Designer class.

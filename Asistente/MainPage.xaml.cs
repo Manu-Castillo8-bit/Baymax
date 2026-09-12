@@ -311,30 +311,11 @@ namespace Asistente
 
         private void OnTestNotificationClicked(object sender, EventArgs e)
 {
-    try
-    {
-        // Programar notificación a los 5 segundos
-        var request = new NotificationRequest
-        {
-            NotificationId = 9999, // ID fijo de prueba
-            Title = "🧪 Prueba Exitosa",
-            Description = "¡Las notificaciones están funcionando correctamente en tu dispositivo!",
-            BadgeNumber = 1,
-            Schedule = new NotificationRequestSchedule
-            {
-                NotifyTime = DateTimeOffset.Now.AddSeconds(5) // Llegará en 5 segundos
-            }
-        };
+    EnviarNotificacionPC("🧪 Prueba Exitosa",
+        "¡Las notificaciones están funcionando correctamente en tu dispositivo!");
 
-        LocalNotificationCenter.Current.Show(request);
-
-        // Aviso visual para el usuario
-        DisplayAlert("Prueba en marcha", "La notificación se disparará en 5 segundos. Puedes minimizar la app.", "OK");
-    }
-    catch (Exception ex)
-    {
-        DisplayAlert("Error de Notificación", ex.Message, "OK");
-    }
+    // Aviso visual para el usuario
+    DisplayAlert("Prueba en marcha", "La notificación se disparará en unos segundos. Puedes minimizar la app.", "OK");
 }
 
        protected override async void OnAppearing()
@@ -377,26 +358,9 @@ private async void OnAutoSyncTick(object sender, EventArgs e)
         
 private void EnviarNotificacionPC(string titulo, string mensaje)
 {
-    try
-    {
-        var request = new NotificationRequest
-        {
-            NotificationId = new Random().Next(1000, 9999),
-            Title = titulo,
-            Description = mensaje,
-            BadgeNumber = 1,
-            Schedule = new NotificationRequestSchedule
-            {
-                NotifyTime = DateTimeOffset.Now.AddSeconds(1) // Se dispara de inmediato
-            }
-        };
-
-        LocalNotificationCenter.Current.Show(request);
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine($"Error al enviar notificación: {ex.Message}");
-    }
+    // Muestra un toast inmediato: en Windows usa el notificador nativo del SO
+    // (funciona sin internet) y en móvil el centro de notificaciones local.
+    NotificadorTareas.MostrarNotificacionInmediata(titulo, mensaje);
 }
         protected override void OnDisappearing()
         {
@@ -922,6 +886,7 @@ private async Task RefreshAllAsync()
                 await _dbLocal.InsertAsync(nuevaTareaLocal);
                 NotificadorTareas.ProgramarRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
                 _ = _syncService.SincronizarTareasAsync();
+                EnviarNotificacionPC("✔ Tarea Creada", $"'{titulo}' se guardó correctamente.");
             }
             else
             {
@@ -935,6 +900,7 @@ private async Task RefreshAllAsync()
                 NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);
                 NotificadorTareas.ProgramarRecordatorio(_tareaEditando.IdLocal, _tareaEditando.Titulo, _tareaEditando.FechaVencimiento, _tareaEditando.FrecuenciaRecordatorioHoras ?? 0);
                 _ = _syncService.SincronizarTareasAsync();
+                EnviarNotificacionPC("✏️ Tarea Actualizada", $"'{titulo}' se editó correctamente.");
             }
 
             TareaPopupOverlay.IsVisible = false;

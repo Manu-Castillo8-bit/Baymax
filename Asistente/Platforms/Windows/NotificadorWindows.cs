@@ -39,7 +39,7 @@ namespace Asistente
 
                 if (!ObtenerNotifier(out var notifier) || notifier is null) return false;
 
-                var xml = ConstruirXml(id, titulo);
+                var xml = ConstruirXml(id, "⏰ Recordatorio: Tarea Próxima", $"La tarea: '{titulo}' está pendiente.");
                 if (xml is null) return false;
 
                 var programada = new ScheduledToastNotification(xml, cuando);
@@ -49,6 +49,30 @@ namespace Asistente
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"NotificadorWindows.Programar: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Muestra una notificación inmediata (toast) a nivel de sistema operativo.
+        /// Funciona 100% sin conexión a internet porque el toast es local.
+        /// Devuelve true si se mostró y false si falla.
+        /// </summary>
+        public static bool Mostrar(int id, string titulo, string mensaje)
+        {
+            try
+            {
+                if (!ObtenerNotifier(out var notifier) || notifier is null) return false;
+
+                var xml = ConstruirXml(id, titulo, mensaje);
+                if (xml is null) return false;
+
+                notifier.Show(new ToastNotification(xml));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"NotificadorWindows.Mostrar: {ex.Message}");
                 return false;
             }
         }
@@ -203,7 +227,7 @@ namespace Asistente
             }
         }
 
-        private static XmlDocument? ConstruirXml(int id, string titulo)
+        private static XmlDocument? ConstruirXml(int id, string textoPrincipal, string textoDetalle)
         {
             try
             {
@@ -211,8 +235,8 @@ namespace Asistente
                 string cuerpo =
                     $"<toast launch=\"{argumento}\">" +
                     "<visual><binding template=\"ToastGeneric\">" +
-                    "<text>⏰ Recordatorio: Tarea Próxima</text>" +
-                    $"<text>La tarea: '{EscapeXml(titulo)}' está pendiente.</text>" +
+                    $"<text>{EscapeXml(textoPrincipal)}</text>" +
+                    $"<text>{EscapeXml(textoDetalle)}</text>" +
                     "</binding></visual></toast>";
 
                 var xml = new XmlDocument();

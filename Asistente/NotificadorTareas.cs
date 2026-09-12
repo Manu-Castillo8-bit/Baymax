@@ -170,6 +170,44 @@ namespace Asistente
             }
         }
 
+        /// <summary>
+        /// Muestra una notificación inmediata de confirmación (por ejemplo al crear
+        /// o editar una tarea). Funciona sin conexión: en Windows usa el toast nativo
+        /// del SO y en el resto de plataformas el centro de notificaciones local.
+        /// </summary>
+        public static void MostrarNotificacionInmediata(string titulo, string mensaje)
+        {
+            try
+            {
+#if WINDOWS
+                if (OperatingSystem.IsWindows())
+                {
+                    if (NotificadorWindows.Mostrar(new Random().Next(1000, 9999), titulo, mensaje))
+                    {
+                        return;
+                    }
+                }
+#endif
+                var request = new NotificationRequest
+                {
+                    NotificationId = new Random().Next(1000, 9999),
+                    Title = titulo,
+                    Description = mensaje,
+                    BadgeNumber = 1,
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTimeOffset.Now.AddSeconds(2)
+                    }
+                };
+
+                LocalNotificationCenter.Current.Show(request);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al mostrar notificación inmediata: {ex.Message}");
+            }
+        }
+
         public static void CancelarRecordatorio(int idTarea)
         {
 #if WINDOWS

@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\Asistente\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\registerpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\registerpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\usuariolocal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\usuariolocal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\tarealocal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\tarealocal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\asistente.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -58,24 +78,12 @@
       "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\syncservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\registerpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\registerpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\registerpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|c:\\users\\user\\desktop\\asistente\\asistente\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{89A9E0C8-583B-FC0A-6905-926922C3598E}|Asistente\\Asistente.csproj|solutionrelative:asistente\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -85,7 +93,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -100,36 +108,103 @@
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginPage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml",
+              "RelativeDocumentMoniker": "Asistente\\LoginPage.xaml",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml",
+              "RelativeToolTip": "Asistente\\LoginPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-03T23:32:46.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml.cs",
+              "RelativeDocumentMoniker": "Asistente\\LoginPage.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml.cs",
+              "RelativeToolTip": "Asistente\\LoginPage.xaml.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswJYAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-04T01:49:05.626Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "RegisterPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\RegisterPage.xaml.cs",
+              "RelativeDocumentMoniker": "Asistente\\RegisterPage.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\RegisterPage.xaml.cs",
+              "RelativeToolTip": "Asistente\\RegisterPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-04T01:53:41.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainPage.xaml",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
               "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
               "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
               "RelativeToolTip": "Asistente\\MainPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAHoBAAAAYGZmZmYkwIIBAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-02T15:09:38.041Z"
+              "WhenOpened": "2026-09-02T15:09:38.041Z",
+              "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AppShell.xaml",
-              "RelativeDocumentMoniker": "Asistente\\AppShell.xaml",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AppShell.xaml",
-              "RelativeToolTip": "Asistente\\AppShell.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-07T15:50:32.523Z"
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "SyncService.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\SyncService.cs",
+              "RelativeDocumentMoniker": "Asistente\\SyncService.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\SyncService.cs",
+              "RelativeToolTip": "Asistente\\SyncService.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAwwAsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-04T13:50:45.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsuarioLocal.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\UsuarioLocal.cs",
+              "RelativeDocumentMoniker": "Asistente\\UsuarioLocal.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\UsuarioLocal.cs",
+              "RelativeToolTip": "Asistente\\UsuarioLocal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T14:12:20.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TareaLocal.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\TareaLocal.cs",
+              "RelativeDocumentMoniker": "Asistente\\TareaLocal.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\TareaLocal.cs",
+              "RelativeToolTip": "Asistente\\TareaLocal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T14:12:40.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "AppShell.xaml.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AppShell.xaml.cs",
               "RelativeDocumentMoniker": "Asistente\\AppShell.xaml.cs",
@@ -141,20 +216,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LoginPage.xaml",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml",
-              "RelativeDocumentMoniker": "Asistente\\LoginPage.xaml",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml",
-              "RelativeToolTip": "Asistente\\LoginPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAqAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AppShell.xaml",
+              "RelativeDocumentMoniker": "Asistente\\AppShell.xaml",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AppShell.xaml",
+              "RelativeToolTip": "Asistente\\AppShell.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-03T23:32:46.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-07T15:50:32.523Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "Asistente",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
               "RelativeDocumentMoniker": "Asistente\\Asistente.csproj",
@@ -165,7 +239,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "Asistente.csproj",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
               "RelativeDocumentMoniker": "Asistente\\Asistente.csproj",
@@ -177,7 +251,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "Asistente\\MainPage.xaml.cs",
@@ -189,7 +263,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "AgenteIAServicio.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\AgenteIAServicio.cs",
               "RelativeDocumentMoniker": "Asistente\\AgenteIAServicio.cs",
@@ -201,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "Xamarin.Android.Aapt2.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\packs\\Microsoft.Android.Sdk.Windows\\36.1.69\\tools\\Xamarin.Android.Aapt2.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Program Files\\dotnet\\packs\\Microsoft.Android.Sdk.Windows\\36.1.69\\tools\\Xamarin.Android.Aapt2.targets",
@@ -213,7 +287,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Asistente\\Properties\\launchSettings.json",
@@ -225,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\App.xaml",
               "RelativeDocumentMoniker": "Asistente\\App.xaml",
@@ -237,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "AndroidManifest.xml",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Platforms\\Android\\AndroidManifest.xml",
               "RelativeDocumentMoniker": "Asistente\\Platforms\\Android\\AndroidManifest.xml",
@@ -249,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\App.xaml.cs",
               "RelativeDocumentMoniker": "Asistente\\App.xaml.cs",
@@ -261,19 +335,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "SyncService.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\SyncService.cs",
-              "RelativeDocumentMoniker": "Asistente\\SyncService.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\SyncService.cs",
-              "RelativeToolTip": "Asistente\\SyncService.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAUwDsAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T13:50:45.641Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MauiProgram.cs",
               "RelativeDocumentMoniker": "Asistente\\MauiProgram.cs",
@@ -285,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Usuario.cs",
               "RelativeDocumentMoniker": "Asistente\\Usuario.cs",
@@ -297,7 +359,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "RegisterPage.xaml",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\RegisterPage.xaml",
               "RelativeDocumentMoniker": "Asistente\\RegisterPage.xaml",
@@ -306,30 +368,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-04T01:53:16.8Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "RegisterPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\RegisterPage.xaml.cs",
-              "RelativeDocumentMoniker": "Asistente\\RegisterPage.xaml.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\RegisterPage.xaml.cs",
-              "RelativeToolTip": "Asistente\\RegisterPage.xaml.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAiwEAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T01:53:41.577Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "LoginPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml.cs",
-              "RelativeDocumentMoniker": "Asistente\\LoginPage.xaml.cs",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\LoginPage.xaml.cs",
-              "RelativeToolTip": "Asistente\\LoginPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAxwJYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T01:49:05.626Z"
             }
           ]
         }

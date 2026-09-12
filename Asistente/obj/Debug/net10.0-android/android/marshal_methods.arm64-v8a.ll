@@ -13,10 +13,10 @@ target triple = "aarch64-unknown-linux-android21"
 	ptr ; MonoClass klass
 }
 
-@assembly_image_cache = dso_local local_unnamed_addr global [345 x ptr] zeroinitializer, align 8
+@assembly_image_cache = dso_local local_unnamed_addr global [349 x ptr] zeroinitializer, align 8
 
 ; Each entry maps hash of an assembly name to an index into the `assembly_image_cache` array
-@assembly_image_cache_hashes = dso_local local_unnamed_addr constant [1035 x i64] [
+@assembly_image_cache_hashes = dso_local local_unnamed_addr constant [1047 x i64] [
 	i64 u0x001e58127c546039, ; 0: lib_System.Globalization.dll.so => 42
 	i64 u0x0024d0f62dee05bd, ; 1: Xamarin.KotlinX.Coroutines.Core.dll => 306
 	i64 u0x0071cf2d27b7d61e, ; 2: lib_Xamarin.AndroidX.SwipeRefreshLayout.dll.so => 285
@@ -92,969 +92,981 @@ target triple = "aarch64-unknown-linux-android21"
 	i64 u0x11a603952763e1d4, ; 72: System.Net.Mail => 68
 	i64 u0x11a70d0e1009fb11, ; 73: System.Net.WebSockets.dll => 83
 	i64 u0x11f26371eee0d3c1, ; 74: lib_Xamarin.AndroidX.Lifecycle.Runtime.Ktx.dll.so => 262
-	i64 u0x12128b3f59302d47, ; 75: lib_System.Xml.Serialization.dll.so => 161
-	i64 u0x123639456fb056da, ; 76: System.Reflection.Emit.Lightweight.dll => 94
-	i64 u0x12521e9764603eaa, ; 77: lib_System.Resources.Reader.dll.so => 101
-	i64 u0x125b7f94acb989db, ; 78: Xamarin.AndroidX.RecyclerView.dll => 277
-	i64 u0x12d3b63863d4ab0b, ; 79: lib_System.Threading.Overlapped.dll.so => 144
-	i64 u0x134eab1061c395ee, ; 80: System.Transactions => 154
-	i64 u0x138567fa954faa55, ; 81: Xamarin.AndroidX.Browser => 231
-	i64 u0x13a01de0cbc3f06c, ; 82: lib-fr-Microsoft.Maui.Controls.resources.dll.so => 318
-	i64 u0x13beedefb0e28a45, ; 83: lib_System.Xml.XmlDocument.dll.so => 165
-	i64 u0x13f1e5e209e91af4, ; 84: lib_Java.Interop.dll.so => 172
-	i64 u0x13f1e880c25d96d1, ; 85: he/Microsoft.Maui.Controls.resources => 319
-	i64 u0x143d8ea60a6a4011, ; 86: Microsoft.Extensions.DependencyInjection.Abstractions => 183
-	i64 u0x1497051b917530bd, ; 87: lib_System.Net.WebSockets.dll.so => 83
-	i64 u0x14d612a531c79c05, ; 88: Xamarin.JSpecify.dll => 303
-	i64 u0x14e68447938213b7, ; 89: Xamarin.AndroidX.Collection.Ktx.dll => 235
-	i64 u0x152a448bd1e745a7, ; 90: Microsoft.Win32.Primitives => 4
-	i64 u0x1557de0138c445f4, ; 91: lib_Microsoft.Win32.Registry.dll.so => 5
-	i64 u0x15bdc156ed462f2f, ; 92: lib_System.IO.FileSystem.dll.so => 51
-	i64 u0x15e300c2c1668655, ; 93: System.Resources.Writer.dll => 103
-	i64 u0x16bf2a22df043a09, ; 94: System.IO.Pipes.dll => 56
-	i64 u0x16ea2b318ad2d830, ; 95: System.Security.Cryptography.Algorithms => 122
-	i64 u0x16eeae54c7ebcc08, ; 96: System.Reflection.dll => 100
-	i64 u0x17125c9a85b4929f, ; 97: lib_netstandard.dll.so => 171
-	i64 u0x1716866f7416792e, ; 98: lib_System.Security.AccessControl.dll.so => 120
-	i64 u0x174f71c46216e44a, ; 99: Xamarin.KotlinX.Coroutines.Core => 306
-	i64 u0x1752c12f1e1fc00c, ; 100: System.Core => 21
-	i64 u0x17b56e25558a5d36, ; 101: lib-hu-Microsoft.Maui.Controls.resources.dll.so => 322
-	i64 u0x17f9358913beb16a, ; 102: System.Text.Encodings.Web => 139
-	i64 u0x1809fb23f29ba44a, ; 103: lib_System.Reflection.TypeExtensions.dll.so => 99
-	i64 u0x18402a709e357f3b, ; 104: lib_Xamarin.KotlinX.Serialization.Core.Jvm.dll.so => 309
-	i64 u0x18a9befae51bb361, ; 105: System.Net.WebClient => 79
-	i64 u0x18f0ce884e87d89a, ; 106: nb/Microsoft.Maui.Controls.resources.dll => 328
-	i64 u0x19777fba3c41b398, ; 107: Xamarin.AndroidX.Startup.StartupRuntime.dll => 284
-	i64 u0x19a4c090f14ebb66, ; 108: System.Security.Claims => 121
-	i64 u0x1a91866a319e9259, ; 109: lib_System.Collections.Concurrent.dll.so => 8
-	i64 u0x1aac34d1917ba5d3, ; 110: lib_System.dll.so => 168
-	i64 u0x1aad60783ffa3e5b, ; 111: lib-th-Microsoft.Maui.Controls.resources.dll.so => 337
-	i64 u0x1aea8f1c3b282172, ; 112: lib_System.Net.Ping.dll.so => 71
-	i64 u0x1b4b7a1d0d265fa2, ; 113: Xamarin.Android.Glide.DiskLruCache => 220
-	i64 u0x1bbdb16cfa73e785, ; 114: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android => 263
-	i64 u0x1bc766e07b2b4241, ; 115: Xamarin.AndroidX.ResourceInspection.Annotation.dll => 278
-	i64 u0x1c753b5ff15bce1b, ; 116: Mono.Android.Runtime.dll => 174
-	i64 u0x1cd47467799d8250, ; 117: System.Threading.Tasks.dll => 148
-	i64 u0x1d23eafdc6dc346c, ; 118: System.Globalization.Calendars.dll => 40
-	i64 u0x1da4110562816681, ; 119: Xamarin.AndroidX.Security.SecurityCrypto.dll => 282
-	i64 u0x1db6820994506bf5, ; 120: System.IO.FileSystem.AccessControl.dll => 47
-	i64 u0x1dbb0c2c6a999acb, ; 121: System.Diagnostics.StackTrace => 30
-	i64 u0x1e3d87657e9659bc, ; 122: Xamarin.AndroidX.Navigation.UI => 275
-	i64 u0x1e57ec3104eb59d9, ; 123: lib_Supabase.Gotrue.dll.so => 211
-	i64 u0x1e71143913d56c10, ; 124: lib-ko-Microsoft.Maui.Controls.resources.dll.so => 326
-	i64 u0x1e7c31185e2fb266, ; 125: lib_System.Threading.Tasks.Parallel.dll.so => 147
-	i64 u0x1ed8fcce5e9b50a0, ; 126: Microsoft.Extensions.Options.dll => 190
-	i64 u0x1f055d15d807e1b2, ; 127: System.Xml.XmlSerializer => 166
-	i64 u0x1f1ed22c1085f044, ; 128: lib_System.Diagnostics.FileVersionInfo.dll.so => 28
-	i64 u0x1f61df9c5b94d2c1, ; 129: lib_System.Numerics.dll.so => 86
-	i64 u0x1f750bb5421397de, ; 130: lib_Xamarin.AndroidX.Tracing.Tracing.dll.so => 286
-	i64 u0x20237ea48006d7a8, ; 131: lib_System.Net.WebClient.dll.so => 79
-	i64 u0x209375905fcc1bad, ; 132: lib_System.IO.Compression.Brotli.dll.so => 43
-	i64 u0x20aa4eb4c5cf3260, ; 133: Supabase.Realtime.dll => 213
-	i64 u0x20fab3cf2dfbc8df, ; 134: lib_System.Diagnostics.Process.dll.so => 29
-	i64 u0x2110167c128cba15, ; 135: System.Globalization => 42
-	i64 u0x21419508838f7547, ; 136: System.Runtime.CompilerServices.VisualC => 105
-	i64 u0x2174319c0d835bc9, ; 137: System.Runtime => 119
-	i64 u0x2198e5bc8b7153fa, ; 138: Xamarin.AndroidX.Annotation.Experimental.dll => 225
-	i64 u0x219ea1b751a4dee4, ; 139: lib_System.IO.Compression.ZipFile.dll.so => 45
-	i64 u0x21cc7e445dcd5469, ; 140: System.Reflection.Emit.ILGeneration => 93
-	i64 u0x220fd4f2e7c48170, ; 141: th/Microsoft.Maui.Controls.resources => 337
-	i64 u0x224538d85ed15a82, ; 142: System.IO.Pipes => 56
-	i64 u0x22908438c6bed1af, ; 143: lib_System.Threading.Timer.dll.so => 151
-	i64 u0x237be844f1f812c7, ; 144: System.Threading.Thread.dll => 149
-	i64 u0x23852b3bdc9f7096, ; 145: System.Resources.ResourceManager => 102
-	i64 u0x23986dd7e5d4fc01, ; 146: System.IO.FileSystem.Primitives.dll => 49
-	i64 u0x2407aef2bbe8fadf, ; 147: System.Console => 20
-	i64 u0x240abe014b27e7d3, ; 148: Xamarin.AndroidX.Core.dll => 240
-	i64 u0x247619fe4413f8bf, ; 149: System.Runtime.Serialization.Primitives.dll => 116
-	i64 u0x24de8d301281575e, ; 150: Xamarin.Android.Glide => 218
-	i64 u0x252073cc3caa62c2, ; 151: fr/Microsoft.Maui.Controls.resources.dll => 318
-	i64 u0x256b8d41255f01b1, ; 152: Xamarin.Google.Crypto.Tink.Android => 299
-	i64 u0x2662c629b96b0b30, ; 153: lib_Xamarin.Kotlin.StdLib.dll.so => 304
-	i64 u0x268c1439f13bcc29, ; 154: lib_Microsoft.Extensions.Primitives.dll.so => 191
-	i64 u0x26a670e154a9c54b, ; 155: System.Reflection.Extensions.dll => 96
-	i64 u0x26d077d9678fe34f, ; 156: System.IO.dll => 58
-	i64 u0x270a44600c921861, ; 157: System.IdentityModel.Tokens.Jwt => 215
-	i64 u0x273f3515de5faf0d, ; 158: id/Microsoft.Maui.Controls.resources.dll => 323
-	i64 u0x2742545f9094896d, ; 159: hr/Microsoft.Maui.Controls.resources => 321
-	i64 u0x274d85d83ad40513, ; 160: lib_Xamarin.AndroidX.Window.WindowCore.dll.so => 295
-	i64 u0x2759af78ab94d39b, ; 161: System.Net.WebSockets => 83
-	i64 u0x27b2b16f3e9de038, ; 162: Xamarin.Google.Crypto.Tink.Android.dll => 299
-	i64 u0x27b410442fad6cf1, ; 163: Java.Interop.dll => 172
-	i64 u0x27b97e0d52c3034a, ; 164: System.Diagnostics.Debug => 26
-	i64 u0x2801845a2c71fbfb, ; 165: System.Net.Primitives.dll => 72
-	i64 u0x286835e259162700, ; 166: lib_Xamarin.AndroidX.ProfileInstaller.ProfileInstaller.dll.so => 276
-	i64 u0x28e52865585a1ebe, ; 167: Microsoft.Extensions.Diagnostics.Abstractions.dll => 184
-	i64 u0x2949f3617a02c6b2, ; 168: Xamarin.AndroidX.ExifInterface => 250
-	i64 u0x29aeab763a527e52, ; 169: lib_Xamarin.AndroidX.Navigation.Common.Android.dll.so => 271
-	i64 u0x2a128783efe70ba0, ; 170: uk/Microsoft.Maui.Controls.resources.dll => 339
-	i64 u0x2a3b095612184159, ; 171: lib_System.Net.NetworkInformation.dll.so => 70
-	i64 u0x2a6507a5ffabdf28, ; 172: System.Diagnostics.TraceSource.dll => 33
-	i64 u0x2ad156c8e1354139, ; 173: fi/Microsoft.Maui.Controls.resources => 317
-	i64 u0x2ad5d6b13b7a3e04, ; 174: System.ComponentModel.DataAnnotations.dll => 14
-	i64 u0x2af298f63581d886, ; 175: System.Text.RegularExpressions.dll => 141
-	i64 u0x2af615542f04da50, ; 176: System.IdentityModel.Tokens.Jwt.dll => 215
-	i64 u0x2afc1c4f898552ee, ; 177: lib_System.Formats.Asn1.dll.so => 38
-	i64 u0x2b148910ed40fbf9, ; 178: zh-Hant/Microsoft.Maui.Controls.resources.dll => 343
-	i64 u0x2b6989d78cba9a15, ; 179: Xamarin.AndroidX.Concurrent.Futures.dll => 236
-	i64 u0x2c42baa2af5f9385, ; 180: lib_MimeMapping.dll.so => 202
-	i64 u0x2c8bd14bb93a7d82, ; 181: lib-pl-Microsoft.Maui.Controls.resources.dll.so => 330
-	i64 u0x2cbd9262ca785540, ; 182: lib_System.Text.Encoding.CodePages.dll.so => 136
-	i64 u0x2cc9e1fed6257257, ; 183: lib_System.Reflection.Emit.Lightweight.dll.so => 94
-	i64 u0x2cd723e9fe623c7c, ; 184: lib_System.Private.Xml.Linq.dll.so => 90
-	i64 u0x2d169d318a968379, ; 185: System.Threading.dll => 152
-	i64 u0x2d20145f27cfc1d2, ; 186: Xamarin.AndroidX.Window.WindowCore.Jvm.dll => 296
-	i64 u0x2d47774b7d993f59, ; 187: sv/Microsoft.Maui.Controls.resources.dll => 336
-	i64 u0x2d5ffcae1ad0aaca, ; 188: System.Data.dll => 24
-	i64 u0x2db915caf23548d2, ; 189: System.Text.Json.dll => 140
-	i64 u0x2dcaa0bb15a4117a, ; 190: System.IO.UnmanagedMemoryStream.dll => 57
-	i64 u0x2e2ced2c3c6a1edc, ; 191: lib_System.Threading.AccessControl.dll.so => 142
-	i64 u0x2e5a40c319acb800, ; 192: System.IO.FileSystem => 51
-	i64 u0x2e6f1f226821322a, ; 193: el/Microsoft.Maui.Controls.resources.dll => 315
-	i64 u0x2f02f94df3200fe5, ; 194: System.Diagnostics.Process => 29
-	i64 u0x2f2e98e1c89b1aff, ; 195: System.Xml.ReaderWriter => 160
-	i64 u0x2f5911d9ba814e4e, ; 196: System.Diagnostics.Tracing => 34
-	i64 u0x2f84070a459bc31f, ; 197: lib_System.Xml.dll.so => 167
-	i64 u0x301c0086136fedbd, ; 198: lib_BirdMessenger.dll.so => 178
-	i64 u0x309ee9eeec09a71e, ; 199: lib_Xamarin.AndroidX.Fragment.dll.so => 251
-	i64 u0x309f2bedefa9a318, ; 200: Microsoft.IdentityModel.Abstractions => 192
-	i64 u0x30c6dda129408828, ; 201: System.IO.IsolatedStorage => 52
-	i64 u0x31195fef5d8fb552, ; 202: _Microsoft.Android.Resource.Designer.dll => 344
-	i64 u0x312c8ed623cbfc8d, ; 203: Xamarin.AndroidX.Window.dll => 294
-	i64 u0x31496b779ed0663d, ; 204: lib_System.Reflection.DispatchProxy.dll.so => 92
-	i64 u0x32243413e774362a, ; 205: Xamarin.AndroidX.CardView.dll => 232
-	i64 u0x3235427f8d12dae1, ; 206: lib_System.Drawing.Primitives.dll.so => 35
-	i64 u0x329753a17a517811, ; 207: fr/Microsoft.Maui.Controls.resources => 318
-	i64 u0x32aa989ff07a84ff, ; 208: lib_System.Xml.ReaderWriter.dll.so => 160
-	i64 u0x32dbba5d256b19d3, ; 209: Supabase.Core => 209
-	i64 u0x33829542f112d59b, ; 210: System.Collections.Immutable => 9
-	i64 u0x33a31443733849fe, ; 211: lib-es-Microsoft.Maui.Controls.resources.dll.so => 316
-	i64 u0x341abc357fbb4ebf, ; 212: lib_System.Net.Sockets.dll.so => 78
-	i64 u0x346a212343615ac5, ; 213: lib_System.Linq.AsyncEnumerable.dll.so => 59
-	i64 u0x3496c1e2dcaf5ecc, ; 214: lib_System.IO.Pipes.AccessControl.dll.so => 55
-	i64 u0x34dfd74fe2afcf37, ; 215: Microsoft.Maui => 199
-	i64 u0x34e292762d9615df, ; 216: cs/Microsoft.Maui.Controls.resources.dll => 312
-	i64 u0x3508234247f48404, ; 217: Microsoft.Maui.Controls => 197
-	i64 u0x353590da528c9d22, ; 218: System.ComponentModel.Annotations => 13
-	i64 u0x3549870798b4cd30, ; 219: lib_Xamarin.AndroidX.ViewPager2.dll.so => 293
-	i64 u0x355282fc1c909694, ; 220: Microsoft.Extensions.Configuration => 180
-	i64 u0x3552fc5d578f0fbf, ; 221: Xamarin.AndroidX.Arch.Core.Common => 229
-	i64 u0x355c649948d55d97, ; 222: lib_System.Runtime.Intrinsics.dll.so => 111
-	i64 u0x35ea9d1c6834bc8c, ; 223: Xamarin.AndroidX.Lifecycle.ViewModel.Ktx.dll => 266
-	i64 u0x3628ab68db23a01a, ; 224: lib_System.Diagnostics.Tools.dll.so => 32
-	i64 u0x3673b042508f5b6b, ; 225: lib_System.Runtime.Extensions.dll.so => 106
-	i64 u0x36740f1a8ecdc6c4, ; 226: System.Numerics => 86
-	i64 u0x36b2b50fdf589ae2, ; 227: System.Reflection.Emit.Lightweight => 94
-	i64 u0x36cada77dc79928b, ; 228: System.IO.MemoryMappedFiles => 53
-	i64 u0x374ef46b06791af6, ; 229: System.Reflection.Primitives.dll => 98
-	i64 u0x376bf93e521a5417, ; 230: lib_Xamarin.Jetbrains.Annotations.dll.so => 302
-	i64 u0x37bc29f3183003b6, ; 231: lib_System.IO.dll.so => 58
-	i64 u0x380134e03b1e160a, ; 232: System.Collections.Immutable.dll => 9
-	i64 u0x38049b5c59b39324, ; 233: System.Runtime.CompilerServices.Unsafe => 104
-	i64 u0x385c17636bb6fe6e, ; 234: Xamarin.AndroidX.CustomView.dll => 244
-	i64 u0x38869c811d74050e, ; 235: System.Net.NameResolution.dll => 69
-	i64 u0x393c226616977fdb, ; 236: lib_Xamarin.AndroidX.ViewPager.dll.so => 292
-	i64 u0x395b3053dde89e41, ; 237: lib_System.Reactive.dll.so => 216
-	i64 u0x395e37c3334cf82a, ; 238: lib-ca-Microsoft.Maui.Controls.resources.dll.so => 311
-	i64 u0x39a87563fdb248a0, ; 239: System.Reactive.dll => 216
-	i64 u0x39c3107c28752af1, ; 240: lib_Microsoft.Extensions.FileProviders.Abstractions.dll.so => 185
-	i64 u0x3ab5859054645f72, ; 241: System.Security.Cryptography.Primitives.dll => 127
-	i64 u0x3ad75090c3fac0e9, ; 242: lib_Xamarin.AndroidX.ResourceInspection.Annotation.dll.so => 278
-	i64 u0x3ae44ac43a1fbdbb, ; 243: System.Runtime.Serialization => 118
-	i64 u0x3b860f9932505633, ; 244: lib_System.Text.Encoding.Extensions.dll.so => 137
-	i64 u0x3be99b43dd39dd37, ; 245: Xamarin.AndroidX.SavedState.SavedState.Android => 280
-	i64 u0x3bea9ebe8c027c01, ; 246: lib_Microsoft.IdentityModel.Tokens.dll.so => 195
-	i64 u0x3c3aafb6b3a00bf6, ; 247: lib_System.Security.Cryptography.X509Certificates.dll.so => 128
-	i64 u0x3c4049146b59aa90, ; 248: System.Runtime.InteropServices.JavaScript => 108
-	i64 u0x3c7c495f58ac5ee9, ; 249: Xamarin.Kotlin.StdLib => 304
-	i64 u0x3c7e5ed3d5db71bb, ; 250: System.Security => 133
-	i64 u0x3cd9d281d402eb9b, ; 251: Xamarin.AndroidX.Browser.dll => 231
-	i64 u0x3d1c50cc001a991e, ; 252: Xamarin.Google.Guava.ListenableFuture.dll => 301
-	i64 u0x3d2b1913edfc08d7, ; 253: lib_System.Threading.ThreadPool.dll.so => 150
-	i64 u0x3d46f0b995082740, ; 254: System.Xml.Linq => 159
-	i64 u0x3d8a8f400514a790, ; 255: Xamarin.AndroidX.Fragment.Ktx.dll => 252
-	i64 u0x3d9c2a242b040a50, ; 256: lib_Xamarin.AndroidX.Core.dll.so => 240
-	i64 u0x3dbb6b9f5ab90fa7, ; 257: lib_Xamarin.AndroidX.DynamicAnimation.dll.so => 247
-	i64 u0x3e5441657549b213, ; 258: Xamarin.AndroidX.ResourceInspection.Annotation => 278
-	i64 u0x3e57d4d195c53c2e, ; 259: System.Reflection.TypeExtensions => 99
-	i64 u0x3e616ab4ed1f3f15, ; 260: lib_System.Data.dll.so => 24
-	i64 u0x3f1d226e6e06db7e, ; 261: Xamarin.AndroidX.SlidingPaneLayout.dll => 283
-	i64 u0x3f510adf788828dd, ; 262: System.Threading.Tasks.Extensions => 146
-	i64 u0x3f6f5914291cdcf7, ; 263: Microsoft.Extensions.Hosting.Abstractions => 186
-	i64 u0x4007fff231dcbc12, ; 264: lib_Supabase.Postgrest.dll.so => 212
-	i64 u0x407a10bb4bf95829, ; 265: lib_Xamarin.AndroidX.Navigation.Common.dll.so => 270
-	i64 u0x40c98b6bd77346d4, ; 266: Microsoft.VisualBasic.dll => 3
-	i64 u0x41833cf766d27d96, ; 267: mscorlib => 170
-	i64 u0x41cab042be111c34, ; 268: lib_Xamarin.AndroidX.AppCompat.AppCompatResources.dll.so => 228
-	i64 u0x423a9ecc4d905a88, ; 269: lib_System.Resources.ResourceManager.dll.so => 102
-	i64 u0x423bf51ae7def810, ; 270: System.Xml.XPath => 164
-	i64 u0x42462ff15ddba223, ; 271: System.Resources.Reader.dll => 101
-	i64 u0x4291015ff4e5ef71, ; 272: Xamarin.AndroidX.Core.ViewTree.dll => 242
-	i64 u0x42a31b86e6ccc3f0, ; 273: System.Diagnostics.Contracts => 25
-	i64 u0x430e95b891249788, ; 274: lib_System.Reflection.Emit.dll.so => 95
-	i64 u0x43375950ec7c1b6a, ; 275: netstandard.dll => 171
-	i64 u0x434c4e1d9284cdae, ; 276: Mono.Android.dll => 175
-	i64 u0x43505013578652a0, ; 277: lib_Xamarin.AndroidX.Activity.Ktx.dll.so => 223
-	i64 u0x437d06c381ed575a, ; 278: lib_Microsoft.VisualBasic.dll.so => 3
-	i64 u0x43950f84de7cc79a, ; 279: pl/Microsoft.Maui.Controls.resources.dll => 330
-	i64 u0x43c077442b230f64, ; 280: Xamarin.AndroidX.Tracing.Tracing.Android => 287
-	i64 u0x43e8ca5bc927ff37, ; 281: lib_Xamarin.AndroidX.Emoji2.ViewsHelper.dll.so => 249
-	i64 u0x448bd33429269b19, ; 282: Microsoft.CSharp => 1
-	i64 u0x4499fa3c8e494654, ; 283: lib_System.Runtime.Serialization.Primitives.dll.so => 116
-	i64 u0x4515080865a951a5, ; 284: Xamarin.Kotlin.StdLib.dll => 304
-	i64 u0x4545802489b736b9, ; 285: Xamarin.AndroidX.Fragment.Ktx => 252
-	i64 u0x454b4d1e66bb783c, ; 286: Xamarin.AndroidX.Lifecycle.Process => 259
-	i64 u0x458d2df79ac57c1d, ; 287: lib_System.IdentityModel.Tokens.Jwt.dll.so => 215
-	i64 u0x45c40276a42e283e, ; 288: System.Diagnostics.TraceSource => 33
-	i64 u0x45d443f2a29adc37, ; 289: System.AppContext.dll => 6
-	i64 u0x46a4213bc97fe5ae, ; 290: lib-ru-Microsoft.Maui.Controls.resources.dll.so => 334
-	i64 u0x47358bd471172e1d, ; 291: lib_System.Xml.Linq.dll.so => 159
-	i64 u0x47daf4e1afbada10, ; 292: pt/Microsoft.Maui.Controls.resources => 332
-	i64 u0x480c0a47dd42dd81, ; 293: lib_System.IO.MemoryMappedFiles.dll.so => 53
-	i64 u0x49e952f19a4e2022, ; 294: System.ObjectModel => 87
-	i64 u0x49f9e6948a8131e4, ; 295: lib_Xamarin.AndroidX.VersionedParcelable.dll.so => 291
-	i64 u0x4a5667b2462a664b, ; 296: lib_Xamarin.AndroidX.Navigation.UI.dll.so => 275
-	i64 u0x4a7a18981dbd56bc, ; 297: System.IO.Compression.FileSystem.dll => 44
-	i64 u0x4aa5c60350917c06, ; 298: lib_Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx.dll.so => 258
-	i64 u0x4b07a0ed0ab33ff4, ; 299: System.Runtime.Extensions.dll => 106
-	i64 u0x4b576d47ac054f3c, ; 300: System.IO.FileSystem.AccessControl => 47
-	i64 u0x4b7b6532ded934b7, ; 301: System.Text.Json => 140
-	i64 u0x4c2029a97af23a8d, ; 302: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android => 268
-	i64 u0x4c7755cf07ad2d5f, ; 303: System.Net.Http.Json.dll => 65
-	i64 u0x4cc5f15266470798, ; 304: lib_Xamarin.AndroidX.Loader.dll.so => 269
-	i64 u0x4cf6f67dc77aacd2, ; 305: System.Net.NetworkInformation.dll => 70
-	i64 u0x4d3183dd245425d4, ; 306: System.Net.WebSockets.Client.dll => 82
-	i64 u0x4d479f968a05e504, ; 307: System.Linq.Expressions.dll => 60
-	i64 u0x4d55a010ffc4faff, ; 308: System.Private.Xml => 91
-	i64 u0x4d5cbe77561c5b2e, ; 309: System.Web.dll => 157
-	i64 u0x4d77512dbd86ee4c, ; 310: lib_Xamarin.AndroidX.Arch.Core.Common.dll.so => 229
-	i64 u0x4d7793536e79c309, ; 311: System.ServiceProcess => 135
-	i64 u0x4d95fccc1f67c7ca, ; 312: System.Runtime.Loader.dll => 112
-	i64 u0x4db014bf0ff1c9c1, ; 313: System.Linq.AsyncEnumerable => 59
-	i64 u0x4dcf44c3c9b076a2, ; 314: it/Microsoft.Maui.Controls.resources.dll => 324
-	i64 u0x4dd9247f1d2c3235, ; 315: Xamarin.AndroidX.Loader.dll => 269
-	i64 u0x4e2aeee78e2c4a87, ; 316: Xamarin.AndroidX.ProfileInstaller.ProfileInstaller => 276
-	i64 u0x4e32f00cb0937401, ; 317: Mono.Android.Runtime => 174
-	i64 u0x4e5eea4668ac2b18, ; 318: System.Text.Encoding.CodePages => 136
-	i64 u0x4e8cf86fe3ecbfcd, ; 319: Supabase => 208
-	i64 u0x4ebd0c4b82c5eefc, ; 320: lib_System.Threading.Channels.dll.so => 143
-	i64 u0x4ee8eaa9c9c1151a, ; 321: System.Globalization.Calendars => 40
-	i64 u0x4f0f420f6c43234c, ; 322: MimeMapping => 202
-	i64 u0x4f21ee6ef9eb527e, ; 323: ca/Microsoft.Maui.Controls.resources => 311
-	i64 u0x4ffd65baff757598, ; 324: Microsoft.IdentityModel.Tokens => 195
-	i64 u0x5037f0be3c28c7a3, ; 325: lib_Microsoft.Maui.Controls.dll.so => 197
-	i64 u0x50c3a29b21050d45, ; 326: System.Linq.Parallel.dll => 61
-	i64 u0x5131bbe80989093f, ; 327: Xamarin.AndroidX.Lifecycle.ViewModel.Android.dll => 265
-	i64 u0x516324a5050a7e3c, ; 328: System.Net.WebProxy => 81
-	i64 u0x516d6f0b21a303de, ; 329: lib_System.Diagnostics.Contracts.dll.so => 25
-	i64 u0x51bb8a2afe774e32, ; 330: System.Drawing => 36
-	i64 u0x5247c5c32a4140f0, ; 331: System.Resources.Reader => 101
-	i64 u0x526bb15e3c386364, ; 332: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.dll => 262
-	i64 u0x526ce79eb8e90527, ; 333: lib_System.Net.Primitives.dll.so => 72
-	i64 u0x52829f00b4467c38, ; 334: lib_System.Data.Common.dll.so => 22
-	i64 u0x529ffe06f39ab8db, ; 335: Xamarin.AndroidX.Core => 240
-	i64 u0x52ff996554dbf352, ; 336: Microsoft.Maui.Graphics => 201
-	i64 u0x535f7e40e8fef8af, ; 337: lib-sk-Microsoft.Maui.Controls.resources.dll.so => 335
-	i64 u0x53978aac584c666e, ; 338: lib_System.Security.Cryptography.Cng.dll.so => 123
-	i64 u0x53a96d5c86c9e194, ; 339: System.Net.NetworkInformation => 70
-	i64 u0x53be1038a61e8d44, ; 340: System.Runtime.InteropServices.RuntimeInformation.dll => 109
-	i64 u0x53c3014b9437e684, ; 341: lib-zh-HK-Microsoft.Maui.Controls.resources.dll.so => 341
-	i64 u0x5435e6f049e9bc37, ; 342: System.Security.Claims.dll => 121
-	i64 u0x54795225dd1587af, ; 343: lib_System.Runtime.dll.so => 119
-	i64 u0x547a34f14e5f6210, ; 344: Xamarin.AndroidX.Lifecycle.Common.dll => 254
-	i64 u0x54b851bc9b470503, ; 345: Xamarin.AndroidX.Navigation.Common.Android => 271
-	i64 u0x556e8b63b660ab8b, ; 346: Xamarin.AndroidX.Lifecycle.Common.Jvm.dll => 255
-	i64 u0x5588627c9a108ec9, ; 347: System.Collections.Specialized => 11
-	i64 u0x55a898e4f42e3fae, ; 348: Microsoft.VisualBasic.Core.dll => 2
-	i64 u0x55fa0c610fe93bb1, ; 349: lib_System.Security.Cryptography.OpenSsl.dll.so => 126
-	i64 u0x56442b99bc64bb47, ; 350: System.Runtime.Serialization.Xml.dll => 117
-	i64 u0x56a8b26e1aeae27b, ; 351: System.Threading.Tasks.Dataflow => 145
-	i64 u0x56f932d61e93c07f, ; 352: System.Globalization.Extensions => 41
-	i64 u0x571c5cfbec5ae8e2, ; 353: System.Private.Uri => 89
-	i64 u0x576499c9f52fea31, ; 354: Xamarin.AndroidX.Annotation => 224
-	i64 u0x578cd35c91d7b347, ; 355: lib_SQLitePCLRaw.core.dll.so => 206
-	i64 u0x579a06fed6eec900, ; 356: System.Private.CoreLib.dll => 177
-	i64 u0x57adda3c951abb33, ; 357: Microsoft.Extensions.Hosting.Abstractions.dll => 186
-	i64 u0x57c542c14049b66d, ; 358: System.Diagnostics.DiagnosticSource => 27
-	i64 u0x581a8bd5cfda563e, ; 359: System.Threading.Timer => 151
-	i64 u0x58601b2dda4a27b9, ; 360: lib-ja-Microsoft.Maui.Controls.resources.dll.so => 325
-	i64 u0x58688d9af496b168, ; 361: Microsoft.Extensions.DependencyInjection.dll => 182
-	i64 u0x588c167a79db6bfb, ; 362: lib_Xamarin.Google.ErrorProne.Annotations.dll.so => 300
-	i64 u0x5906028ae5151104, ; 363: Xamarin.AndroidX.Activity.Ktx => 223
-	i64 u0x595a356d23e8da9a, ; 364: lib_Microsoft.CSharp.dll.so => 1
-	i64 u0x59f9e60b9475085f, ; 365: lib_Xamarin.AndroidX.Annotation.Experimental.dll.so => 225
-	i64 u0x5a745f5101a75527, ; 366: lib_System.IO.Compression.FileSystem.dll.so => 44
-	i64 u0x5a89a886ae30258d, ; 367: lib_Xamarin.AndroidX.CoordinatorLayout.dll.so => 239
-	i64 u0x5a8f6699f4a1caa9, ; 368: lib_System.Threading.dll.so => 152
-	i64 u0x5ae9cd33b15841bf, ; 369: System.ComponentModel => 18
-	i64 u0x5b54391bdc6fcfe6, ; 370: System.Private.DataContractSerialization => 88
-	i64 u0x5b5f0e240a06a2a2, ; 371: da/Microsoft.Maui.Controls.resources.dll => 313
-	i64 u0x5b8109e8e14c5e3e, ; 372: System.Globalization.Extensions.dll => 41
-	i64 u0x5bddd04d72a9e350, ; 373: Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx => 258
-	i64 u0x5bdf16b09da116ab, ; 374: Xamarin.AndroidX.Collection => 233
-	i64 u0x5c019d5266093159, ; 375: lib_Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android.dll.so => 263
-	i64 u0x5c30a4a35f9cc8c4, ; 376: lib_System.Reflection.Extensions.dll.so => 96
-	i64 u0x5c393624b8176517, ; 377: lib_Microsoft.Extensions.Logging.dll.so => 187
-	i64 u0x5c53c29f5073b0c9, ; 378: System.Diagnostics.FileVersionInfo => 28
-	i64 u0x5c87463c575c7616, ; 379: lib_System.Globalization.Extensions.dll.so => 41
-	i64 u0x5d0a4a29b02d9d3c, ; 380: System.Net.WebHeaderCollection.dll => 80
-	i64 u0x5d40c9b15181641f, ; 381: lib_Xamarin.AndroidX.Emoji2.dll.so => 248
-	i64 u0x5d6ca10d35e9485b, ; 382: lib_Xamarin.AndroidX.Concurrent.Futures.dll.so => 236
-	i64 u0x5d7ec76c1c703055, ; 383: System.Threading.Tasks.Parallel => 147
-	i64 u0x5db0cbbd1028510e, ; 384: lib_System.Runtime.InteropServices.dll.so => 110
-	i64 u0x5db30905d3e5013b, ; 385: Xamarin.AndroidX.Collection.Jvm.dll => 234
-	i64 u0x5e467bc8f09ad026, ; 386: System.Collections.Specialized.dll => 11
-	i64 u0x5e5173b3208d97e7, ; 387: System.Runtime.Handles.dll => 107
-	i64 u0x5ea92fdb19ec8c4c, ; 388: System.Text.Encodings.Web.dll => 139
-	i64 u0x5eb8046dd40e9ac3, ; 389: System.ComponentModel.Primitives => 16
-	i64 u0x5ec272d219c9aba4, ; 390: System.Security.Cryptography.Csp.dll => 124
-	i64 u0x5eee1376d94c7f5e, ; 391: System.Net.HttpListener.dll => 67
-	i64 u0x5f36ccf5c6a57e24, ; 392: System.Xml.ReaderWriter.dll => 160
-	i64 u0x5f4294b9b63cb842, ; 393: System.Data.Common => 22
-	i64 u0x5f9a2d823f664957, ; 394: lib-el-Microsoft.Maui.Controls.resources.dll.so => 315
-	i64 u0x5fa6da9c3cd8142a, ; 395: lib_Xamarin.KotlinX.Serialization.Core.dll.so => 308
-	i64 u0x5fac98e0b37a5b9d, ; 396: System.Runtime.CompilerServices.Unsafe.dll => 104
-	i64 u0x609f4b7b63d802d4, ; 397: lib_Microsoft.Extensions.DependencyInjection.dll.so => 182
-	i64 u0x60cd4e33d7e60134, ; 398: Xamarin.KotlinX.Coroutines.Core.Jvm => 307
-	i64 u0x60f62d786afcf130, ; 399: System.Memory => 64
-	i64 u0x61bb78c89f867353, ; 400: System.IO => 58
-	i64 u0x61be8d1299194243, ; 401: Microsoft.Maui.Controls.Xaml => 198
-	i64 u0x61d2cba29557038f, ; 402: de/Microsoft.Maui.Controls.resources => 314
-	i64 u0x61d88f399afb2f45, ; 403: lib_System.Runtime.Loader.dll.so => 112
-	i64 u0x622eef6f9e59068d, ; 404: System.Private.CoreLib => 177
-	i64 u0x639fb99a7bef11de, ; 405: Xamarin.AndroidX.Navigation.Runtime.Android.dll => 274
-	i64 u0x63d5e3aa4ef9b931, ; 406: Xamarin.KotlinX.Coroutines.Android.dll => 305
-	i64 u0x63f1f6883c1e23c2, ; 407: lib_System.Collections.Immutable.dll.so => 9
-	i64 u0x6400f68068c1e9f1, ; 408: Xamarin.Google.Android.Material.dll => 297
-	i64 u0x640e3b14dbd325c2, ; 409: System.Security.Cryptography.Algorithms.dll => 122
-	i64 u0x64587004560099b9, ; 410: System.Reflection => 100
-	i64 u0x64b1529a438a3c45, ; 411: lib_System.Runtime.Handles.dll.so => 107
-	i64 u0x64b61dd9da8a4d57, ; 412: System.Net.ServerSentEvents.dll => 76
-	i64 u0x6565fba2cd8f235b, ; 413: Xamarin.AndroidX.Lifecycle.ViewModel.Ktx => 266
-	i64 u0x65ecac39144dd3cc, ; 414: Microsoft.Maui.Controls.dll => 197
-	i64 u0x65ece51227bfa724, ; 415: lib_System.Runtime.Numerics.dll.so => 113
-	i64 u0x661722438787b57f, ; 416: Xamarin.AndroidX.Annotation.Jvm.dll => 226
-	i64 u0x6679b2337ee6b22a, ; 417: lib_System.IO.FileSystem.Primitives.dll.so => 49
-	i64 u0x667c66a03dd97d40, ; 418: System.Linq.AsyncEnumerable.dll => 59
-	i64 u0x6692e924eade1b29, ; 419: lib_System.Console.dll.so => 20
-	i64 u0x66a4e5c6a3fb0bae, ; 420: lib_Xamarin.AndroidX.Lifecycle.ViewModel.Android.dll.so => 265
-	i64 u0x66d13304ce1a3efa, ; 421: Xamarin.AndroidX.CursorAdapter => 243
-	i64 u0x674303f65d8fad6f, ; 422: lib_System.Net.Quic.dll.so => 73
-	i64 u0x6756ca4cad62e9d6, ; 423: lib_Xamarin.AndroidX.ConstraintLayout.Core.dll.so => 238
-	i64 u0x67c0802770244408, ; 424: System.Windows.dll => 158
-	i64 u0x68100b69286e27cd, ; 425: lib_System.Formats.Tar.dll.so => 39
-	i64 u0x68558ec653afa616, ; 426: lib-da-Microsoft.Maui.Controls.resources.dll.so => 313
-	i64 u0x6872ec7a2e36b1ac, ; 427: System.Drawing.Primitives.dll => 35
-	i64 u0x68fbbbe2eb455198, ; 428: System.Formats.Asn1 => 38
-	i64 u0x69063fc0ba8e6bdd, ; 429: he/Microsoft.Maui.Controls.resources.dll => 319
-	i64 u0x6a4d7577b2317255, ; 430: System.Runtime.InteropServices.dll => 110
-	i64 u0x6ace3b74b15ee4a4, ; 431: nb/Microsoft.Maui.Controls.resources => 328
-	i64 u0x6afcedb171067e2b, ; 432: System.Core.dll => 21
-	i64 u0x6bef98e124147c24, ; 433: Xamarin.Jetbrains.Annotations => 302
-	i64 u0x6ca323bb74a4c28a, ; 434: Supabase.Storage.dll => 214
-	i64 u0x6ce874bff138ce2b, ; 435: Xamarin.AndroidX.Lifecycle.ViewModel.dll => 264
-	i64 u0x6d12bfaa99c72b1f, ; 436: lib_Microsoft.Maui.Graphics.dll.so => 201
-	i64 u0x6d70755158ca866e, ; 437: lib_System.ComponentModel.EventBasedAsync.dll.so => 15
-	i64 u0x6d79993361e10ef2, ; 438: Microsoft.Extensions.Primitives => 191
-	i64 u0x6d7eeca99577fc8b, ; 439: lib_System.Net.WebProxy.dll.so => 81
-	i64 u0x6d8515b19946b6a2, ; 440: System.Net.WebProxy.dll => 81
-	i64 u0x6d86d56b84c8eb71, ; 441: lib_Xamarin.AndroidX.CursorAdapter.dll.so => 243
-	i64 u0x6d9bea6b3e895cf7, ; 442: Microsoft.Extensions.Primitives.dll => 191
-	i64 u0x6e25a02c3833319a, ; 443: lib_Xamarin.AndroidX.Navigation.Fragment.dll.so => 272
-	i64 u0x6e79c6bd8627412a, ; 444: Xamarin.AndroidX.SavedState.SavedState.Ktx => 281
-	i64 u0x6e838d9a2a6f6c9e, ; 445: lib_System.ValueTuple.dll.so => 155
-	i64 u0x6e9965ce1095e60a, ; 446: lib_System.Core.dll.so => 21
-	i64 u0x6f549bdbd19c7a4d, ; 447: Supabase.Gotrue => 211
-	i64 u0x6fd2265da78b93a4, ; 448: lib_Microsoft.Maui.dll.so => 199
-	i64 u0x6fdfc7de82c33008, ; 449: cs/Microsoft.Maui.Controls.resources => 312
-	i64 u0x6ffc4967cc47ba57, ; 450: System.IO.FileSystem.Watcher.dll => 50
-	i64 u0x701cd46a1c25a5fe, ; 451: System.IO.FileSystem.dll => 51
-	i64 u0x70e99f48c05cb921, ; 452: tr/Microsoft.Maui.Controls.resources.dll => 338
-	i64 u0x70fd3deda22442d2, ; 453: lib-nb-Microsoft.Maui.Controls.resources.dll.so => 328
-	i64 u0x71485e7ffdb4b958, ; 454: System.Reflection.Extensions => 96
-	i64 u0x7162a2fce67a945f, ; 455: lib_Xamarin.Android.Glide.Annotations.dll.so => 219
-	i64 u0x717530326f808838, ; 456: lib_Microsoft.Extensions.Diagnostics.Abstractions.dll.so => 184
-	i64 u0x71a495ea3761dde8, ; 457: lib-it-Microsoft.Maui.Controls.resources.dll.so => 324
-	i64 u0x71ad672adbe48f35, ; 458: System.ComponentModel.Primitives.dll => 16
-	i64 u0x720f102581a4a5c8, ; 459: Xamarin.AndroidX.Core.ViewTree => 242
-	i64 u0x725f5a9e82a45c81, ; 460: System.Security.Cryptography.Encoding => 125
-	i64 u0x72b1fb4109e08d7b, ; 461: lib-hr-Microsoft.Maui.Controls.resources.dll.so => 321
-	i64 u0x72e0300099accce1, ; 462: System.Xml.XPath.XDocument => 163
-	i64 u0x730bfb248998f67a, ; 463: System.IO.Compression.ZipFile => 45
-	i64 u0x732b2d67b9e5c47b, ; 464: Xamarin.Google.ErrorProne.Annotations.dll => 300
-	i64 u0x734b76fdc0dc05bb, ; 465: lib_GoogleGson.dll.so => 179
-	i64 u0x73a6be34e822f9d1, ; 466: lib_System.Runtime.Serialization.dll.so => 118
-	i64 u0x73e4ce94e2eb6ffc, ; 467: lib_System.Memory.dll.so => 64
-	i64 u0x743a1eccf080489a, ; 468: WindowsBase.dll => 169
-	i64 u0x74fcb5b9d3ee6884, ; 469: Plugin.LocalNotification => 203
-	i64 u0x755a91767330b3d4, ; 470: lib_Microsoft.Extensions.Configuration.dll.so => 180
-	i64 u0x75c326eb821b85c4, ; 471: lib_System.ComponentModel.DataAnnotations.dll.so => 14
-	i64 u0x76012e7334db86e5, ; 472: lib_Xamarin.AndroidX.SavedState.dll.so => 279
-	i64 u0x76ca07b878f44da0, ; 473: System.Runtime.Numerics.dll => 113
-	i64 u0x7736c8a96e51a061, ; 474: lib_Xamarin.AndroidX.Annotation.Jvm.dll.so => 226
-	i64 u0x778a805e625329ef, ; 475: System.Linq.Parallel => 61
-	i64 u0x77d9074d8f33a303, ; 476: lib_System.Net.ServerSentEvents.dll.so => 76
-	i64 u0x77f8a4acc2fdc449, ; 477: System.Security.Cryptography.Cng.dll => 123
-	i64 u0x780bc73597a503a9, ; 478: lib-ms-Microsoft.Maui.Controls.resources.dll.so => 327
-	i64 u0x782c5d8eb99ff201, ; 479: lib_Microsoft.VisualBasic.Core.dll.so => 2
-	i64 u0x783606d1e53e7a1a, ; 480: th/Microsoft.Maui.Controls.resources.dll => 337
-	i64 u0x78a45e51311409b6, ; 481: Xamarin.AndroidX.Fragment.dll => 251
-	i64 u0x78ed4ab8f9d800a1, ; 482: Xamarin.AndroidX.Lifecycle.ViewModel => 264
-	i64 u0x7a5207a7c82d30b4, ; 483: lib_Xamarin.JSpecify.dll.so => 303
-	i64 u0x7a5d8076a9ed8822, ; 484: Asistente.dll => 0
-	i64 u0x7a7e7eddf79c5d26, ; 485: lib_Xamarin.AndroidX.Lifecycle.ViewModel.dll.so => 264
-	i64 u0x7a9a57d43b0845fa, ; 486: System.AppContext => 6
-	i64 u0x7ad0f4f1e5d08183, ; 487: Xamarin.AndroidX.Collection.dll => 233
-	i64 u0x7adb8da2ac89b647, ; 488: fi/Microsoft.Maui.Controls.resources.dll => 317
-	i64 u0x7b13d9eaa944ade8, ; 489: Xamarin.AndroidX.DynamicAnimation.dll => 247
-	i64 u0x7b4927e421291c41, ; 490: Microsoft.IdentityModel.JsonWebTokens.dll => 193
-	i64 u0x7bef86a4335c4870, ; 491: System.ComponentModel.TypeConverter => 17
-	i64 u0x7c0820144cd34d6a, ; 492: sk/Microsoft.Maui.Controls.resources.dll => 335
-	i64 u0x7c2a0bd1e0f988fc, ; 493: lib-de-Microsoft.Maui.Controls.resources.dll.so => 314
-	i64 u0x7c41d387501568ba, ; 494: System.Net.WebClient.dll => 79
-	i64 u0x7c482cd79bd24b13, ; 495: lib_Xamarin.AndroidX.ConstraintLayout.dll.so => 237
-	i64 u0x7c60acf6404e96b6, ; 496: Xamarin.AndroidX.Navigation.Common.Android.dll => 271
-	i64 u0x7cd2ec8eaf5241cd, ; 497: System.Security.dll => 133
-	i64 u0x7cf9ae50dd350622, ; 498: Xamarin.Jetbrains.Annotations.dll => 302
-	i64 u0x7d649b75d580bb42, ; 499: ms/Microsoft.Maui.Controls.resources.dll => 327
-	i64 u0x7d8ee2bdc8e3aad1, ; 500: System.Numerics.Vectors => 85
-	i64 u0x7df5df8db8eaa6ac, ; 501: Microsoft.Extensions.Logging.Debug => 189
-	i64 u0x7dfc3d6d9d8d7b70, ; 502: System.Collections => 12
-	i64 u0x7e2e564fa2f76c65, ; 503: lib_System.Diagnostics.Tracing.dll.so => 34
-	i64 u0x7e302e110e1e1346, ; 504: lib_System.Security.Claims.dll.so => 121
-	i64 u0x7e4465b3f78ad8d0, ; 505: Xamarin.KotlinX.Serialization.Core.dll => 308
-	i64 u0x7e571cad5915e6c3, ; 506: lib_Xamarin.AndroidX.Lifecycle.Process.dll.so => 259
-	i64 u0x7e6ac99e4e8df72f, ; 507: System.IO.Hashing => 176
-	i64 u0x7e6b1ca712437d7d, ; 508: Xamarin.AndroidX.Emoji2.ViewsHelper => 249
-	i64 u0x7e946809d6008ef2, ; 509: lib_System.ObjectModel.dll.so => 87
-	i64 u0x7ea0272c1b4a9635, ; 510: lib_Xamarin.Android.Glide.dll.so => 218
-	i64 u0x7ecc13347c8fd849, ; 511: lib_System.ComponentModel.dll.so => 18
-	i64 u0x7f00ddd9b9ca5a13, ; 512: Xamarin.AndroidX.ViewPager.dll => 292
-	i64 u0x7f9351cd44b1273f, ; 513: Microsoft.Extensions.Configuration.Abstractions => 181
-	i64 u0x7fbd557c99b3ce6f, ; 514: lib_Xamarin.AndroidX.Lifecycle.LiveData.Core.dll.so => 257
-	i64 u0x8076a9a44a2ca331, ; 515: System.Net.Quic => 73
-	i64 u0x80da183a87731838, ; 516: System.Reflection.Metadata => 97
-	i64 u0x80fa55b6d1b0be99, ; 517: SQLitePCLRaw.provider.e_sqlite3 => 207
-	i64 u0x812c069d5cdecc17, ; 518: System.dll => 168
-	i64 u0x81381be520a60adb, ; 519: Xamarin.AndroidX.Interpolator.dll => 253
-	i64 u0x81657cec2b31e8aa, ; 520: System.Net => 84
-	i64 u0x81ab745f6c0f5ce6, ; 521: zh-Hant/Microsoft.Maui.Controls.resources => 343
-	i64 u0x8277f2be6b5ce05f, ; 522: Xamarin.AndroidX.AppCompat => 227
-	i64 u0x828f06563b30bc50, ; 523: lib_Xamarin.AndroidX.CardView.dll.so => 232
-	i64 u0x82b399cb01b531c4, ; 524: lib_System.Web.dll.so => 157
-	i64 u0x82df8f5532a10c59, ; 525: lib_System.Drawing.dll.so => 36
-	i64 u0x82f0b6e911d13535, ; 526: lib_System.Transactions.dll.so => 154
-	i64 u0x82f6403342e12049, ; 527: uk/Microsoft.Maui.Controls.resources => 339
-	i64 u0x83144699b312ad81, ; 528: SQLite-net.dll => 205
-	i64 u0x83a2d9ad3c54f4f8, ; 529: MimeMapping.dll => 202
-	i64 u0x83a7afd2c49adc86, ; 530: lib_Microsoft.IdentityModel.Abstractions.dll.so => 192
-	i64 u0x83c14ba66c8e2b8c, ; 531: zh-Hans/Microsoft.Maui.Controls.resources => 342
-	i64 u0x846ce984efea52c7, ; 532: System.Threading.Tasks.Parallel.dll => 147
-	i64 u0x84ae73148a4557d2, ; 533: lib_System.IO.Pipes.dll.so => 56
-	i64 u0x84b01102c12a9232, ; 534: System.Runtime.Serialization.Json.dll => 115
-	i64 u0x850c5ba0b57ce8e7, ; 535: lib_Xamarin.AndroidX.Collection.dll.so => 233
-	i64 u0x851d02edd334b044, ; 536: Xamarin.AndroidX.VectorDrawable => 289
-	i64 u0x85c919db62150978, ; 537: Xamarin.AndroidX.Transition.dll => 288
-	i64 u0x8662aaeb94fef37f, ; 538: lib_System.Dynamic.Runtime.dll.so => 37
-	i64 u0x86a909228dc7657b, ; 539: lib-zh-Hant-Microsoft.Maui.Controls.resources.dll.so => 343
-	i64 u0x86b3e00c36b84509, ; 540: Microsoft.Extensions.Configuration.dll => 180
-	i64 u0x86b62cb077ec4fd7, ; 541: System.Runtime.Serialization.Xml => 117
-	i64 u0x8706ffb12bf3f53d, ; 542: Xamarin.AndroidX.Annotation.Experimental => 225
-	i64 u0x872a5b14c18d328c, ; 543: System.ComponentModel.DataAnnotations => 14
-	i64 u0x872fb9615bc2dff0, ; 544: Xamarin.Android.Glide.Annotations.dll => 219
-	i64 u0x87c69b87d9283884, ; 545: lib_System.Threading.Thread.dll.so => 149
-	i64 u0x87f6569b25707834, ; 546: System.IO.Compression.Brotli.dll => 43
-	i64 u0x8842b3a5d2d3fb36, ; 547: Microsoft.Maui.Essentials => 200
-	i64 u0x88926583efe7ee86, ; 548: Xamarin.AndroidX.Activity.Ktx.dll => 223
-	i64 u0x88ba6bc4f7762b03, ; 549: lib_System.Reflection.dll.so => 100
-	i64 u0x88bda98e0cffb7a9, ; 550: lib_Xamarin.KotlinX.Coroutines.Core.Jvm.dll.so => 307
-	i64 u0x8930322c7bd8f768, ; 551: netstandard => 171
-	i64 u0x897a606c9e39c75f, ; 552: lib_System.ComponentModel.Primitives.dll.so => 16
-	i64 u0x898a5c6bc9e47ec1, ; 553: lib_Xamarin.AndroidX.SavedState.SavedState.Android.dll.so => 280
-	i64 u0x89911a22005b92b7, ; 554: System.IO.FileSystem.DriveInfo.dll => 48
-	i64 u0x89c5188089ec2cd5, ; 555: lib_System.Runtime.InteropServices.RuntimeInformation.dll.so => 109
-	i64 u0x8a19e3dc71b34b2c, ; 556: System.Reflection.TypeExtensions.dll => 99
-	i64 u0x8ad229ea26432ee2, ; 557: Xamarin.AndroidX.Loader => 269
-	i64 u0x8b4ff5d0fdd5faa1, ; 558: lib_System.Diagnostics.DiagnosticSource.dll.so => 27
-	i64 u0x8b541d476eb3774c, ; 559: System.Security.Principal.Windows => 130
-	i64 u0x8b8d01333a96d0b5, ; 560: System.Diagnostics.Process.dll => 29
-	i64 u0x8b9ceca7acae3451, ; 561: lib-he-Microsoft.Maui.Controls.resources.dll.so => 319
-	i64 u0x8c575135aa1ccef4, ; 562: Microsoft.Extensions.FileProviders.Abstractions => 185
-	i64 u0x8cb8f612b633affb, ; 563: Xamarin.AndroidX.SavedState.SavedState.Ktx.dll => 281
-	i64 u0x8cdfdb4ce85fb925, ; 564: lib_System.Security.Principal.Windows.dll.so => 130
-	i64 u0x8cdfe7b8f4caa426, ; 565: System.IO.Compression.FileSystem => 44
-	i64 u0x8d0f420977c2c1c7, ; 566: Xamarin.AndroidX.CursorAdapter.dll => 243
-	i64 u0x8d52f7ea2796c531, ; 567: Xamarin.AndroidX.Emoji2.dll => 248
-	i64 u0x8d7b8ab4b3310ead, ; 568: System.Threading => 152
-	i64 u0x8da188285aadfe8e, ; 569: System.Collections.Concurrent => 8
-	i64 u0x8e8f269ad1e1ff94, ; 570: lib_Xamarin.AndroidX.Tracing.Tracing.Android.dll.so => 287
-	i64 u0x8ed807bfe9858dfc, ; 571: Xamarin.AndroidX.Navigation.Common => 270
-	i64 u0x8ee08b8194a30f48, ; 572: lib-hi-Microsoft.Maui.Controls.resources.dll.so => 320
-	i64 u0x8ef7601039857a44, ; 573: lib-ro-Microsoft.Maui.Controls.resources.dll.so => 333
-	i64 u0x8ef9414937d93a0a, ; 574: SQLitePCLRaw.core.dll => 206
-	i64 u0x8f32c6f611f6ffab, ; 575: pt/Microsoft.Maui.Controls.resources.dll => 332
-	i64 u0x8f44b45eb046bbd1, ; 576: System.ServiceModel.Web.dll => 134
-	i64 u0x8f8829d21c8985a4, ; 577: lib-pt-BR-Microsoft.Maui.Controls.resources.dll.so => 331
-	i64 u0x8fbf5b0114c6dcef, ; 578: System.Globalization.dll => 42
-	i64 u0x8fcc8c2a81f3d9e7, ; 579: Xamarin.KotlinX.Serialization.Core => 308
-	i64 u0x8fd27d934d7b3a55, ; 580: SQLitePCLRaw.core => 206
-	i64 u0x90263f8448b8f572, ; 581: lib_System.Diagnostics.TraceSource.dll.so => 33
-	i64 u0x903101b46fb73a04, ; 582: _Microsoft.Android.Resource.Designer => 344
-	i64 u0x90393bd4865292f3, ; 583: lib_System.IO.Compression.dll.so => 46
-	i64 u0x905e2b8e7ae91ae6, ; 584: System.Threading.Tasks.Extensions.dll => 146
-	i64 u0x90634f86c5ebe2b5, ; 585: Xamarin.AndroidX.Lifecycle.ViewModel.Android => 265
-	i64 u0x907b636704ad79ef, ; 586: lib_Microsoft.Maui.Controls.Xaml.dll.so => 198
-	i64 u0x90e9efbfd68593e0, ; 587: lib_Xamarin.AndroidX.Lifecycle.LiveData.dll.so => 256
-	i64 u0x91418dc638b29e68, ; 588: lib_Xamarin.AndroidX.CustomView.dll.so => 244
-	i64 u0x9157bd523cd7ed36, ; 589: lib_System.Text.Json.dll.so => 140
-	i64 u0x91a74f07b30d37e2, ; 590: System.Linq.dll => 63
-	i64 u0x91cb86ea3b17111d, ; 591: System.ServiceModel.Web => 134
-	i64 u0x91fa41a87223399f, ; 592: ca/Microsoft.Maui.Controls.resources.dll => 311
-	i64 u0x92054e486c0c7ea7, ; 593: System.IO.FileSystem.DriveInfo => 48
-	i64 u0x928614058c40c4cd, ; 594: lib_System.Xml.XPath.XDocument.dll.so => 163
-	i64 u0x92b138fffca2b01e, ; 595: lib_Xamarin.AndroidX.Arch.Core.Runtime.dll.so => 230
-	i64 u0x92dfc2bfc6c6a888, ; 596: Xamarin.AndroidX.Lifecycle.LiveData => 256
-	i64 u0x933da2c779423d68, ; 597: Xamarin.Android.Glide.Annotations => 219
-	i64 u0x9388aad9b7ae40ce, ; 598: lib_Xamarin.AndroidX.Lifecycle.Common.dll.so => 254
-	i64 u0x93cfa73ab28d6e35, ; 599: ms/Microsoft.Maui.Controls.resources => 327
-	i64 u0x941c00d21e5c0679, ; 600: lib_Xamarin.AndroidX.Transition.dll.so => 288
-	i64 u0x944077d8ca3c6580, ; 601: System.IO.Compression.dll => 46
-	i64 u0x948cffedc8ed7960, ; 602: System.Xml => 167
-	i64 u0x948d746a7702861f, ; 603: Microsoft.IdentityModel.Logging.dll => 194
-	i64 u0x94bbeab0d4764588, ; 604: System.IO.Hashing.dll => 176
-	i64 u0x94c8990839c4bdb1, ; 605: lib_Xamarin.AndroidX.Interpolator.dll.so => 253
-	i64 u0x9564283c37ed59a9, ; 606: lib_Microsoft.IdentityModel.Logging.dll.so => 194
-	i64 u0x967fc325e09bfa8c, ; 607: es/Microsoft.Maui.Controls.resources => 316
-	i64 u0x9686161486d34b81, ; 608: lib_Xamarin.AndroidX.ExifInterface.dll.so => 250
-	i64 u0x9732d8dbddea3d9a, ; 609: id/Microsoft.Maui.Controls.resources => 323
-	i64 u0x978be80e5210d31b, ; 610: Microsoft.Maui.Graphics.dll => 201
-	i64 u0x97b8c771ea3e4220, ; 611: System.ComponentModel.dll => 18
-	i64 u0x97e144c9d3c6976e, ; 612: System.Collections.Concurrent.dll => 8
-	i64 u0x984184e3c70d4419, ; 613: GoogleGson => 179
-	i64 u0x9843944103683dd3, ; 614: Xamarin.AndroidX.Core.Core.Ktx => 241
-	i64 u0x98b05cc81e6f333c, ; 615: Xamarin.AndroidX.SavedState.SavedState.Android.dll => 280
-	i64 u0x98d720cc4597562c, ; 616: System.Security.Cryptography.OpenSsl => 126
-	i64 u0x991d510397f92d9d, ; 617: System.Linq.Expressions => 60
-	i64 u0x996ceeb8a3da3d67, ; 618: System.Threading.Overlapped.dll => 144
-	i64 u0x99a00ca5270c6878, ; 619: Xamarin.AndroidX.Navigation.Runtime => 273
-	i64 u0x99cdc6d1f2d3a72f, ; 620: ko/Microsoft.Maui.Controls.resources.dll => 326
-	i64 u0x9a01b1da98b6ee10, ; 621: Xamarin.AndroidX.Lifecycle.Runtime.dll => 260
-	i64 u0x9a5ccc274fd6e6ee, ; 622: Jsr305Binding.dll => 298
-	i64 u0x9a816d9654deff7c, ; 623: Microsoft.IO.RecyclableMemoryStream => 196
-	i64 u0x9ae6940b11c02876, ; 624: lib_Xamarin.AndroidX.Window.dll.so => 294
-	i64 u0x9b211a749105beac, ; 625: System.Transactions.Local => 153
-	i64 u0x9b8734714671022d, ; 626: System.Threading.Tasks.Dataflow.dll => 145
-	i64 u0x9bc6aea27fbf034f, ; 627: lib_Xamarin.KotlinX.Coroutines.Core.dll.so => 306
-	i64 u0x9c244ac7cda32d26, ; 628: System.Security.Cryptography.X509Certificates.dll => 128
-	i64 u0x9c36a0f95393e81c, ; 629: Supabase.Postgrest.dll => 212
-	i64 u0x9c465f280cf43733, ; 630: lib_Xamarin.KotlinX.Coroutines.Android.dll.so => 305
-	i64 u0x9c8f6872beab6408, ; 631: System.Xml.XPath.XDocument.dll => 163
-	i64 u0x9ce01cf91101ae23, ; 632: System.Xml.XmlDocument => 165
-	i64 u0x9d128180c81d7ce6, ; 633: Xamarin.AndroidX.CustomView.PoolingContainer => 245
-	i64 u0x9d5dbcf5a48583fe, ; 634: lib_Xamarin.AndroidX.Activity.dll.so => 222
-	i64 u0x9d74dee1a7725f34, ; 635: Microsoft.Extensions.Configuration.Abstractions.dll => 181
-	i64 u0x9dd0e195825d65c6, ; 636: lib_Xamarin.AndroidX.Navigation.Runtime.Android.dll.so => 274
-	i64 u0x9e4534b6adaf6e84, ; 637: nl/Microsoft.Maui.Controls.resources => 329
-	i64 u0x9e4b95dec42769f7, ; 638: System.Diagnostics.Debug.dll => 26
-	i64 u0x9eaf1efdf6f7267e, ; 639: Xamarin.AndroidX.Navigation.Common.dll => 270
-	i64 u0x9ef542cf1f78c506, ; 640: Xamarin.AndroidX.Lifecycle.LiveData.Core => 257
-	i64 u0x9fc2184212c417ad, ; 641: Plugin.LocalNotification.dll => 203
-	i64 u0xa00832eb975f56a8, ; 642: lib_System.Net.dll.so => 84
-	i64 u0xa0ad78236b7b267f, ; 643: Xamarin.AndroidX.Window => 294
-	i64 u0xa0d8259f4cc284ec, ; 644: lib_System.Security.Cryptography.dll.so => 129
-	i64 u0xa0e17ca50c77a225, ; 645: lib_Xamarin.Google.Crypto.Tink.Android.dll.so => 299
-	i64 u0xa0ff9b3e34d92f11, ; 646: lib_System.Resources.Writer.dll.so => 103
-	i64 u0xa12a8378511c135a, ; 647: BirdMessenger.dll => 178
-	i64 u0xa12fbfb4da97d9f3, ; 648: System.Threading.Timer.dll => 151
-	i64 u0xa135be3d6497d3d3, ; 649: Supabase.Core.dll => 209
-	i64 u0xa1440773ee9d341e, ; 650: Xamarin.Google.Android.Material => 297
-	i64 u0xa18c39c44cdc3465, ; 651: Xamarin.AndroidX.Window.WindowCore => 295
-	i64 u0xa1b9d7c27f47219f, ; 652: Xamarin.AndroidX.Navigation.UI.dll => 275
-	i64 u0xa2572680829d2c7c, ; 653: System.IO.Pipelines.dll => 54
-	i64 u0xa26597e57ee9c7f6, ; 654: System.Xml.XmlDocument.dll => 165
-	i64 u0xa308401900e5bed3, ; 655: lib_mscorlib.dll.so => 170
-	i64 u0xa395572e7da6c99d, ; 656: lib_System.Security.dll.so => 133
-	i64 u0xa3e683f24b43af6f, ; 657: System.Dynamic.Runtime.dll => 37
-	i64 u0xa4145becdee3dc4f, ; 658: Xamarin.AndroidX.VectorDrawable.Animated => 290
-	i64 u0xa46aa1eaa214539b, ; 659: ko/Microsoft.Maui.Controls.resources => 326
-	i64 u0xa4edc8f2ceae241a, ; 660: System.Data.Common.dll => 22
-	i64 u0xa5494f40f128ce6a, ; 661: System.Runtime.Serialization.Formatters.dll => 114
-	i64 u0xa54b74df83dce92b, ; 662: System.Reflection.DispatchProxy => 92
-	i64 u0xa5b7152421ed6d98, ; 663: lib_System.IO.FileSystem.Watcher.dll.so => 50
-	i64 u0xa5c3844f17b822db, ; 664: lib_System.Linq.Parallel.dll.so => 61
-	i64 u0xa5ce5c755bde8cb8, ; 665: lib_System.Security.Cryptography.Csp.dll.so => 124
-	i64 u0xa5e599d1e0524750, ; 666: System.Numerics.Vectors.dll => 85
-	i64 u0xa5f1ba49b85dd355, ; 667: System.Security.Cryptography.dll => 129
-	i64 u0xa61975a5a37873ea, ; 668: lib_System.Xml.XmlSerializer.dll.so => 166
-	i64 u0xa6593e21584384d2, ; 669: lib_Jsr305Binding.dll.so => 298
-	i64 u0xa66cbee0130865f7, ; 670: lib_WindowsBase.dll.so => 169
-	i64 u0xa67dbee13e1df9ca, ; 671: Xamarin.AndroidX.SavedState.dll => 279
-	i64 u0xa684b098dd27b296, ; 672: lib_Xamarin.AndroidX.Security.SecurityCrypto.dll.so => 282
-	i64 u0xa68a420042bb9b1f, ; 673: Xamarin.AndroidX.DrawerLayout.dll => 246
-	i64 u0xa6d26156d1cacc7c, ; 674: Xamarin.Android.Glide.dll => 218
-	i64 u0xa75386b5cb9595aa, ; 675: Xamarin.AndroidX.Lifecycle.Runtime.Android => 261
-	i64 u0xa763fbb98df8d9fb, ; 676: lib_Microsoft.Win32.Primitives.dll.so => 4
-	i64 u0xa78ce3745383236a, ; 677: Xamarin.AndroidX.Lifecycle.Common.Jvm => 255
-	i64 u0xa7c31b56b4dc7b33, ; 678: hu/Microsoft.Maui.Controls.resources => 322
-	i64 u0xa7eab29ed44b4e7a, ; 679: Mono.Android.Export => 173
-	i64 u0xa8195217cbf017b7, ; 680: Microsoft.VisualBasic.Core => 2
-	i64 u0xa859a95830f367ff, ; 681: lib_Xamarin.AndroidX.Lifecycle.ViewModel.Ktx.dll.so => 266
-	i64 u0xa8b52f21e0dbe690, ; 682: System.Runtime.Serialization.dll => 118
-	i64 u0xa8e6320dd07580ef, ; 683: lib_Microsoft.IdentityModel.JsonWebTokens.dll.so => 193
-	i64 u0xa8ee4ed7de2efaee, ; 684: Xamarin.AndroidX.Annotation.dll => 224
-	i64 u0xa9240518980b3aab, ; 685: BirdMessenger => 178
-	i64 u0xa95590e7c57438a4, ; 686: System.Configuration => 19
-	i64 u0xaa2219c8e3449ff5, ; 687: Microsoft.Extensions.Logging.Abstractions => 188
-	i64 u0xaa443ac34067eeef, ; 688: System.Private.Xml.dll => 91
-	i64 u0xaa52de307ef5d1dd, ; 689: System.Net.Http => 66
-	i64 u0xaa9a7b0214a5cc5c, ; 690: System.Diagnostics.StackTrace.dll => 30
-	i64 u0xaaaf86367285a918, ; 691: Microsoft.Extensions.DependencyInjection.Abstractions.dll => 183
-	i64 u0xaaf84bb3f052a265, ; 692: el/Microsoft.Maui.Controls.resources => 315
-	i64 u0xab9af77b5b67a0b8, ; 693: Xamarin.AndroidX.ConstraintLayout.Core => 238
-	i64 u0xab9c1b2687d86b0b, ; 694: lib_System.Linq.Expressions.dll.so => 60
-	i64 u0xac2af3fa195a15ce, ; 695: System.Runtime.Numerics => 113
-	i64 u0xac5376a2a538dc10, ; 696: Xamarin.AndroidX.Lifecycle.LiveData.Core.dll => 257
-	i64 u0xac5acae88f60357e, ; 697: System.Diagnostics.Tools.dll => 32
-	i64 u0xac79c7e46047ad98, ; 698: System.Security.Principal.Windows.dll => 130
-	i64 u0xac98d31068e24591, ; 699: System.Xml.XDocument => 162
-	i64 u0xacd46e002c3ccb97, ; 700: ro/Microsoft.Maui.Controls.resources => 333
-	i64 u0xacdd9e4180d56dda, ; 701: Xamarin.AndroidX.Concurrent.Futures => 236
-	i64 u0xacf42eea7ef9cd12, ; 702: System.Threading.Channels => 143
-	i64 u0xad89c07347f1bad6, ; 703: nl/Microsoft.Maui.Controls.resources.dll => 329
-	i64 u0xadbb53caf78a79d2, ; 704: System.Web.HttpUtility => 156
-	i64 u0xadc90ab061a9e6e4, ; 705: System.ComponentModel.TypeConverter.dll => 17
-	i64 u0xadca1b9030b9317e, ; 706: Xamarin.AndroidX.Collection.Ktx => 235
-	i64 u0xadd8eda2edf396ad, ; 707: Xamarin.Android.Glide.GifDecoder => 221
-	i64 u0xadf4cf30debbeb9a, ; 708: System.Net.ServicePoint.dll => 77
-	i64 u0xadf511667bef3595, ; 709: System.Net.Security => 75
-	i64 u0xae0aaa94fdcfce0f, ; 710: System.ComponentModel.EventBasedAsync.dll => 15
-	i64 u0xae282bcd03739de7, ; 711: Java.Interop => 172
-	i64 u0xae53579c90db1107, ; 712: System.ObjectModel.dll => 87
-	i64 u0xae7ea18c61eef394, ; 713: SQLite-net => 205
-	i64 u0xaf732d0b2193b8f5, ; 714: System.Security.Cryptography.OpenSsl.dll => 126
-	i64 u0xafdb94dbccd9d11c, ; 715: Xamarin.AndroidX.Lifecycle.LiveData.dll => 256
-	i64 u0xafe29f45095518e7, ; 716: lib_Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll.so => 267
-	i64 u0xb03ae931fb25607e, ; 717: Xamarin.AndroidX.ConstraintLayout => 237
-	i64 u0xb05b6f0a6cc8ddbb, ; 718: lib_Microsoft.IO.RecyclableMemoryStream.dll.so => 196
-	i64 u0xb05cc42cd94c6d9d, ; 719: lib-sv-Microsoft.Maui.Controls.resources.dll.so => 336
-	i64 u0xb0ac21bec8f428c5, ; 720: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android.dll => 263
-	i64 u0xb0bb43dc52ea59f9, ; 721: System.Diagnostics.Tracing.dll => 34
-	i64 u0xb1dd05401aa8ee63, ; 722: System.Security.AccessControl => 120
-	i64 u0xb220631954820169, ; 723: System.Text.RegularExpressions => 141
-	i64 u0xb2376e1dbf8b4ed7, ; 724: System.Security.Cryptography.Csp => 124
-	i64 u0xb243b3e5f9a6350a, ; 725: Plugin.LocalNotification.Core.dll => 204
-	i64 u0xb2a1959fe95c5402, ; 726: lib_System.Runtime.InteropServices.JavaScript.dll.so => 108
-	i64 u0xb2a3f67f3bf29fce, ; 727: da/Microsoft.Maui.Controls.resources => 313
-	i64 u0xb3874072ee0ecf8c, ; 728: Xamarin.AndroidX.VectorDrawable.Animated.dll => 290
-	i64 u0xb3f0a0fcda8d3ebc, ; 729: Xamarin.AndroidX.CardView => 232
-	i64 u0xb46be1aa6d4fff93, ; 730: hi/Microsoft.Maui.Controls.resources => 320
-	i64 u0xb477491be13109d8, ; 731: ar/Microsoft.Maui.Controls.resources => 310
-	i64 u0xb4bd7015ecee9d86, ; 732: System.IO.Pipelines => 54
-	i64 u0xb4c53d9749c5f226, ; 733: lib_System.IO.FileSystem.AccessControl.dll.so => 47
-	i64 u0xb4ff710863453fda, ; 734: System.Diagnostics.FileVersionInfo.dll => 28
-	i64 u0xb54092076b15e062, ; 735: System.Threading.AccessControl => 142
-	i64 u0xb5c38bf497a4cfe2, ; 736: lib_System.Threading.Tasks.dll.so => 148
-	i64 u0xb5c7fcdafbc67ee4, ; 737: Microsoft.Extensions.Logging.Abstractions.dll => 188
-	i64 u0xb5ea31d5244c6626, ; 738: System.Threading.ThreadPool.dll => 150
-	i64 u0xb7212c4683a94afe, ; 739: System.Drawing.Primitives => 35
-	i64 u0xb7b7753d1f319409, ; 740: sv/Microsoft.Maui.Controls.resources => 336
-	i64 u0xb81a2c6e0aee50fe, ; 741: lib_System.Private.CoreLib.dll.so => 177
-	i64 u0xb8c60af47c08d4da, ; 742: System.Net.ServicePoint => 77
-	i64 u0xb8e68d20aad91196, ; 743: lib_System.Xml.XPath.dll.so => 164
-	i64 u0xb9185c33a1643eed, ; 744: Microsoft.CSharp.dll => 1
-	i64 u0xb960d6b2200ba320, ; 745: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android.dll => 268
-	i64 u0xb9b8001adf4ed7cc, ; 746: lib_Xamarin.AndroidX.SlidingPaneLayout.dll.so => 283
-	i64 u0xb9f64d3b230def68, ; 747: lib-pt-Microsoft.Maui.Controls.resources.dll.so => 332
-	i64 u0xb9fc3c8a556e3691, ; 748: ja/Microsoft.Maui.Controls.resources => 325
-	i64 u0xba4670aa94a2b3c6, ; 749: lib_System.Xml.XDocument.dll.so => 162
-	i64 u0xba48785529705af9, ; 750: System.Collections.dll => 12
-	i64 u0xba965b8c86359996, ; 751: lib_System.Windows.dll.so => 158
-	i64 u0xbb286883bc35db36, ; 752: System.Transactions.dll => 154
-	i64 u0xbb54fd4c9d1101e1, ; 753: lib_Supabase.dll.so => 208
-	i64 u0xbb65706fde942ce3, ; 754: System.Net.Sockets => 78
-	i64 u0xbba28979413cad9e, ; 755: lib_System.Runtime.CompilerServices.VisualC.dll.so => 105
-	i64 u0xbbd180354b67271a, ; 756: System.Runtime.Serialization.Formatters => 114
-	i64 u0xbc22a245dab70cb4, ; 757: lib_SQLitePCLRaw.provider.e_sqlite3.dll.so => 207
-	i64 u0xbc260cdba33291a3, ; 758: Xamarin.AndroidX.Arch.Core.Common.dll => 229
-	i64 u0xbd0e2c0d55246576, ; 759: System.Net.Http.dll => 66
-	i64 u0xbd3fbd85b9e1cb29, ; 760: lib_System.Net.HttpListener.dll.so => 67
-	i64 u0xbd437a2cdb333d0d, ; 761: Xamarin.AndroidX.ViewPager2 => 293
-	i64 u0xbd4f572d2bd0a789, ; 762: System.IO.Compression.ZipFile.dll => 45
-	i64 u0xbd5d0b88d3d647a5, ; 763: lib_Xamarin.AndroidX.Browser.dll.so => 231
-	i64 u0xbd877b14d0b56392, ; 764: System.Runtime.Intrinsics.dll => 111
-	i64 u0xbe359393a91995c2, ; 765: Asistente => 0
-	i64 u0xbe65a49036345cf4, ; 766: lib_System.Buffers.dll.so => 7
-	i64 u0xbee38d4a88835966, ; 767: Xamarin.AndroidX.AppCompat.AppCompatResources => 228
-	i64 u0xbef9919db45b4ca7, ; 768: System.IO.Pipes.AccessControl => 55
-	i64 u0xbf02c92392c99ce0, ; 769: Websocket.Client => 217
-	i64 u0xbf0fa68611139208, ; 770: lib_Xamarin.AndroidX.Annotation.dll.so => 224
-	i64 u0xbfc1e1fb3095f2b3, ; 771: lib_System.Net.Http.Json.dll.so => 65
-	i64 u0xc040a4ab55817f58, ; 772: ar/Microsoft.Maui.Controls.resources.dll => 310
-	i64 u0xc07cadab29efeba0, ; 773: Xamarin.AndroidX.Core.Core.Ktx.dll => 241
-	i64 u0xc0d928351ab5ca77, ; 774: System.Console.dll => 20
-	i64 u0xc0f5a221a9383aea, ; 775: System.Runtime.Intrinsics => 111
-	i64 u0xc111030af54d7191, ; 776: System.Resources.Writer => 103
-	i64 u0xc12b8b3afa48329c, ; 777: lib_System.Linq.dll.so => 63
-	i64 u0xc183ca0b74453aa9, ; 778: lib_System.Threading.Tasks.Dataflow.dll.so => 145
-	i64 u0xc1ff9ae3cdb6e1e6, ; 779: Xamarin.AndroidX.Activity.dll => 222
-	i64 u0xc26c064effb1dea9, ; 780: System.Buffers.dll => 7
-	i64 u0xc278de356ad8a9e3, ; 781: Microsoft.IdentityModel.Logging => 194
-	i64 u0xc28c50f32f81cc73, ; 782: ja/Microsoft.Maui.Controls.resources.dll => 325
-	i64 u0xc2902f6cf5452577, ; 783: lib_Mono.Android.Export.dll.so => 173
-	i64 u0xc2a3bca55b573141, ; 784: System.IO.FileSystem.Watcher => 50
-	i64 u0xc2bcfec99f69365e, ; 785: Xamarin.AndroidX.ViewPager2.dll => 293
-	i64 u0xc30b52815b58ac2c, ; 786: lib_System.Runtime.Serialization.Xml.dll.so => 117
-	i64 u0xc36d7d89c652f455, ; 787: System.Threading.Overlapped => 144
-	i64 u0xc396b285e59e5493, ; 788: GoogleGson.dll => 179
-	i64 u0xc3c86c1e5e12f03d, ; 789: WindowsBase => 169
-	i64 u0xc421b61fd853169d, ; 790: lib_System.Net.WebSockets.Client.dll.so => 82
-	i64 u0xc463e077917aa21d, ; 791: System.Runtime.Serialization.Json => 115
-	i64 u0xc4d3858ed4d08512, ; 792: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll => 267
-	i64 u0xc50fded0ded1418c, ; 793: lib_System.ComponentModel.TypeConverter.dll.so => 17
-	i64 u0xc519125d6bc8fb11, ; 794: lib_System.Net.Requests.dll.so => 74
-	i64 u0xc5293b19e4dc230e, ; 795: Xamarin.AndroidX.Navigation.Fragment => 272
-	i64 u0xc5325b2fcb37446f, ; 796: lib_System.Private.Xml.dll.so => 91
-	i64 u0xc535cb9a21385d9b, ; 797: lib_Xamarin.Android.Glide.DiskLruCache.dll.so => 220
-	i64 u0xc5a0f4b95a699af7, ; 798: lib_System.Private.Uri.dll.so => 89
-	i64 u0xc5cdcd5b6277579e, ; 799: lib_System.Security.Cryptography.Algorithms.dll.so => 122
-	i64 u0xc5ec286825cb0bf4, ; 800: Xamarin.AndroidX.Tracing.Tracing => 286
-	i64 u0xc6706bc8aa7fe265, ; 801: Xamarin.AndroidX.Annotation.Jvm => 226
-	i64 u0xc74d70d4aa96cef3, ; 802: Xamarin.AndroidX.Navigation.Runtime.Android => 274
-	i64 u0xc7c01e7d7c93a110, ; 803: System.Text.Encoding.Extensions.dll => 137
-	i64 u0xc7ce851898a4548e, ; 804: lib_System.Web.HttpUtility.dll.so => 156
-	i64 u0xc809d4089d2556b2, ; 805: System.Runtime.InteropServices.JavaScript.dll => 108
-	i64 u0xc858a28d9ee5a6c5, ; 806: lib_System.Collections.Specialized.dll.so => 11
-	i64 u0xc8ac7c6bf1c2ec51, ; 807: System.Reflection.DispatchProxy.dll => 92
-	i64 u0xc9c62c8f354ac568, ; 808: lib_System.Diagnostics.TextWriterTraceListener.dll.so => 31
-	i64 u0xca3a723e7342c5b6, ; 809: lib-tr-Microsoft.Maui.Controls.resources.dll.so => 338
-	i64 u0xca5801070d9fccfb, ; 810: System.Text.Encoding => 138
-	i64 u0xcab3493c70141c2d, ; 811: pl/Microsoft.Maui.Controls.resources => 330
-	i64 u0xcacfddc9f7c6de76, ; 812: ro/Microsoft.Maui.Controls.resources.dll => 333
-	i64 u0xcadbc92899a777f0, ; 813: Xamarin.AndroidX.Startup.StartupRuntime => 284
-	i64 u0xcb76efab0f56f81a, ; 814: System.Reactive => 216
-	i64 u0xcba1cb79f45292b5, ; 815: Xamarin.Android.Glide.GifDecoder.dll => 221
-	i64 u0xcbb5f80c7293e696, ; 816: lib_System.Globalization.Calendars.dll.so => 40
-	i64 u0xcbd4fdd9cef4a294, ; 817: lib__Microsoft.Android.Resource.Designer.dll.so => 344
-	i64 u0xcc15da1e07bbd994, ; 818: Xamarin.AndroidX.SlidingPaneLayout => 283
-	i64 u0xcc2876b32ef2794c, ; 819: lib_System.Text.RegularExpressions.dll.so => 141
-	i64 u0xcc5c3bb714c4561e, ; 820: Xamarin.KotlinX.Coroutines.Core.Jvm.dll => 307
-	i64 u0xcc76886e09b88260, ; 821: Xamarin.KotlinX.Serialization.Core.Jvm.dll => 309
-	i64 u0xcc9fa2923aa1c9ef, ; 822: System.Diagnostics.Contracts.dll => 25
-	i64 u0xccae9bb73e2326bd, ; 823: lib_System.IO.Hashing.dll.so => 176
-	i64 u0xccf25c4b634ccd3a, ; 824: zh-Hans/Microsoft.Maui.Controls.resources.dll => 342
-	i64 u0xcd10a42808629144, ; 825: System.Net.Requests => 74
-	i64 u0xcdca1b920e9f53ba, ; 826: Xamarin.AndroidX.Interpolator => 253
-	i64 u0xcdd0c48b6937b21c, ; 827: Xamarin.AndroidX.SwipeRefreshLayout => 285
-	i64 u0xcf23d8093f3ceadf, ; 828: System.Diagnostics.DiagnosticSource.dll => 27
-	i64 u0xcf5ff6b6b2c4c382, ; 829: System.Net.Mail.dll => 68
-	i64 u0xcf8fc898f98b0d34, ; 830: System.Private.Xml.Linq => 90
-	i64 u0xd04b5f59ed596e31, ; 831: System.Reflection.Metadata.dll => 97
-	i64 u0xd063299fcfc0c93f, ; 832: lib_System.Runtime.Serialization.Json.dll.so => 115
-	i64 u0xd0de8a113e976700, ; 833: System.Diagnostics.TextWriterTraceListener => 31
-	i64 u0xd0fc33d5ae5d4cb8, ; 834: System.Runtime.Extensions => 106
-	i64 u0xd1194e1d8a8de83c, ; 835: lib_Xamarin.AndroidX.Lifecycle.Common.Jvm.dll.so => 255
-	i64 u0xd12beacdfc14f696, ; 836: System.Dynamic.Runtime => 37
-	i64 u0xd16fd7fb9bbcd43e, ; 837: Microsoft.Extensions.Diagnostics.Abstractions => 184
-	i64 u0xd198e7ce1b6a8344, ; 838: System.Net.Quic.dll => 73
-	i64 u0xd3144156a3727ebe, ; 839: Xamarin.Google.Guava.ListenableFuture => 301
-	i64 u0xd333d0af9e423810, ; 840: System.Runtime.InteropServices => 110
-	i64 u0xd33a415cb4278969, ; 841: System.Security.Cryptography.Encoding.dll => 125
-	i64 u0xd3426d966bb704f5, ; 842: Xamarin.AndroidX.AppCompat.AppCompatResources.dll => 228
-	i64 u0xd3651b6fc3125825, ; 843: System.Private.Uri.dll => 89
-	i64 u0xd373685349b1fe8b, ; 844: Microsoft.Extensions.Logging.dll => 187
-	i64 u0xd3801faafafb7698, ; 845: System.Private.DataContractSerialization.dll => 88
-	i64 u0xd3e4c8d6a2d5d470, ; 846: it/Microsoft.Maui.Controls.resources => 324
-	i64 u0xd3edcc1f25459a50, ; 847: System.Reflection.Emit => 95
-	i64 u0xd4645626dffec99d, ; 848: lib_Microsoft.Extensions.DependencyInjection.Abstractions.dll.so => 183
-	i64 u0xd4fa0abb79079ea9, ; 849: System.Security.Principal.dll => 131
-	i64 u0xd5507e11a2b2839f, ; 850: Xamarin.AndroidX.Lifecycle.ViewModelSavedState => 267
-	i64 u0xd5d04bef8478ea19, ; 851: Xamarin.AndroidX.Tracing.Tracing.dll => 286
-	i64 u0xd60815f26a12e140, ; 852: Microsoft.Extensions.Logging.Debug.dll => 189
-	i64 u0xd6694f8359737e4e, ; 853: Xamarin.AndroidX.SavedState => 279
-	i64 u0xd6949e129339eae5, ; 854: lib_Xamarin.AndroidX.Core.Core.Ktx.dll.so => 241
-	i64 u0xd6d21782156bc35b, ; 855: Xamarin.AndroidX.SwipeRefreshLayout.dll => 285
-	i64 u0xd6de019f6af72435, ; 856: Xamarin.AndroidX.ConstraintLayout.Core.dll => 238
-	i64 u0xd70956d1e6deefb9, ; 857: Jsr305Binding => 298
-	i64 u0xd72329819cbbbc44, ; 858: lib_Microsoft.Extensions.Configuration.Abstractions.dll.so => 181
-	i64 u0xd72c760af136e863, ; 859: System.Xml.XmlSerializer.dll => 166
-	i64 u0xd753f071e44c2a03, ; 860: lib_System.Security.SecureString.dll.so => 132
-	i64 u0xd7aff209654fa011, ; 861: lib_Plugin.LocalNotification.Core.dll.so => 204
-	i64 u0xd7b3764ada9d341d, ; 862: lib_Microsoft.Extensions.Logging.Abstractions.dll.so => 188
-	i64 u0xd7f0088bc5ad71f2, ; 863: Xamarin.AndroidX.VersionedParcelable => 291
-	i64 u0xd824ef6ab33f8f7a, ; 864: Xamarin.AndroidX.Window.WindowCore.dll => 295
-	i64 u0xd8fb25e28ae30a12, ; 865: Xamarin.AndroidX.ProfileInstaller.ProfileInstaller.dll => 276
-	i64 u0xda1dfa4c534a9251, ; 866: Microsoft.Extensions.DependencyInjection => 182
-	i64 u0xdad05a11827959a3, ; 867: System.Collections.NonGeneric.dll => 10
-	i64 u0xdaefdfe71aa53cf9, ; 868: System.IO.FileSystem.Primitives => 49
-	i64 u0xdb5383ab5865c007, ; 869: lib-vi-Microsoft.Maui.Controls.resources.dll.so => 340
-	i64 u0xdb58816721c02a59, ; 870: lib_System.Reflection.Emit.ILGeneration.dll.so => 93
-	i64 u0xdbeda89f832aa805, ; 871: vi/Microsoft.Maui.Controls.resources.dll => 340
-	i64 u0xdbf2a779fbc3ac31, ; 872: System.Transactions.Local.dll => 153
-	i64 u0xdbf9607a441b4505, ; 873: System.Linq => 63
-	i64 u0xdbfc90157a0de9b0, ; 874: lib_System.Text.Encoding.dll.so => 138
-	i64 u0xdc75032002d1a212, ; 875: lib_System.Transactions.Local.dll.so => 153
-	i64 u0xdca8be7403f92d4f, ; 876: lib_System.Linq.Queryable.dll.so => 62
-	i64 u0xdce2c53525640bf3, ; 877: Microsoft.Extensions.Logging => 187
-	i64 u0xdceda8d644ac18a6, ; 878: Supabase.dll => 208
-	i64 u0xdd2b722d78ef5f43, ; 879: System.Runtime.dll => 119
-	i64 u0xdd67031857c72f96, ; 880: lib_System.Text.Encodings.Web.dll.so => 139
-	i64 u0xdd70765ad6162057, ; 881: Xamarin.JSpecify => 303
-	i64 u0xdd92e229ad292030, ; 882: System.Numerics.dll => 86
-	i64 u0xdde30e6b77aa6f6c, ; 883: lib-zh-Hans-Microsoft.Maui.Controls.resources.dll.so => 342
-	i64 u0xde110ae80fa7c2e2, ; 884: System.Xml.XDocument.dll => 162
-	i64 u0xde1223bb049720d1, ; 885: Supabase.Realtime => 213
-	i64 u0xde4726fcdf63a198, ; 886: Xamarin.AndroidX.Transition => 288
-	i64 u0xde572c2b2fb32f93, ; 887: lib_System.Threading.Tasks.Extensions.dll.so => 146
-	i64 u0xde8769ebda7d8647, ; 888: hr/Microsoft.Maui.Controls.resources.dll => 321
-	i64 u0xdee075f3477ef6be, ; 889: Xamarin.AndroidX.ExifInterface.dll => 250
-	i64 u0xdf25d9f36d8dc576, ; 890: lib_Supabase.Functions.dll.so => 210
-	i64 u0xdf4b773de8fb1540, ; 891: System.Net.dll => 84
-	i64 u0xdf9c7682560a9629, ; 892: System.Net.ServerSentEvents => 76
-	i64 u0xdfa254ebb4346068, ; 893: System.Net.Ping => 71
-	i64 u0xe0142572c095a480, ; 894: Xamarin.AndroidX.AppCompat.dll => 227
-	i64 u0xe021eaa401792a05, ; 895: System.Text.Encoding.dll => 138
-	i64 u0xe02f89350ec78051, ; 896: Xamarin.AndroidX.CoordinatorLayout.dll => 239
-	i64 u0xe0496b9d65ef5474, ; 897: Xamarin.Android.Glide.DiskLruCache.dll => 220
-	i64 u0xe10b760bb1462e7a, ; 898: lib_System.Security.Cryptography.Primitives.dll.so => 127
-	i64 u0xe192a588d4410686, ; 899: lib_System.IO.Pipelines.dll.so => 54
-	i64 u0xe1a08bd3fa539e0d, ; 900: System.Runtime.Loader => 112
-	i64 u0xe1a77eb8831f7741, ; 901: System.Security.SecureString.dll => 132
-	i64 u0xe1b52f9f816c70ef, ; 902: System.Private.Xml.Linq.dll => 90
-	i64 u0xe1e199c8ab02e356, ; 903: System.Data.DataSetExtensions.dll => 23
-	i64 u0xe1ecfdb7fff86067, ; 904: System.Net.Security.dll => 75
-	i64 u0xe2252a80fe853de4, ; 905: lib_System.Security.Principal.dll.so => 131
-	i64 u0xe22fa4c9c645db62, ; 906: System.Diagnostics.TextWriterTraceListener.dll => 31
-	i64 u0xe24095a7afddaab3, ; 907: lib_Microsoft.Extensions.Hosting.Abstractions.dll.so => 186
-	i64 u0xe2420585aeceb728, ; 908: System.Net.Requests.dll => 74
-	i64 u0xe26692647e6bcb62, ; 909: Xamarin.AndroidX.Lifecycle.Runtime.Ktx => 262
-	i64 u0xe29b73bc11392966, ; 910: lib-id-Microsoft.Maui.Controls.resources.dll.so => 323
-	i64 u0xe2ad448dee50fbdf, ; 911: System.Xml.Serialization => 161
-	i64 u0xe2d920f978f5d85c, ; 912: System.Data.DataSetExtensions => 23
-	i64 u0xe2e426c7714fa0bc, ; 913: Microsoft.Win32.Primitives.dll => 4
-	i64 u0xe332bacb3eb4a806, ; 914: Mono.Android.Export.dll => 173
-	i64 u0xe3811d68d4fe8463, ; 915: pt-BR/Microsoft.Maui.Controls.resources.dll => 331
-	i64 u0xe3a586956771a0ed, ; 916: lib_SQLite-net.dll.so => 205
-	i64 u0xe3b7cbae5ad66c75, ; 917: lib_System.Security.Cryptography.Encoding.dll.so => 125
-	i64 u0xe4292b48f3224d5b, ; 918: lib_Xamarin.AndroidX.Core.ViewTree.dll.so => 242
-	i64 u0xe494f7ced4ecd10a, ; 919: hu/Microsoft.Maui.Controls.resources.dll => 322
-	i64 u0xe4a9b1e40d1e8917, ; 920: lib-fi-Microsoft.Maui.Controls.resources.dll.so => 317
-	i64 u0xe4f74a0b5bf9703f, ; 921: System.Runtime.Serialization.Primitives => 116
-	i64 u0xe5434e8a119ceb69, ; 922: lib_Mono.Android.dll.so => 175
-	i64 u0xe55703b9ce5c038a, ; 923: System.Diagnostics.Tools => 32
-	i64 u0xe57013c8afc270b5, ; 924: Microsoft.VisualBasic => 3
-	i64 u0xe62913cc36bc07ec, ; 925: System.Xml.dll => 167
-	i64 u0xe7326f70f98e091c, ; 926: Plugin.LocalNotification.Core => 204
-	i64 u0xe7bea09c4900a191, ; 927: Xamarin.AndroidX.VectorDrawable.dll => 289
-	i64 u0xe7e03cc18dcdeb49, ; 928: lib_System.Diagnostics.StackTrace.dll.so => 30
-	i64 u0xe7e147ff99a7a380, ; 929: lib_System.Configuration.dll.so => 19
-	i64 u0xe86b0df4ba9e5db8, ; 930: lib_Xamarin.AndroidX.Lifecycle.Runtime.Android.dll.so => 261
-	i64 u0xe896622fe0902957, ; 931: System.Reflection.Emit.dll => 95
-	i64 u0xe89a2a9ef110899b, ; 932: System.Drawing.dll => 36
-	i64 u0xe8c5f8c100b5934b, ; 933: Microsoft.Win32.Registry => 5
-	i64 u0xe98163eb702ae5c5, ; 934: Xamarin.AndroidX.Arch.Core.Runtime => 230
-	i64 u0xe994f23ba4c143e5, ; 935: Xamarin.KotlinX.Coroutines.Android => 305
-	i64 u0xe9b9c8c0458fd92a, ; 936: System.Windows => 158
-	i64 u0xe9d166d87a7f2bdb, ; 937: lib_Xamarin.AndroidX.Startup.StartupRuntime.dll.so => 284
-	i64 u0xea5a4efc2ad81d1b, ; 938: Xamarin.Google.ErrorProne.Annotations => 300
-	i64 u0xeb2313fe9d65b785, ; 939: Xamarin.AndroidX.ConstraintLayout.dll => 237
-	i64 u0xed19c616b3fcb7eb, ; 940: Xamarin.AndroidX.VersionedParcelable.dll => 291
-	i64 u0xedc4817167106c23, ; 941: System.Net.Sockets.dll => 78
-	i64 u0xedc632067fb20ff3, ; 942: System.Memory.dll => 64
-	i64 u0xedc8e4ca71a02a8b, ; 943: Xamarin.AndroidX.Navigation.Runtime.dll => 273
-	i64 u0xee81f5b3f1c4f83b, ; 944: System.Threading.ThreadPool => 150
-	i64 u0xeeb7ebb80150501b, ; 945: lib_Xamarin.AndroidX.Collection.Jvm.dll.so => 234
-	i64 u0xeefc635595ef57f0, ; 946: System.Security.Cryptography.Cng => 123
-	i64 u0xef03b1b5a04e9709, ; 947: System.Text.Encoding.CodePages.dll => 136
-	i64 u0xef5bcbe61622ee5f, ; 948: Xamarin.AndroidX.Tracing.Tracing.Android.dll => 287
-	i64 u0xef602c523fe2e87a, ; 949: lib_Xamarin.Google.Guava.ListenableFuture.dll.so => 301
-	i64 u0xef72742e1bcca27a, ; 950: Microsoft.Maui.Essentials.dll => 200
-	i64 u0xefd1e0c4e5c9b371, ; 951: System.Resources.ResourceManager.dll => 102
-	i64 u0xefe8f8d5ed3c72ea, ; 952: System.Formats.Tar.dll => 39
-	i64 u0xefec0b7fdc57ec42, ; 953: Xamarin.AndroidX.Activity => 222
-	i64 u0xeff59cbde4363ec3, ; 954: System.Threading.AccessControl.dll => 142
-	i64 u0xf00c29406ea45e19, ; 955: es/Microsoft.Maui.Controls.resources.dll => 316
-	i64 u0xf09e47b6ae914f6e, ; 956: System.Net.NameResolution => 69
-	i64 u0xf0ac2b489fed2e35, ; 957: lib_System.Diagnostics.Debug.dll.so => 26
-	i64 u0xf0bb49dadd3a1fe1, ; 958: lib_System.Net.ServicePoint.dll.so => 77
-	i64 u0xf0c16dff90fbf5d6, ; 959: Xamarin.AndroidX.Window.WindowCore.Jvm => 296
-	i64 u0xf0de2537ee19c6ca, ; 960: lib_System.Net.WebHeaderCollection.dll.so => 80
-	i64 u0xf1138779fa181c68, ; 961: lib_Xamarin.AndroidX.Lifecycle.Runtime.dll.so => 260
-	i64 u0xf11b621fc87b983f, ; 962: Microsoft.Maui.Controls.Xaml.dll => 198
-	i64 u0xf161f4f3c3b7e62c, ; 963: System.Data => 24
-	i64 u0xf16eb650d5a464bc, ; 964: System.ValueTuple => 155
-	i64 u0xf1c4b4005493d871, ; 965: System.Formats.Asn1.dll => 38
-	i64 u0xf22514cfad2d598b, ; 966: lib_Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android.dll.so => 268
-	i64 u0xf238bd79489d3a96, ; 967: lib-nl-Microsoft.Maui.Controls.resources.dll.so => 329
-	i64 u0xf2feea356ba760af, ; 968: Xamarin.AndroidX.Arch.Core.Runtime.dll => 230
-	i64 u0xf300e085f8acd238, ; 969: lib_System.ServiceProcess.dll.so => 135
-	i64 u0xf34e52b26e7e059d, ; 970: System.Runtime.CompilerServices.VisualC.dll => 105
-	i64 u0xf37221fda4ef8830, ; 971: lib_Xamarin.Google.Android.Material.dll.so => 297
-	i64 u0xf3ad9b8fb3eefd12, ; 972: lib_System.IO.UnmanagedMemoryStream.dll.so => 57
-	i64 u0xf3ddfe05336abf29, ; 973: System => 168
-	i64 u0xf408654b2a135055, ; 974: System.Reflection.Emit.ILGeneration.dll => 93
-	i64 u0xf4103170a1de5bd0, ; 975: System.Linq.Queryable.dll => 62
-	i64 u0xf42d20c23173d77c, ; 976: lib_System.ServiceModel.Web.dll.so => 134
-	i64 u0xf47e294cbe68c2b0, ; 977: lib_Websocket.Client.dll.so => 217
-	i64 u0xf4c1dd70a5496a17, ; 978: System.IO.Compression => 46
-	i64 u0xf4ecf4b9afc64781, ; 979: System.ServiceProcess.dll => 135
-	i64 u0xf4eeeaa566e9b970, ; 980: lib_Xamarin.AndroidX.CustomView.PoolingContainer.dll.so => 245
-	i64 u0xf518f63ead11fcd1, ; 981: System.Threading.Tasks => 148
-	i64 u0xf5fc7602fe27b333, ; 982: System.Net.WebHeaderCollection => 80
-	i64 u0xf6077741019d7428, ; 983: Xamarin.AndroidX.CoordinatorLayout => 239
-	i64 u0xf61ade9836ad4692, ; 984: Microsoft.IdentityModel.Tokens.dll => 195
-	i64 u0xf6742cbf457c450b, ; 985: Xamarin.AndroidX.Lifecycle.Runtime.Android.dll => 261
-	i64 u0xf6c0e7d55a7a4e4f, ; 986: Microsoft.IdentityModel.JsonWebTokens => 193
-	i64 u0xf6e8de2aebcbb422, ; 987: lib_Xamarin.AndroidX.Window.WindowCore.Jvm.dll.so => 296
-	i64 u0xf70c0a7bf8ccf5af, ; 988: System.Web => 157
-	i64 u0xf77b20923f07c667, ; 989: de/Microsoft.Maui.Controls.resources.dll => 314
-	i64 u0xf7d5da3db84fa88c, ; 990: Supabase.Postgrest => 212
-	i64 u0xf7e2cac4c45067b3, ; 991: lib_System.Numerics.Vectors.dll.so => 85
-	i64 u0xf7e74930e0e3d214, ; 992: zh-HK/Microsoft.Maui.Controls.resources.dll => 341
-	i64 u0xf84773b5c81e3cef, ; 993: lib-uk-Microsoft.Maui.Controls.resources.dll.so => 339
-	i64 u0xf8aac5ea82de1348, ; 994: System.Linq.Queryable => 62
-	i64 u0xf8b77539b362d3ba, ; 995: lib_System.Reflection.Primitives.dll.so => 98
-	i64 u0xf8e045dc345b2ea3, ; 996: lib_Xamarin.AndroidX.RecyclerView.dll.so => 277
-	i64 u0xf915dc29808193a1, ; 997: System.Web.HttpUtility.dll => 156
-	i64 u0xf96c777a2a0686f4, ; 998: hi/Microsoft.Maui.Controls.resources.dll => 320
-	i64 u0xf9be54c8bcf8ff3b, ; 999: System.Security.AccessControl.dll => 120
-	i64 u0xf9eec5bb3a6aedc6, ; 1000: Microsoft.Extensions.Options => 190
-	i64 u0xfa0e82300e67f913, ; 1001: lib_System.AppContext.dll.so => 6
-	i64 u0xfa2fdb27e8a2c8e8, ; 1002: System.ComponentModel.EventBasedAsync => 15
-	i64 u0xfa3f278f288b0e84, ; 1003: lib_System.Net.Security.dll.so => 75
-	i64 u0xfa504dfa0f097d72, ; 1004: Microsoft.Extensions.FileProviders.Abstractions.dll => 185
-	i64 u0xfa5ed7226d978949, ; 1005: lib-ar-Microsoft.Maui.Controls.resources.dll.so => 310
-	i64 u0xfa645d91e9fc4cba, ; 1006: System.Threading.Thread => 149
-	i64 u0xfad4d2c770e827f9, ; 1007: lib_System.IO.IsolatedStorage.dll.so => 52
-	i64 u0xfb06dd2338e6f7c4, ; 1008: System.Net.Ping.dll => 71
-	i64 u0xfb087abe5365e3b7, ; 1009: lib_System.Data.DataSetExtensions.dll.so => 23
-	i64 u0xfb35173928a89083, ; 1010: Supabase.Functions.dll => 210
-	i64 u0xfb3cb754cb2d9fc0, ; 1011: lib_Plugin.LocalNotification.dll.so => 203
-	i64 u0xfb7a682b00f50271, ; 1012: lib_Supabase.Storage.dll.so => 214
-	i64 u0xfb846e949baff5ea, ; 1013: System.Xml.Serialization.dll => 161
-	i64 u0xfbad3e4ce4b98145, ; 1014: System.Security.Cryptography.X509Certificates => 128
-	i64 u0xfbba65887a38c94f, ; 1015: lib_Supabase.Core.dll.so => 209
-	i64 u0xfbf0a31c9fc34bc4, ; 1016: lib_System.Net.Http.dll.so => 66
-	i64 u0xfc6b7527cc280b3f, ; 1017: lib_System.Runtime.Serialization.Formatters.dll.so => 114
-	i64 u0xfc719aec26adf9d9, ; 1018: Xamarin.AndroidX.Navigation.Fragment.dll => 272
-	i64 u0xfc82690c2fe2735c, ; 1019: Xamarin.AndroidX.Lifecycle.Process.dll => 259
-	i64 u0xfc93fc307d279893, ; 1020: System.IO.Pipes.AccessControl.dll => 55
-	i64 u0xfcd302092ada6328, ; 1021: System.IO.MemoryMappedFiles.dll => 53
-	i64 u0xfd22f00870e40ae0, ; 1022: lib_Xamarin.AndroidX.DrawerLayout.dll.so => 246
-	i64 u0xfd49b3c1a76e2748, ; 1023: System.Runtime.InteropServices.RuntimeInformation => 109
-	i64 u0xfd536c702f64dc47, ; 1024: System.Text.Encoding.Extensions => 137
-	i64 u0xfd583f7657b6a1cb, ; 1025: Xamarin.AndroidX.Fragment => 251
-	i64 u0xfd8dd91a2c26bd5d, ; 1026: Xamarin.AndroidX.Lifecycle.Runtime => 260
-	i64 u0xfda36abccf05cf5c, ; 1027: System.Net.WebSockets.Client => 82
-	i64 u0xfddbe9695626a7f5, ; 1028: Xamarin.AndroidX.Lifecycle.Common => 254
-	i64 u0xfeae9952cf03b8cb, ; 1029: tr/Microsoft.Maui.Controls.resources => 338
-	i64 u0xfebe1950717515f9, ; 1030: Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx.dll => 258
-	i64 u0xff270a55858bac8d, ; 1031: System.Security.Principal => 131
-	i64 u0xff9b54613e0d2cc8, ; 1032: System.Net.Http.Json => 65
-	i64 u0xffa1fe933cabf8e4, ; 1033: Websocket.Client.dll => 217
-	i64 u0xffdb7a971be4ec73 ; 1034: System.ValueTuple.dll => 155
+	i64 u0x11fbe62d469cc1c8, ; 75: Microsoft.VisualStudio.DesignTools.TapContract.dll => 346
+	i64 u0x12128b3f59302d47, ; 76: lib_System.Xml.Serialization.dll.so => 161
+	i64 u0x123639456fb056da, ; 77: System.Reflection.Emit.Lightweight.dll => 94
+	i64 u0x12521e9764603eaa, ; 78: lib_System.Resources.Reader.dll.so => 101
+	i64 u0x125b7f94acb989db, ; 79: Xamarin.AndroidX.RecyclerView.dll => 277
+	i64 u0x12d3b63863d4ab0b, ; 80: lib_System.Threading.Overlapped.dll.so => 144
+	i64 u0x134eab1061c395ee, ; 81: System.Transactions => 154
+	i64 u0x138567fa954faa55, ; 82: Xamarin.AndroidX.Browser => 231
+	i64 u0x13a01de0cbc3f06c, ; 83: lib-fr-Microsoft.Maui.Controls.resources.dll.so => 318
+	i64 u0x13beedefb0e28a45, ; 84: lib_System.Xml.XmlDocument.dll.so => 165
+	i64 u0x13f1e5e209e91af4, ; 85: lib_Java.Interop.dll.so => 172
+	i64 u0x13f1e880c25d96d1, ; 86: he/Microsoft.Maui.Controls.resources => 319
+	i64 u0x143d8ea60a6a4011, ; 87: Microsoft.Extensions.DependencyInjection.Abstractions => 183
+	i64 u0x1497051b917530bd, ; 88: lib_System.Net.WebSockets.dll.so => 83
+	i64 u0x14b78ce3adce0011, ; 89: Microsoft.VisualStudio.DesignTools.TapContract => 346
+	i64 u0x14d612a531c79c05, ; 90: Xamarin.JSpecify.dll => 303
+	i64 u0x14e68447938213b7, ; 91: Xamarin.AndroidX.Collection.Ktx.dll => 235
+	i64 u0x152a448bd1e745a7, ; 92: Microsoft.Win32.Primitives => 4
+	i64 u0x1557de0138c445f4, ; 93: lib_Microsoft.Win32.Registry.dll.so => 5
+	i64 u0x15bdc156ed462f2f, ; 94: lib_System.IO.FileSystem.dll.so => 51
+	i64 u0x15e300c2c1668655, ; 95: System.Resources.Writer.dll => 103
+	i64 u0x16bf2a22df043a09, ; 96: System.IO.Pipes.dll => 56
+	i64 u0x16ea2b318ad2d830, ; 97: System.Security.Cryptography.Algorithms => 122
+	i64 u0x16eeae54c7ebcc08, ; 98: System.Reflection.dll => 100
+	i64 u0x17125c9a85b4929f, ; 99: lib_netstandard.dll.so => 171
+	i64 u0x1716866f7416792e, ; 100: lib_System.Security.AccessControl.dll.so => 120
+	i64 u0x174f71c46216e44a, ; 101: Xamarin.KotlinX.Coroutines.Core => 306
+	i64 u0x1752c12f1e1fc00c, ; 102: System.Core => 21
+	i64 u0x17b56e25558a5d36, ; 103: lib-hu-Microsoft.Maui.Controls.resources.dll.so => 322
+	i64 u0x17f9358913beb16a, ; 104: System.Text.Encodings.Web => 139
+	i64 u0x1809fb23f29ba44a, ; 105: lib_System.Reflection.TypeExtensions.dll.so => 99
+	i64 u0x18402a709e357f3b, ; 106: lib_Xamarin.KotlinX.Serialization.Core.Jvm.dll.so => 309
+	i64 u0x18a9befae51bb361, ; 107: System.Net.WebClient => 79
+	i64 u0x18f0ce884e87d89a, ; 108: nb/Microsoft.Maui.Controls.resources.dll => 328
+	i64 u0x19777fba3c41b398, ; 109: Xamarin.AndroidX.Startup.StartupRuntime.dll => 284
+	i64 u0x19a4c090f14ebb66, ; 110: System.Security.Claims => 121
+	i64 u0x1a91866a319e9259, ; 111: lib_System.Collections.Concurrent.dll.so => 8
+	i64 u0x1aac34d1917ba5d3, ; 112: lib_System.dll.so => 168
+	i64 u0x1aad60783ffa3e5b, ; 113: lib-th-Microsoft.Maui.Controls.resources.dll.so => 337
+	i64 u0x1aea8f1c3b282172, ; 114: lib_System.Net.Ping.dll.so => 71
+	i64 u0x1b4b7a1d0d265fa2, ; 115: Xamarin.Android.Glide.DiskLruCache => 220
+	i64 u0x1bbdb16cfa73e785, ; 116: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android => 263
+	i64 u0x1bc766e07b2b4241, ; 117: Xamarin.AndroidX.ResourceInspection.Annotation.dll => 278
+	i64 u0x1c753b5ff15bce1b, ; 118: Mono.Android.Runtime.dll => 174
+	i64 u0x1cd47467799d8250, ; 119: System.Threading.Tasks.dll => 148
+	i64 u0x1d23eafdc6dc346c, ; 120: System.Globalization.Calendars.dll => 40
+	i64 u0x1da4110562816681, ; 121: Xamarin.AndroidX.Security.SecurityCrypto.dll => 282
+	i64 u0x1db6820994506bf5, ; 122: System.IO.FileSystem.AccessControl.dll => 47
+	i64 u0x1dbb0c2c6a999acb, ; 123: System.Diagnostics.StackTrace => 30
+	i64 u0x1e3d87657e9659bc, ; 124: Xamarin.AndroidX.Navigation.UI => 275
+	i64 u0x1e57ec3104eb59d9, ; 125: lib_Supabase.Gotrue.dll.so => 211
+	i64 u0x1e71143913d56c10, ; 126: lib-ko-Microsoft.Maui.Controls.resources.dll.so => 326
+	i64 u0x1e7c31185e2fb266, ; 127: lib_System.Threading.Tasks.Parallel.dll.so => 147
+	i64 u0x1ed8fcce5e9b50a0, ; 128: Microsoft.Extensions.Options.dll => 190
+	i64 u0x1f055d15d807e1b2, ; 129: System.Xml.XmlSerializer => 166
+	i64 u0x1f1ed22c1085f044, ; 130: lib_System.Diagnostics.FileVersionInfo.dll.so => 28
+	i64 u0x1f61df9c5b94d2c1, ; 131: lib_System.Numerics.dll.so => 86
+	i64 u0x1f750bb5421397de, ; 132: lib_Xamarin.AndroidX.Tracing.Tracing.dll.so => 286
+	i64 u0x20237ea48006d7a8, ; 133: lib_System.Net.WebClient.dll.so => 79
+	i64 u0x209375905fcc1bad, ; 134: lib_System.IO.Compression.Brotli.dll.so => 43
+	i64 u0x20aa4eb4c5cf3260, ; 135: Supabase.Realtime.dll => 213
+	i64 u0x20fab3cf2dfbc8df, ; 136: lib_System.Diagnostics.Process.dll.so => 29
+	i64 u0x2110167c128cba15, ; 137: System.Globalization => 42
+	i64 u0x21419508838f7547, ; 138: System.Runtime.CompilerServices.VisualC => 105
+	i64 u0x2174319c0d835bc9, ; 139: System.Runtime => 119
+	i64 u0x2198e5bc8b7153fa, ; 140: Xamarin.AndroidX.Annotation.Experimental.dll => 225
+	i64 u0x219ea1b751a4dee4, ; 141: lib_System.IO.Compression.ZipFile.dll.so => 45
+	i64 u0x21cc7e445dcd5469, ; 142: System.Reflection.Emit.ILGeneration => 93
+	i64 u0x220fd4f2e7c48170, ; 143: th/Microsoft.Maui.Controls.resources => 337
+	i64 u0x224538d85ed15a82, ; 144: System.IO.Pipes => 56
+	i64 u0x22908438c6bed1af, ; 145: lib_System.Threading.Timer.dll.so => 151
+	i64 u0x22fbc14e981e3b45, ; 146: lib_Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll.so => 345
+	i64 u0x237be844f1f812c7, ; 147: System.Threading.Thread.dll => 149
+	i64 u0x23852b3bdc9f7096, ; 148: System.Resources.ResourceManager => 102
+	i64 u0x23986dd7e5d4fc01, ; 149: System.IO.FileSystem.Primitives.dll => 49
+	i64 u0x2407aef2bbe8fadf, ; 150: System.Console => 20
+	i64 u0x240abe014b27e7d3, ; 151: Xamarin.AndroidX.Core.dll => 240
+	i64 u0x247619fe4413f8bf, ; 152: System.Runtime.Serialization.Primitives.dll => 116
+	i64 u0x24de8d301281575e, ; 153: Xamarin.Android.Glide => 218
+	i64 u0x252073cc3caa62c2, ; 154: fr/Microsoft.Maui.Controls.resources.dll => 318
+	i64 u0x256b8d41255f01b1, ; 155: Xamarin.Google.Crypto.Tink.Android => 299
+	i64 u0x2662c629b96b0b30, ; 156: lib_Xamarin.Kotlin.StdLib.dll.so => 304
+	i64 u0x268c1439f13bcc29, ; 157: lib_Microsoft.Extensions.Primitives.dll.so => 191
+	i64 u0x26a670e154a9c54b, ; 158: System.Reflection.Extensions.dll => 96
+	i64 u0x26d077d9678fe34f, ; 159: System.IO.dll => 58
+	i64 u0x270a44600c921861, ; 160: System.IdentityModel.Tokens.Jwt => 215
+	i64 u0x273f3515de5faf0d, ; 161: id/Microsoft.Maui.Controls.resources.dll => 323
+	i64 u0x2742545f9094896d, ; 162: hr/Microsoft.Maui.Controls.resources => 321
+	i64 u0x274d85d83ad40513, ; 163: lib_Xamarin.AndroidX.Window.WindowCore.dll.so => 295
+	i64 u0x2759af78ab94d39b, ; 164: System.Net.WebSockets => 83
+	i64 u0x27b2b16f3e9de038, ; 165: Xamarin.Google.Crypto.Tink.Android.dll => 299
+	i64 u0x27b410442fad6cf1, ; 166: Java.Interop.dll => 172
+	i64 u0x27b97e0d52c3034a, ; 167: System.Diagnostics.Debug => 26
+	i64 u0x2801845a2c71fbfb, ; 168: System.Net.Primitives.dll => 72
+	i64 u0x286835e259162700, ; 169: lib_Xamarin.AndroidX.ProfileInstaller.ProfileInstaller.dll.so => 276
+	i64 u0x28e52865585a1ebe, ; 170: Microsoft.Extensions.Diagnostics.Abstractions.dll => 184
+	i64 u0x2949f3617a02c6b2, ; 171: Xamarin.AndroidX.ExifInterface => 250
+	i64 u0x29aeab763a527e52, ; 172: lib_Xamarin.AndroidX.Navigation.Common.Android.dll.so => 271
+	i64 u0x29f947844fb7fc11, ; 173: Microsoft.Maui.Controls.HotReload.Forms => 344
+	i64 u0x2a128783efe70ba0, ; 174: uk/Microsoft.Maui.Controls.resources.dll => 339
+	i64 u0x2a3b095612184159, ; 175: lib_System.Net.NetworkInformation.dll.so => 70
+	i64 u0x2a6507a5ffabdf28, ; 176: System.Diagnostics.TraceSource.dll => 33
+	i64 u0x2ad156c8e1354139, ; 177: fi/Microsoft.Maui.Controls.resources => 317
+	i64 u0x2ad5d6b13b7a3e04, ; 178: System.ComponentModel.DataAnnotations.dll => 14
+	i64 u0x2af298f63581d886, ; 179: System.Text.RegularExpressions.dll => 141
+	i64 u0x2af615542f04da50, ; 180: System.IdentityModel.Tokens.Jwt.dll => 215
+	i64 u0x2afc1c4f898552ee, ; 181: lib_System.Formats.Asn1.dll.so => 38
+	i64 u0x2b148910ed40fbf9, ; 182: zh-Hant/Microsoft.Maui.Controls.resources.dll => 343
+	i64 u0x2b6989d78cba9a15, ; 183: Xamarin.AndroidX.Concurrent.Futures.dll => 236
+	i64 u0x2c42baa2af5f9385, ; 184: lib_MimeMapping.dll.so => 202
+	i64 u0x2c8bd14bb93a7d82, ; 185: lib-pl-Microsoft.Maui.Controls.resources.dll.so => 330
+	i64 u0x2cbd9262ca785540, ; 186: lib_System.Text.Encoding.CodePages.dll.so => 136
+	i64 u0x2cc9e1fed6257257, ; 187: lib_System.Reflection.Emit.Lightweight.dll.so => 94
+	i64 u0x2cd723e9fe623c7c, ; 188: lib_System.Private.Xml.Linq.dll.so => 90
+	i64 u0x2d169d318a968379, ; 189: System.Threading.dll => 152
+	i64 u0x2d20145f27cfc1d2, ; 190: Xamarin.AndroidX.Window.WindowCore.Jvm.dll => 296
+	i64 u0x2d47774b7d993f59, ; 191: sv/Microsoft.Maui.Controls.resources.dll => 336
+	i64 u0x2d5ffcae1ad0aaca, ; 192: System.Data.dll => 24
+	i64 u0x2db915caf23548d2, ; 193: System.Text.Json.dll => 140
+	i64 u0x2dcaa0bb15a4117a, ; 194: System.IO.UnmanagedMemoryStream.dll => 57
+	i64 u0x2e2ced2c3c6a1edc, ; 195: lib_System.Threading.AccessControl.dll.so => 142
+	i64 u0x2e5a40c319acb800, ; 196: System.IO.FileSystem => 51
+	i64 u0x2e6f1f226821322a, ; 197: el/Microsoft.Maui.Controls.resources.dll => 315
+	i64 u0x2f02f94df3200fe5, ; 198: System.Diagnostics.Process => 29
+	i64 u0x2f2e98e1c89b1aff, ; 199: System.Xml.ReaderWriter => 160
+	i64 u0x2f5911d9ba814e4e, ; 200: System.Diagnostics.Tracing => 34
+	i64 u0x2f84070a459bc31f, ; 201: lib_System.Xml.dll.so => 167
+	i64 u0x301c0086136fedbd, ; 202: lib_BirdMessenger.dll.so => 178
+	i64 u0x309ee9eeec09a71e, ; 203: lib_Xamarin.AndroidX.Fragment.dll.so => 251
+	i64 u0x309f2bedefa9a318, ; 204: Microsoft.IdentityModel.Abstractions => 192
+	i64 u0x30c6dda129408828, ; 205: System.IO.IsolatedStorage => 52
+	i64 u0x31195fef5d8fb552, ; 206: _Microsoft.Android.Resource.Designer.dll => 348
+	i64 u0x312c8ed623cbfc8d, ; 207: Xamarin.AndroidX.Window.dll => 294
+	i64 u0x31496b779ed0663d, ; 208: lib_System.Reflection.DispatchProxy.dll.so => 92
+	i64 u0x32243413e774362a, ; 209: Xamarin.AndroidX.CardView.dll => 232
+	i64 u0x3235427f8d12dae1, ; 210: lib_System.Drawing.Primitives.dll.so => 35
+	i64 u0x329753a17a517811, ; 211: fr/Microsoft.Maui.Controls.resources => 318
+	i64 u0x32aa989ff07a84ff, ; 212: lib_System.Xml.ReaderWriter.dll.so => 160
+	i64 u0x32dbba5d256b19d3, ; 213: Supabase.Core => 209
+	i64 u0x33829542f112d59b, ; 214: System.Collections.Immutable => 9
+	i64 u0x33a31443733849fe, ; 215: lib-es-Microsoft.Maui.Controls.resources.dll.so => 316
+	i64 u0x341abc357fbb4ebf, ; 216: lib_System.Net.Sockets.dll.so => 78
+	i64 u0x346a212343615ac5, ; 217: lib_System.Linq.AsyncEnumerable.dll.so => 59
+	i64 u0x3496c1e2dcaf5ecc, ; 218: lib_System.IO.Pipes.AccessControl.dll.so => 55
+	i64 u0x34dfd74fe2afcf37, ; 219: Microsoft.Maui => 199
+	i64 u0x34e292762d9615df, ; 220: cs/Microsoft.Maui.Controls.resources.dll => 312
+	i64 u0x3508234247f48404, ; 221: Microsoft.Maui.Controls => 197
+	i64 u0x353590da528c9d22, ; 222: System.ComponentModel.Annotations => 13
+	i64 u0x3549870798b4cd30, ; 223: lib_Xamarin.AndroidX.ViewPager2.dll.so => 293
+	i64 u0x355282fc1c909694, ; 224: Microsoft.Extensions.Configuration => 180
+	i64 u0x3552fc5d578f0fbf, ; 225: Xamarin.AndroidX.Arch.Core.Common => 229
+	i64 u0x355c649948d55d97, ; 226: lib_System.Runtime.Intrinsics.dll.so => 111
+	i64 u0x35ea9d1c6834bc8c, ; 227: Xamarin.AndroidX.Lifecycle.ViewModel.Ktx.dll => 266
+	i64 u0x3628ab68db23a01a, ; 228: lib_System.Diagnostics.Tools.dll.so => 32
+	i64 u0x3673b042508f5b6b, ; 229: lib_System.Runtime.Extensions.dll.so => 106
+	i64 u0x36740f1a8ecdc6c4, ; 230: System.Numerics => 86
+	i64 u0x36b2b50fdf589ae2, ; 231: System.Reflection.Emit.Lightweight => 94
+	i64 u0x36cada77dc79928b, ; 232: System.IO.MemoryMappedFiles => 53
+	i64 u0x374ef46b06791af6, ; 233: System.Reflection.Primitives.dll => 98
+	i64 u0x376bf93e521a5417, ; 234: lib_Xamarin.Jetbrains.Annotations.dll.so => 302
+	i64 u0x37bc29f3183003b6, ; 235: lib_System.IO.dll.so => 58
+	i64 u0x380134e03b1e160a, ; 236: System.Collections.Immutable.dll => 9
+	i64 u0x38049b5c59b39324, ; 237: System.Runtime.CompilerServices.Unsafe => 104
+	i64 u0x385c17636bb6fe6e, ; 238: Xamarin.AndroidX.CustomView.dll => 244
+	i64 u0x38869c811d74050e, ; 239: System.Net.NameResolution.dll => 69
+	i64 u0x393c226616977fdb, ; 240: lib_Xamarin.AndroidX.ViewPager.dll.so => 292
+	i64 u0x395b3053dde89e41, ; 241: lib_System.Reactive.dll.so => 216
+	i64 u0x395e37c3334cf82a, ; 242: lib-ca-Microsoft.Maui.Controls.resources.dll.so => 311
+	i64 u0x39a87563fdb248a0, ; 243: System.Reactive.dll => 216
+	i64 u0x39c3107c28752af1, ; 244: lib_Microsoft.Extensions.FileProviders.Abstractions.dll.so => 185
+	i64 u0x3ab5859054645f72, ; 245: System.Security.Cryptography.Primitives.dll => 127
+	i64 u0x3ad75090c3fac0e9, ; 246: lib_Xamarin.AndroidX.ResourceInspection.Annotation.dll.so => 278
+	i64 u0x3ae44ac43a1fbdbb, ; 247: System.Runtime.Serialization => 118
+	i64 u0x3b860f9932505633, ; 248: lib_System.Text.Encoding.Extensions.dll.so => 137
+	i64 u0x3be99b43dd39dd37, ; 249: Xamarin.AndroidX.SavedState.SavedState.Android => 280
+	i64 u0x3bea9ebe8c027c01, ; 250: lib_Microsoft.IdentityModel.Tokens.dll.so => 195
+	i64 u0x3c3aafb6b3a00bf6, ; 251: lib_System.Security.Cryptography.X509Certificates.dll.so => 128
+	i64 u0x3c4049146b59aa90, ; 252: System.Runtime.InteropServices.JavaScript => 108
+	i64 u0x3c7c495f58ac5ee9, ; 253: Xamarin.Kotlin.StdLib => 304
+	i64 u0x3c7e5ed3d5db71bb, ; 254: System.Security => 133
+	i64 u0x3cd9d281d402eb9b, ; 255: Xamarin.AndroidX.Browser.dll => 231
+	i64 u0x3d1c50cc001a991e, ; 256: Xamarin.Google.Guava.ListenableFuture.dll => 301
+	i64 u0x3d2b1913edfc08d7, ; 257: lib_System.Threading.ThreadPool.dll.so => 150
+	i64 u0x3d46f0b995082740, ; 258: System.Xml.Linq => 159
+	i64 u0x3d8a8f400514a790, ; 259: Xamarin.AndroidX.Fragment.Ktx.dll => 252
+	i64 u0x3d9c2a242b040a50, ; 260: lib_Xamarin.AndroidX.Core.dll.so => 240
+	i64 u0x3dbb6b9f5ab90fa7, ; 261: lib_Xamarin.AndroidX.DynamicAnimation.dll.so => 247
+	i64 u0x3e5441657549b213, ; 262: Xamarin.AndroidX.ResourceInspection.Annotation => 278
+	i64 u0x3e57d4d195c53c2e, ; 263: System.Reflection.TypeExtensions => 99
+	i64 u0x3e616ab4ed1f3f15, ; 264: lib_System.Data.dll.so => 24
+	i64 u0x3f1d226e6e06db7e, ; 265: Xamarin.AndroidX.SlidingPaneLayout.dll => 283
+	i64 u0x3f510adf788828dd, ; 266: System.Threading.Tasks.Extensions => 146
+	i64 u0x3f6f5914291cdcf7, ; 267: Microsoft.Extensions.Hosting.Abstractions => 186
+	i64 u0x4007fff231dcbc12, ; 268: lib_Supabase.Postgrest.dll.so => 212
+	i64 u0x407a10bb4bf95829, ; 269: lib_Xamarin.AndroidX.Navigation.Common.dll.so => 270
+	i64 u0x40c98b6bd77346d4, ; 270: Microsoft.VisualBasic.dll => 3
+	i64 u0x41833cf766d27d96, ; 271: mscorlib => 170
+	i64 u0x41cab042be111c34, ; 272: lib_Xamarin.AndroidX.AppCompat.AppCompatResources.dll.so => 228
+	i64 u0x423a9ecc4d905a88, ; 273: lib_System.Resources.ResourceManager.dll.so => 102
+	i64 u0x423bf51ae7def810, ; 274: System.Xml.XPath => 164
+	i64 u0x42462ff15ddba223, ; 275: System.Resources.Reader.dll => 101
+	i64 u0x4291015ff4e5ef71, ; 276: Xamarin.AndroidX.Core.ViewTree.dll => 242
+	i64 u0x42a31b86e6ccc3f0, ; 277: System.Diagnostics.Contracts => 25
+	i64 u0x430e95b891249788, ; 278: lib_System.Reflection.Emit.dll.so => 95
+	i64 u0x43375950ec7c1b6a, ; 279: netstandard.dll => 171
+	i64 u0x434c4e1d9284cdae, ; 280: Mono.Android.dll => 175
+	i64 u0x43505013578652a0, ; 281: lib_Xamarin.AndroidX.Activity.Ktx.dll.so => 223
+	i64 u0x437d06c381ed575a, ; 282: lib_Microsoft.VisualBasic.dll.so => 3
+	i64 u0x43950f84de7cc79a, ; 283: pl/Microsoft.Maui.Controls.resources.dll => 330
+	i64 u0x43c077442b230f64, ; 284: Xamarin.AndroidX.Tracing.Tracing.Android => 287
+	i64 u0x43e8ca5bc927ff37, ; 285: lib_Xamarin.AndroidX.Emoji2.ViewsHelper.dll.so => 249
+	i64 u0x448bd33429269b19, ; 286: Microsoft.CSharp => 1
+	i64 u0x4499fa3c8e494654, ; 287: lib_System.Runtime.Serialization.Primitives.dll.so => 116
+	i64 u0x4515080865a951a5, ; 288: Xamarin.Kotlin.StdLib.dll => 304
+	i64 u0x4545802489b736b9, ; 289: Xamarin.AndroidX.Fragment.Ktx => 252
+	i64 u0x454b4d1e66bb783c, ; 290: Xamarin.AndroidX.Lifecycle.Process => 259
+	i64 u0x458d2df79ac57c1d, ; 291: lib_System.IdentityModel.Tokens.Jwt.dll.so => 215
+	i64 u0x45c40276a42e283e, ; 292: System.Diagnostics.TraceSource => 33
+	i64 u0x45d443f2a29adc37, ; 293: System.AppContext.dll => 6
+	i64 u0x46a4213bc97fe5ae, ; 294: lib-ru-Microsoft.Maui.Controls.resources.dll.so => 334
+	i64 u0x47358bd471172e1d, ; 295: lib_System.Xml.Linq.dll.so => 159
+	i64 u0x47daf4e1afbada10, ; 296: pt/Microsoft.Maui.Controls.resources => 332
+	i64 u0x480c0a47dd42dd81, ; 297: lib_System.IO.MemoryMappedFiles.dll.so => 53
+	i64 u0x49e952f19a4e2022, ; 298: System.ObjectModel => 87
+	i64 u0x49f9e6948a8131e4, ; 299: lib_Xamarin.AndroidX.VersionedParcelable.dll.so => 291
+	i64 u0x4a5667b2462a664b, ; 300: lib_Xamarin.AndroidX.Navigation.UI.dll.so => 275
+	i64 u0x4a7a18981dbd56bc, ; 301: System.IO.Compression.FileSystem.dll => 44
+	i64 u0x4aa5c60350917c06, ; 302: lib_Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx.dll.so => 258
+	i64 u0x4b07a0ed0ab33ff4, ; 303: System.Runtime.Extensions.dll => 106
+	i64 u0x4b576d47ac054f3c, ; 304: System.IO.FileSystem.AccessControl => 47
+	i64 u0x4b7b6532ded934b7, ; 305: System.Text.Json => 140
+	i64 u0x4c2029a97af23a8d, ; 306: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android => 268
+	i64 u0x4c7755cf07ad2d5f, ; 307: System.Net.Http.Json.dll => 65
+	i64 u0x4cc5f15266470798, ; 308: lib_Xamarin.AndroidX.Loader.dll.so => 269
+	i64 u0x4cf6f67dc77aacd2, ; 309: System.Net.NetworkInformation.dll => 70
+	i64 u0x4d3183dd245425d4, ; 310: System.Net.WebSockets.Client.dll => 82
+	i64 u0x4d479f968a05e504, ; 311: System.Linq.Expressions.dll => 60
+	i64 u0x4d55a010ffc4faff, ; 312: System.Private.Xml => 91
+	i64 u0x4d5cbe77561c5b2e, ; 313: System.Web.dll => 157
+	i64 u0x4d77512dbd86ee4c, ; 314: lib_Xamarin.AndroidX.Arch.Core.Common.dll.so => 229
+	i64 u0x4d7793536e79c309, ; 315: System.ServiceProcess => 135
+	i64 u0x4d95fccc1f67c7ca, ; 316: System.Runtime.Loader.dll => 112
+	i64 u0x4db014bf0ff1c9c1, ; 317: System.Linq.AsyncEnumerable => 59
+	i64 u0x4dcf44c3c9b076a2, ; 318: it/Microsoft.Maui.Controls.resources.dll => 324
+	i64 u0x4dd9247f1d2c3235, ; 319: Xamarin.AndroidX.Loader.dll => 269
+	i64 u0x4e2aeee78e2c4a87, ; 320: Xamarin.AndroidX.ProfileInstaller.ProfileInstaller => 276
+	i64 u0x4e32f00cb0937401, ; 321: Mono.Android.Runtime => 174
+	i64 u0x4e5eea4668ac2b18, ; 322: System.Text.Encoding.CodePages => 136
+	i64 u0x4e8cf86fe3ecbfcd, ; 323: Supabase => 208
+	i64 u0x4ebd0c4b82c5eefc, ; 324: lib_System.Threading.Channels.dll.so => 143
+	i64 u0x4ee8eaa9c9c1151a, ; 325: System.Globalization.Calendars => 40
+	i64 u0x4f0f420f6c43234c, ; 326: MimeMapping => 202
+	i64 u0x4f21ee6ef9eb527e, ; 327: ca/Microsoft.Maui.Controls.resources => 311
+	i64 u0x4ffd65baff757598, ; 328: Microsoft.IdentityModel.Tokens => 195
+	i64 u0x5037f0be3c28c7a3, ; 329: lib_Microsoft.Maui.Controls.dll.so => 197
+	i64 u0x50c3a29b21050d45, ; 330: System.Linq.Parallel.dll => 61
+	i64 u0x5131bbe80989093f, ; 331: Xamarin.AndroidX.Lifecycle.ViewModel.Android.dll => 265
+	i64 u0x516324a5050a7e3c, ; 332: System.Net.WebProxy => 81
+	i64 u0x516d6f0b21a303de, ; 333: lib_System.Diagnostics.Contracts.dll.so => 25
+	i64 u0x51bb8a2afe774e32, ; 334: System.Drawing => 36
+	i64 u0x5247c5c32a4140f0, ; 335: System.Resources.Reader => 101
+	i64 u0x526bb15e3c386364, ; 336: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.dll => 262
+	i64 u0x526ce79eb8e90527, ; 337: lib_System.Net.Primitives.dll.so => 72
+	i64 u0x52829f00b4467c38, ; 338: lib_System.Data.Common.dll.so => 22
+	i64 u0x529ffe06f39ab8db, ; 339: Xamarin.AndroidX.Core => 240
+	i64 u0x52ff996554dbf352, ; 340: Microsoft.Maui.Graphics => 201
+	i64 u0x535f7e40e8fef8af, ; 341: lib-sk-Microsoft.Maui.Controls.resources.dll.so => 335
+	i64 u0x53978aac584c666e, ; 342: lib_System.Security.Cryptography.Cng.dll.so => 123
+	i64 u0x53a96d5c86c9e194, ; 343: System.Net.NetworkInformation => 70
+	i64 u0x53be1038a61e8d44, ; 344: System.Runtime.InteropServices.RuntimeInformation.dll => 109
+	i64 u0x53c3014b9437e684, ; 345: lib-zh-HK-Microsoft.Maui.Controls.resources.dll.so => 341
+	i64 u0x5435e6f049e9bc37, ; 346: System.Security.Claims.dll => 121
+	i64 u0x54795225dd1587af, ; 347: lib_System.Runtime.dll.so => 119
+	i64 u0x547a34f14e5f6210, ; 348: Xamarin.AndroidX.Lifecycle.Common.dll => 254
+	i64 u0x54b851bc9b470503, ; 349: Xamarin.AndroidX.Navigation.Common.Android => 271
+	i64 u0x556e8b63b660ab8b, ; 350: Xamarin.AndroidX.Lifecycle.Common.Jvm.dll => 255
+	i64 u0x5588627c9a108ec9, ; 351: System.Collections.Specialized => 11
+	i64 u0x55a898e4f42e3fae, ; 352: Microsoft.VisualBasic.Core.dll => 2
+	i64 u0x55fa0c610fe93bb1, ; 353: lib_System.Security.Cryptography.OpenSsl.dll.so => 126
+	i64 u0x56442b99bc64bb47, ; 354: System.Runtime.Serialization.Xml.dll => 117
+	i64 u0x56a8b26e1aeae27b, ; 355: System.Threading.Tasks.Dataflow => 145
+	i64 u0x56f932d61e93c07f, ; 356: System.Globalization.Extensions => 41
+	i64 u0x571c5cfbec5ae8e2, ; 357: System.Private.Uri => 89
+	i64 u0x576499c9f52fea31, ; 358: Xamarin.AndroidX.Annotation => 224
+	i64 u0x578cd35c91d7b347, ; 359: lib_SQLitePCLRaw.core.dll.so => 206
+	i64 u0x579a06fed6eec900, ; 360: System.Private.CoreLib.dll => 177
+	i64 u0x57adda3c951abb33, ; 361: Microsoft.Extensions.Hosting.Abstractions.dll => 186
+	i64 u0x57c542c14049b66d, ; 362: System.Diagnostics.DiagnosticSource => 27
+	i64 u0x581a8bd5cfda563e, ; 363: System.Threading.Timer => 151
+	i64 u0x58601b2dda4a27b9, ; 364: lib-ja-Microsoft.Maui.Controls.resources.dll.so => 325
+	i64 u0x58688d9af496b168, ; 365: Microsoft.Extensions.DependencyInjection.dll => 182
+	i64 u0x588c167a79db6bfb, ; 366: lib_Xamarin.Google.ErrorProne.Annotations.dll.so => 300
+	i64 u0x5906028ae5151104, ; 367: Xamarin.AndroidX.Activity.Ktx => 223
+	i64 u0x595a356d23e8da9a, ; 368: lib_Microsoft.CSharp.dll.so => 1
+	i64 u0x59f9e60b9475085f, ; 369: lib_Xamarin.AndroidX.Annotation.Experimental.dll.so => 225
+	i64 u0x5a745f5101a75527, ; 370: lib_System.IO.Compression.FileSystem.dll.so => 44
+	i64 u0x5a89a886ae30258d, ; 371: lib_Xamarin.AndroidX.CoordinatorLayout.dll.so => 239
+	i64 u0x5a8f6699f4a1caa9, ; 372: lib_System.Threading.dll.so => 152
+	i64 u0x5ae9cd33b15841bf, ; 373: System.ComponentModel => 18
+	i64 u0x5b54391bdc6fcfe6, ; 374: System.Private.DataContractSerialization => 88
+	i64 u0x5b5f0e240a06a2a2, ; 375: da/Microsoft.Maui.Controls.resources.dll => 313
+	i64 u0x5b8109e8e14c5e3e, ; 376: System.Globalization.Extensions.dll => 41
+	i64 u0x5bddd04d72a9e350, ; 377: Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx => 258
+	i64 u0x5bdf16b09da116ab, ; 378: Xamarin.AndroidX.Collection => 233
+	i64 u0x5c019d5266093159, ; 379: lib_Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android.dll.so => 263
+	i64 u0x5c30a4a35f9cc8c4, ; 380: lib_System.Reflection.Extensions.dll.so => 96
+	i64 u0x5c393624b8176517, ; 381: lib_Microsoft.Extensions.Logging.dll.so => 187
+	i64 u0x5c53c29f5073b0c9, ; 382: System.Diagnostics.FileVersionInfo => 28
+	i64 u0x5c87463c575c7616, ; 383: lib_System.Globalization.Extensions.dll.so => 41
+	i64 u0x5d0a4a29b02d9d3c, ; 384: System.Net.WebHeaderCollection.dll => 80
+	i64 u0x5d40c9b15181641f, ; 385: lib_Xamarin.AndroidX.Emoji2.dll.so => 248
+	i64 u0x5d6ca10d35e9485b, ; 386: lib_Xamarin.AndroidX.Concurrent.Futures.dll.so => 236
+	i64 u0x5d7ec76c1c703055, ; 387: System.Threading.Tasks.Parallel => 147
+	i64 u0x5db0cbbd1028510e, ; 388: lib_System.Runtime.InteropServices.dll.so => 110
+	i64 u0x5db30905d3e5013b, ; 389: Xamarin.AndroidX.Collection.Jvm.dll => 234
+	i64 u0x5e467bc8f09ad026, ; 390: System.Collections.Specialized.dll => 11
+	i64 u0x5e5173b3208d97e7, ; 391: System.Runtime.Handles.dll => 107
+	i64 u0x5ea92fdb19ec8c4c, ; 392: System.Text.Encodings.Web.dll => 139
+	i64 u0x5eb8046dd40e9ac3, ; 393: System.ComponentModel.Primitives => 16
+	i64 u0x5ec272d219c9aba4, ; 394: System.Security.Cryptography.Csp.dll => 124
+	i64 u0x5eee1376d94c7f5e, ; 395: System.Net.HttpListener.dll => 67
+	i64 u0x5f36ccf5c6a57e24, ; 396: System.Xml.ReaderWriter.dll => 160
+	i64 u0x5f4294b9b63cb842, ; 397: System.Data.Common => 22
+	i64 u0x5f9a2d823f664957, ; 398: lib-el-Microsoft.Maui.Controls.resources.dll.so => 315
+	i64 u0x5fa6da9c3cd8142a, ; 399: lib_Xamarin.KotlinX.Serialization.Core.dll.so => 308
+	i64 u0x5fac98e0b37a5b9d, ; 400: System.Runtime.CompilerServices.Unsafe.dll => 104
+	i64 u0x609f4b7b63d802d4, ; 401: lib_Microsoft.Extensions.DependencyInjection.dll.so => 182
+	i64 u0x60cd4e33d7e60134, ; 402: Xamarin.KotlinX.Coroutines.Core.Jvm => 307
+	i64 u0x60f62d786afcf130, ; 403: System.Memory => 64
+	i64 u0x61bb78c89f867353, ; 404: System.IO => 58
+	i64 u0x61be8d1299194243, ; 405: Microsoft.Maui.Controls.Xaml => 198
+	i64 u0x61d2cba29557038f, ; 406: de/Microsoft.Maui.Controls.resources => 314
+	i64 u0x61d88f399afb2f45, ; 407: lib_System.Runtime.Loader.dll.so => 112
+	i64 u0x622eef6f9e59068d, ; 408: System.Private.CoreLib => 177
+	i64 u0x639fb99a7bef11de, ; 409: Xamarin.AndroidX.Navigation.Runtime.Android.dll => 274
+	i64 u0x63cdbd66ac39bb46, ; 410: lib_Microsoft.VisualStudio.DesignTools.XamlTapContract.dll.so => 347
+	i64 u0x63d5e3aa4ef9b931, ; 411: Xamarin.KotlinX.Coroutines.Android.dll => 305
+	i64 u0x63f1f6883c1e23c2, ; 412: lib_System.Collections.Immutable.dll.so => 9
+	i64 u0x6400f68068c1e9f1, ; 413: Xamarin.Google.Android.Material.dll => 297
+	i64 u0x640e3b14dbd325c2, ; 414: System.Security.Cryptography.Algorithms.dll => 122
+	i64 u0x64587004560099b9, ; 415: System.Reflection => 100
+	i64 u0x64b1529a438a3c45, ; 416: lib_System.Runtime.Handles.dll.so => 107
+	i64 u0x64b61dd9da8a4d57, ; 417: System.Net.ServerSentEvents.dll => 76
+	i64 u0x6565fba2cd8f235b, ; 418: Xamarin.AndroidX.Lifecycle.ViewModel.Ktx => 266
+	i64 u0x65ecac39144dd3cc, ; 419: Microsoft.Maui.Controls.dll => 197
+	i64 u0x65ece51227bfa724, ; 420: lib_System.Runtime.Numerics.dll.so => 113
+	i64 u0x661722438787b57f, ; 421: Xamarin.AndroidX.Annotation.Jvm.dll => 226
+	i64 u0x6679b2337ee6b22a, ; 422: lib_System.IO.FileSystem.Primitives.dll.so => 49
+	i64 u0x667c66a03dd97d40, ; 423: System.Linq.AsyncEnumerable.dll => 59
+	i64 u0x6692e924eade1b29, ; 424: lib_System.Console.dll.so => 20
+	i64 u0x66a4e5c6a3fb0bae, ; 425: lib_Xamarin.AndroidX.Lifecycle.ViewModel.Android.dll.so => 265
+	i64 u0x66d13304ce1a3efa, ; 426: Xamarin.AndroidX.CursorAdapter => 243
+	i64 u0x674303f65d8fad6f, ; 427: lib_System.Net.Quic.dll.so => 73
+	i64 u0x6756ca4cad62e9d6, ; 428: lib_Xamarin.AndroidX.ConstraintLayout.Core.dll.so => 238
+	i64 u0x67c0802770244408, ; 429: System.Windows.dll => 158
+	i64 u0x68100b69286e27cd, ; 430: lib_System.Formats.Tar.dll.so => 39
+	i64 u0x68558ec653afa616, ; 431: lib-da-Microsoft.Maui.Controls.resources.dll.so => 313
+	i64 u0x6872ec7a2e36b1ac, ; 432: System.Drawing.Primitives.dll => 35
+	i64 u0x68fbbbe2eb455198, ; 433: System.Formats.Asn1 => 38
+	i64 u0x69063fc0ba8e6bdd, ; 434: he/Microsoft.Maui.Controls.resources.dll => 319
+	i64 u0x6a4d7577b2317255, ; 435: System.Runtime.InteropServices.dll => 110
+	i64 u0x6ace3b74b15ee4a4, ; 436: nb/Microsoft.Maui.Controls.resources => 328
+	i64 u0x6afcedb171067e2b, ; 437: System.Core.dll => 21
+	i64 u0x6bef98e124147c24, ; 438: Xamarin.Jetbrains.Annotations => 302
+	i64 u0x6ca323bb74a4c28a, ; 439: Supabase.Storage.dll => 214
+	i64 u0x6ce874bff138ce2b, ; 440: Xamarin.AndroidX.Lifecycle.ViewModel.dll => 264
+	i64 u0x6d12bfaa99c72b1f, ; 441: lib_Microsoft.Maui.Graphics.dll.so => 201
+	i64 u0x6d70755158ca866e, ; 442: lib_System.ComponentModel.EventBasedAsync.dll.so => 15
+	i64 u0x6d79993361e10ef2, ; 443: Microsoft.Extensions.Primitives => 191
+	i64 u0x6d7eeca99577fc8b, ; 444: lib_System.Net.WebProxy.dll.so => 81
+	i64 u0x6d8515b19946b6a2, ; 445: System.Net.WebProxy.dll => 81
+	i64 u0x6d86d56b84c8eb71, ; 446: lib_Xamarin.AndroidX.CursorAdapter.dll.so => 243
+	i64 u0x6d9bea6b3e895cf7, ; 447: Microsoft.Extensions.Primitives.dll => 191
+	i64 u0x6e25a02c3833319a, ; 448: lib_Xamarin.AndroidX.Navigation.Fragment.dll.so => 272
+	i64 u0x6e79c6bd8627412a, ; 449: Xamarin.AndroidX.SavedState.SavedState.Ktx => 281
+	i64 u0x6e838d9a2a6f6c9e, ; 450: lib_System.ValueTuple.dll.so => 155
+	i64 u0x6e9965ce1095e60a, ; 451: lib_System.Core.dll.so => 21
+	i64 u0x6f549bdbd19c7a4d, ; 452: Supabase.Gotrue => 211
+	i64 u0x6fd2265da78b93a4, ; 453: lib_Microsoft.Maui.dll.so => 199
+	i64 u0x6fdfc7de82c33008, ; 454: cs/Microsoft.Maui.Controls.resources => 312
+	i64 u0x6ffc4967cc47ba57, ; 455: System.IO.FileSystem.Watcher.dll => 50
+	i64 u0x701cd46a1c25a5fe, ; 456: System.IO.FileSystem.dll => 51
+	i64 u0x70e99f48c05cb921, ; 457: tr/Microsoft.Maui.Controls.resources.dll => 338
+	i64 u0x70fd3deda22442d2, ; 458: lib-nb-Microsoft.Maui.Controls.resources.dll.so => 328
+	i64 u0x71485e7ffdb4b958, ; 459: System.Reflection.Extensions => 96
+	i64 u0x7162a2fce67a945f, ; 460: lib_Xamarin.Android.Glide.Annotations.dll.so => 219
+	i64 u0x717530326f808838, ; 461: lib_Microsoft.Extensions.Diagnostics.Abstractions.dll.so => 184
+	i64 u0x71a495ea3761dde8, ; 462: lib-it-Microsoft.Maui.Controls.resources.dll.so => 324
+	i64 u0x71ad672adbe48f35, ; 463: System.ComponentModel.Primitives.dll => 16
+	i64 u0x720f102581a4a5c8, ; 464: Xamarin.AndroidX.Core.ViewTree => 242
+	i64 u0x725f5a9e82a45c81, ; 465: System.Security.Cryptography.Encoding => 125
+	i64 u0x72b1fb4109e08d7b, ; 466: lib-hr-Microsoft.Maui.Controls.resources.dll.so => 321
+	i64 u0x72e0300099accce1, ; 467: System.Xml.XPath.XDocument => 163
+	i64 u0x730bfb248998f67a, ; 468: System.IO.Compression.ZipFile => 45
+	i64 u0x732b2d67b9e5c47b, ; 469: Xamarin.Google.ErrorProne.Annotations.dll => 300
+	i64 u0x734b76fdc0dc05bb, ; 470: lib_GoogleGson.dll.so => 179
+	i64 u0x73a6be34e822f9d1, ; 471: lib_System.Runtime.Serialization.dll.so => 118
+	i64 u0x73e4ce94e2eb6ffc, ; 472: lib_System.Memory.dll.so => 64
+	i64 u0x743a1eccf080489a, ; 473: WindowsBase.dll => 169
+	i64 u0x74fcb5b9d3ee6884, ; 474: Plugin.LocalNotification => 203
+	i64 u0x755a91767330b3d4, ; 475: lib_Microsoft.Extensions.Configuration.dll.so => 180
+	i64 u0x75c326eb821b85c4, ; 476: lib_System.ComponentModel.DataAnnotations.dll.so => 14
+	i64 u0x76012e7334db86e5, ; 477: lib_Xamarin.AndroidX.SavedState.dll.so => 279
+	i64 u0x76ca07b878f44da0, ; 478: System.Runtime.Numerics.dll => 113
+	i64 u0x7736c8a96e51a061, ; 479: lib_Xamarin.AndroidX.Annotation.Jvm.dll.so => 226
+	i64 u0x778a805e625329ef, ; 480: System.Linq.Parallel => 61
+	i64 u0x77d9074d8f33a303, ; 481: lib_System.Net.ServerSentEvents.dll.so => 76
+	i64 u0x77f8a4acc2fdc449, ; 482: System.Security.Cryptography.Cng.dll => 123
+	i64 u0x780bc73597a503a9, ; 483: lib-ms-Microsoft.Maui.Controls.resources.dll.so => 327
+	i64 u0x782c5d8eb99ff201, ; 484: lib_Microsoft.VisualBasic.Core.dll.so => 2
+	i64 u0x783606d1e53e7a1a, ; 485: th/Microsoft.Maui.Controls.resources.dll => 337
+	i64 u0x78a45e51311409b6, ; 486: Xamarin.AndroidX.Fragment.dll => 251
+	i64 u0x78ed4ab8f9d800a1, ; 487: Xamarin.AndroidX.Lifecycle.ViewModel => 264
+	i64 u0x7a5207a7c82d30b4, ; 488: lib_Xamarin.JSpecify.dll.so => 303
+	i64 u0x7a5d8076a9ed8822, ; 489: Asistente.dll => 0
+	i64 u0x7a7e7eddf79c5d26, ; 490: lib_Xamarin.AndroidX.Lifecycle.ViewModel.dll.so => 264
+	i64 u0x7a9a57d43b0845fa, ; 491: System.AppContext => 6
+	i64 u0x7ad0f4f1e5d08183, ; 492: Xamarin.AndroidX.Collection.dll => 233
+	i64 u0x7adb8da2ac89b647, ; 493: fi/Microsoft.Maui.Controls.resources.dll => 317
+	i64 u0x7b13d9eaa944ade8, ; 494: Xamarin.AndroidX.DynamicAnimation.dll => 247
+	i64 u0x7b4927e421291c41, ; 495: Microsoft.IdentityModel.JsonWebTokens.dll => 193
+	i64 u0x7bef86a4335c4870, ; 496: System.ComponentModel.TypeConverter => 17
+	i64 u0x7c0820144cd34d6a, ; 497: sk/Microsoft.Maui.Controls.resources.dll => 335
+	i64 u0x7c2a0bd1e0f988fc, ; 498: lib-de-Microsoft.Maui.Controls.resources.dll.so => 314
+	i64 u0x7c41d387501568ba, ; 499: System.Net.WebClient.dll => 79
+	i64 u0x7c482cd79bd24b13, ; 500: lib_Xamarin.AndroidX.ConstraintLayout.dll.so => 237
+	i64 u0x7c60acf6404e96b6, ; 501: Xamarin.AndroidX.Navigation.Common.Android.dll => 271
+	i64 u0x7cd2ec8eaf5241cd, ; 502: System.Security.dll => 133
+	i64 u0x7cf9ae50dd350622, ; 503: Xamarin.Jetbrains.Annotations.dll => 302
+	i64 u0x7d649b75d580bb42, ; 504: ms/Microsoft.Maui.Controls.resources.dll => 327
+	i64 u0x7d8ee2bdc8e3aad1, ; 505: System.Numerics.Vectors => 85
+	i64 u0x7df5df8db8eaa6ac, ; 506: Microsoft.Extensions.Logging.Debug => 189
+	i64 u0x7dfc3d6d9d8d7b70, ; 507: System.Collections => 12
+	i64 u0x7e2e564fa2f76c65, ; 508: lib_System.Diagnostics.Tracing.dll.so => 34
+	i64 u0x7e302e110e1e1346, ; 509: lib_System.Security.Claims.dll.so => 121
+	i64 u0x7e4465b3f78ad8d0, ; 510: Xamarin.KotlinX.Serialization.Core.dll => 308
+	i64 u0x7e571cad5915e6c3, ; 511: lib_Xamarin.AndroidX.Lifecycle.Process.dll.so => 259
+	i64 u0x7e6ac99e4e8df72f, ; 512: System.IO.Hashing => 176
+	i64 u0x7e6b1ca712437d7d, ; 513: Xamarin.AndroidX.Emoji2.ViewsHelper => 249
+	i64 u0x7e946809d6008ef2, ; 514: lib_System.ObjectModel.dll.so => 87
+	i64 u0x7ea0272c1b4a9635, ; 515: lib_Xamarin.Android.Glide.dll.so => 218
+	i64 u0x7ecc13347c8fd849, ; 516: lib_System.ComponentModel.dll.so => 18
+	i64 u0x7f00ddd9b9ca5a13, ; 517: Xamarin.AndroidX.ViewPager.dll => 292
+	i64 u0x7f9351cd44b1273f, ; 518: Microsoft.Extensions.Configuration.Abstractions => 181
+	i64 u0x7fbd557c99b3ce6f, ; 519: lib_Xamarin.AndroidX.Lifecycle.LiveData.Core.dll.so => 257
+	i64 u0x8076a9a44a2ca331, ; 520: System.Net.Quic => 73
+	i64 u0x80b7e726b0280681, ; 521: Microsoft.VisualStudio.DesignTools.MobileTapContracts => 345
+	i64 u0x80da183a87731838, ; 522: System.Reflection.Metadata => 97
+	i64 u0x80fa55b6d1b0be99, ; 523: SQLitePCLRaw.provider.e_sqlite3 => 207
+	i64 u0x812c069d5cdecc17, ; 524: System.dll => 168
+	i64 u0x81381be520a60adb, ; 525: Xamarin.AndroidX.Interpolator.dll => 253
+	i64 u0x81657cec2b31e8aa, ; 526: System.Net => 84
+	i64 u0x81ab745f6c0f5ce6, ; 527: zh-Hant/Microsoft.Maui.Controls.resources => 343
+	i64 u0x8277f2be6b5ce05f, ; 528: Xamarin.AndroidX.AppCompat => 227
+	i64 u0x828f06563b30bc50, ; 529: lib_Xamarin.AndroidX.CardView.dll.so => 232
+	i64 u0x82b399cb01b531c4, ; 530: lib_System.Web.dll.so => 157
+	i64 u0x82df8f5532a10c59, ; 531: lib_System.Drawing.dll.so => 36
+	i64 u0x82f0b6e911d13535, ; 532: lib_System.Transactions.dll.so => 154
+	i64 u0x82f6403342e12049, ; 533: uk/Microsoft.Maui.Controls.resources => 339
+	i64 u0x83144699b312ad81, ; 534: SQLite-net.dll => 205
+	i64 u0x83a2d9ad3c54f4f8, ; 535: MimeMapping.dll => 202
+	i64 u0x83a7afd2c49adc86, ; 536: lib_Microsoft.IdentityModel.Abstractions.dll.so => 192
+	i64 u0x83c14ba66c8e2b8c, ; 537: zh-Hans/Microsoft.Maui.Controls.resources => 342
+	i64 u0x846ce984efea52c7, ; 538: System.Threading.Tasks.Parallel.dll => 147
+	i64 u0x84ae73148a4557d2, ; 539: lib_System.IO.Pipes.dll.so => 56
+	i64 u0x84b01102c12a9232, ; 540: System.Runtime.Serialization.Json.dll => 115
+	i64 u0x850c5ba0b57ce8e7, ; 541: lib_Xamarin.AndroidX.Collection.dll.so => 233
+	i64 u0x851d02edd334b044, ; 542: Xamarin.AndroidX.VectorDrawable => 289
+	i64 u0x85c919db62150978, ; 543: Xamarin.AndroidX.Transition.dll => 288
+	i64 u0x8662aaeb94fef37f, ; 544: lib_System.Dynamic.Runtime.dll.so => 37
+	i64 u0x86a909228dc7657b, ; 545: lib-zh-Hant-Microsoft.Maui.Controls.resources.dll.so => 343
+	i64 u0x86b3e00c36b84509, ; 546: Microsoft.Extensions.Configuration.dll => 180
+	i64 u0x86b62cb077ec4fd7, ; 547: System.Runtime.Serialization.Xml => 117
+	i64 u0x8706ffb12bf3f53d, ; 548: Xamarin.AndroidX.Annotation.Experimental => 225
+	i64 u0x872a5b14c18d328c, ; 549: System.ComponentModel.DataAnnotations => 14
+	i64 u0x872fb9615bc2dff0, ; 550: Xamarin.Android.Glide.Annotations.dll => 219
+	i64 u0x87c69b87d9283884, ; 551: lib_System.Threading.Thread.dll.so => 149
+	i64 u0x87f6569b25707834, ; 552: System.IO.Compression.Brotli.dll => 43
+	i64 u0x8842b3a5d2d3fb36, ; 553: Microsoft.Maui.Essentials => 200
+	i64 u0x88926583efe7ee86, ; 554: Xamarin.AndroidX.Activity.Ktx.dll => 223
+	i64 u0x88ba6bc4f7762b03, ; 555: lib_System.Reflection.dll.so => 100
+	i64 u0x88bda98e0cffb7a9, ; 556: lib_Xamarin.KotlinX.Coroutines.Core.Jvm.dll.so => 307
+	i64 u0x8930322c7bd8f768, ; 557: netstandard => 171
+	i64 u0x897a606c9e39c75f, ; 558: lib_System.ComponentModel.Primitives.dll.so => 16
+	i64 u0x898a5c6bc9e47ec1, ; 559: lib_Xamarin.AndroidX.SavedState.SavedState.Android.dll.so => 280
+	i64 u0x89911a22005b92b7, ; 560: System.IO.FileSystem.DriveInfo.dll => 48
+	i64 u0x89c5188089ec2cd5, ; 561: lib_System.Runtime.InteropServices.RuntimeInformation.dll.so => 109
+	i64 u0x8a19e3dc71b34b2c, ; 562: System.Reflection.TypeExtensions.dll => 99
+	i64 u0x8ad229ea26432ee2, ; 563: Xamarin.AndroidX.Loader => 269
+	i64 u0x8b4ff5d0fdd5faa1, ; 564: lib_System.Diagnostics.DiagnosticSource.dll.so => 27
+	i64 u0x8b541d476eb3774c, ; 565: System.Security.Principal.Windows => 130
+	i64 u0x8b8d01333a96d0b5, ; 566: System.Diagnostics.Process.dll => 29
+	i64 u0x8b9ceca7acae3451, ; 567: lib-he-Microsoft.Maui.Controls.resources.dll.so => 319
+	i64 u0x8c575135aa1ccef4, ; 568: Microsoft.Extensions.FileProviders.Abstractions => 185
+	i64 u0x8cb8f612b633affb, ; 569: Xamarin.AndroidX.SavedState.SavedState.Ktx.dll => 281
+	i64 u0x8cdfdb4ce85fb925, ; 570: lib_System.Security.Principal.Windows.dll.so => 130
+	i64 u0x8cdfe7b8f4caa426, ; 571: System.IO.Compression.FileSystem => 44
+	i64 u0x8d0f420977c2c1c7, ; 572: Xamarin.AndroidX.CursorAdapter.dll => 243
+	i64 u0x8d52f7ea2796c531, ; 573: Xamarin.AndroidX.Emoji2.dll => 248
+	i64 u0x8d7b8ab4b3310ead, ; 574: System.Threading => 152
+	i64 u0x8da188285aadfe8e, ; 575: System.Collections.Concurrent => 8
+	i64 u0x8e8f269ad1e1ff94, ; 576: lib_Xamarin.AndroidX.Tracing.Tracing.Android.dll.so => 287
+	i64 u0x8ed807bfe9858dfc, ; 577: Xamarin.AndroidX.Navigation.Common => 270
+	i64 u0x8ee08b8194a30f48, ; 578: lib-hi-Microsoft.Maui.Controls.resources.dll.so => 320
+	i64 u0x8ef7601039857a44, ; 579: lib-ro-Microsoft.Maui.Controls.resources.dll.so => 333
+	i64 u0x8ef9414937d93a0a, ; 580: SQLitePCLRaw.core.dll => 206
+	i64 u0x8f32c6f611f6ffab, ; 581: pt/Microsoft.Maui.Controls.resources.dll => 332
+	i64 u0x8f44b45eb046bbd1, ; 582: System.ServiceModel.Web.dll => 134
+	i64 u0x8f8829d21c8985a4, ; 583: lib-pt-BR-Microsoft.Maui.Controls.resources.dll.so => 331
+	i64 u0x8fbf5b0114c6dcef, ; 584: System.Globalization.dll => 42
+	i64 u0x8fcc8c2a81f3d9e7, ; 585: Xamarin.KotlinX.Serialization.Core => 308
+	i64 u0x8fd27d934d7b3a55, ; 586: SQLitePCLRaw.core => 206
+	i64 u0x90263f8448b8f572, ; 587: lib_System.Diagnostics.TraceSource.dll.so => 33
+	i64 u0x903101b46fb73a04, ; 588: _Microsoft.Android.Resource.Designer => 348
+	i64 u0x90393bd4865292f3, ; 589: lib_System.IO.Compression.dll.so => 46
+	i64 u0x905e2b8e7ae91ae6, ; 590: System.Threading.Tasks.Extensions.dll => 146
+	i64 u0x90634f86c5ebe2b5, ; 591: Xamarin.AndroidX.Lifecycle.ViewModel.Android => 265
+	i64 u0x907b636704ad79ef, ; 592: lib_Microsoft.Maui.Controls.Xaml.dll.so => 198
+	i64 u0x90e9efbfd68593e0, ; 593: lib_Xamarin.AndroidX.Lifecycle.LiveData.dll.so => 256
+	i64 u0x91418dc638b29e68, ; 594: lib_Xamarin.AndroidX.CustomView.dll.so => 244
+	i64 u0x9157bd523cd7ed36, ; 595: lib_System.Text.Json.dll.so => 140
+	i64 u0x91a74f07b30d37e2, ; 596: System.Linq.dll => 63
+	i64 u0x91cb86ea3b17111d, ; 597: System.ServiceModel.Web => 134
+	i64 u0x91fa41a87223399f, ; 598: ca/Microsoft.Maui.Controls.resources.dll => 311
+	i64 u0x92054e486c0c7ea7, ; 599: System.IO.FileSystem.DriveInfo => 48
+	i64 u0x928614058c40c4cd, ; 600: lib_System.Xml.XPath.XDocument.dll.so => 163
+	i64 u0x92b138fffca2b01e, ; 601: lib_Xamarin.AndroidX.Arch.Core.Runtime.dll.so => 230
+	i64 u0x92dfc2bfc6c6a888, ; 602: Xamarin.AndroidX.Lifecycle.LiveData => 256
+	i64 u0x933da2c779423d68, ; 603: Xamarin.Android.Glide.Annotations => 219
+	i64 u0x9388aad9b7ae40ce, ; 604: lib_Xamarin.AndroidX.Lifecycle.Common.dll.so => 254
+	i64 u0x93cfa73ab28d6e35, ; 605: ms/Microsoft.Maui.Controls.resources => 327
+	i64 u0x941c00d21e5c0679, ; 606: lib_Xamarin.AndroidX.Transition.dll.so => 288
+	i64 u0x944077d8ca3c6580, ; 607: System.IO.Compression.dll => 46
+	i64 u0x948cffedc8ed7960, ; 608: System.Xml => 167
+	i64 u0x948d746a7702861f, ; 609: Microsoft.IdentityModel.Logging.dll => 194
+	i64 u0x94bbeab0d4764588, ; 610: System.IO.Hashing.dll => 176
+	i64 u0x94c8990839c4bdb1, ; 611: lib_Xamarin.AndroidX.Interpolator.dll.so => 253
+	i64 u0x9564283c37ed59a9, ; 612: lib_Microsoft.IdentityModel.Logging.dll.so => 194
+	i64 u0x967fc325e09bfa8c, ; 613: es/Microsoft.Maui.Controls.resources => 316
+	i64 u0x9686161486d34b81, ; 614: lib_Xamarin.AndroidX.ExifInterface.dll.so => 250
+	i64 u0x9732d8dbddea3d9a, ; 615: id/Microsoft.Maui.Controls.resources => 323
+	i64 u0x978be80e5210d31b, ; 616: Microsoft.Maui.Graphics.dll => 201
+	i64 u0x97b8c771ea3e4220, ; 617: System.ComponentModel.dll => 18
+	i64 u0x97e144c9d3c6976e, ; 618: System.Collections.Concurrent.dll => 8
+	i64 u0x984184e3c70d4419, ; 619: GoogleGson => 179
+	i64 u0x9843944103683dd3, ; 620: Xamarin.AndroidX.Core.Core.Ktx => 241
+	i64 u0x98b05cc81e6f333c, ; 621: Xamarin.AndroidX.SavedState.SavedState.Android.dll => 280
+	i64 u0x98d720cc4597562c, ; 622: System.Security.Cryptography.OpenSsl => 126
+	i64 u0x991d510397f92d9d, ; 623: System.Linq.Expressions => 60
+	i64 u0x996ceeb8a3da3d67, ; 624: System.Threading.Overlapped.dll => 144
+	i64 u0x99a00ca5270c6878, ; 625: Xamarin.AndroidX.Navigation.Runtime => 273
+	i64 u0x99cdc6d1f2d3a72f, ; 626: ko/Microsoft.Maui.Controls.resources.dll => 326
+	i64 u0x9a01b1da98b6ee10, ; 627: Xamarin.AndroidX.Lifecycle.Runtime.dll => 260
+	i64 u0x9a5ccc274fd6e6ee, ; 628: Jsr305Binding.dll => 298
+	i64 u0x9a816d9654deff7c, ; 629: Microsoft.IO.RecyclableMemoryStream => 196
+	i64 u0x9ae6940b11c02876, ; 630: lib_Xamarin.AndroidX.Window.dll.so => 294
+	i64 u0x9b211a749105beac, ; 631: System.Transactions.Local => 153
+	i64 u0x9b8734714671022d, ; 632: System.Threading.Tasks.Dataflow.dll => 145
+	i64 u0x9bc6aea27fbf034f, ; 633: lib_Xamarin.KotlinX.Coroutines.Core.dll.so => 306
+	i64 u0x9c244ac7cda32d26, ; 634: System.Security.Cryptography.X509Certificates.dll => 128
+	i64 u0x9c36a0f95393e81c, ; 635: Supabase.Postgrest.dll => 212
+	i64 u0x9c465f280cf43733, ; 636: lib_Xamarin.KotlinX.Coroutines.Android.dll.so => 305
+	i64 u0x9c8f6872beab6408, ; 637: System.Xml.XPath.XDocument.dll => 163
+	i64 u0x9ce01cf91101ae23, ; 638: System.Xml.XmlDocument => 165
+	i64 u0x9d128180c81d7ce6, ; 639: Xamarin.AndroidX.CustomView.PoolingContainer => 245
+	i64 u0x9d5dbcf5a48583fe, ; 640: lib_Xamarin.AndroidX.Activity.dll.so => 222
+	i64 u0x9d74dee1a7725f34, ; 641: Microsoft.Extensions.Configuration.Abstractions.dll => 181
+	i64 u0x9dd0e195825d65c6, ; 642: lib_Xamarin.AndroidX.Navigation.Runtime.Android.dll.so => 274
+	i64 u0x9e4534b6adaf6e84, ; 643: nl/Microsoft.Maui.Controls.resources => 329
+	i64 u0x9e4b95dec42769f7, ; 644: System.Diagnostics.Debug.dll => 26
+	i64 u0x9eaf1efdf6f7267e, ; 645: Xamarin.AndroidX.Navigation.Common.dll => 270
+	i64 u0x9ef542cf1f78c506, ; 646: Xamarin.AndroidX.Lifecycle.LiveData.Core => 257
+	i64 u0x9fc2184212c417ad, ; 647: Plugin.LocalNotification.dll => 203
+	i64 u0xa00832eb975f56a8, ; 648: lib_System.Net.dll.so => 84
+	i64 u0xa0ad78236b7b267f, ; 649: Xamarin.AndroidX.Window => 294
+	i64 u0xa0d8259f4cc284ec, ; 650: lib_System.Security.Cryptography.dll.so => 129
+	i64 u0xa0e17ca50c77a225, ; 651: lib_Xamarin.Google.Crypto.Tink.Android.dll.so => 299
+	i64 u0xa0ff9b3e34d92f11, ; 652: lib_System.Resources.Writer.dll.so => 103
+	i64 u0xa12a8378511c135a, ; 653: BirdMessenger.dll => 178
+	i64 u0xa12fbfb4da97d9f3, ; 654: System.Threading.Timer.dll => 151
+	i64 u0xa135be3d6497d3d3, ; 655: Supabase.Core.dll => 209
+	i64 u0xa1440773ee9d341e, ; 656: Xamarin.Google.Android.Material => 297
+	i64 u0xa18c39c44cdc3465, ; 657: Xamarin.AndroidX.Window.WindowCore => 295
+	i64 u0xa1b9d7c27f47219f, ; 658: Xamarin.AndroidX.Navigation.UI.dll => 275
+	i64 u0xa2572680829d2c7c, ; 659: System.IO.Pipelines.dll => 54
+	i64 u0xa26597e57ee9c7f6, ; 660: System.Xml.XmlDocument.dll => 165
+	i64 u0xa308401900e5bed3, ; 661: lib_mscorlib.dll.so => 170
+	i64 u0xa395572e7da6c99d, ; 662: lib_System.Security.dll.so => 133
+	i64 u0xa3e683f24b43af6f, ; 663: System.Dynamic.Runtime.dll => 37
+	i64 u0xa4145becdee3dc4f, ; 664: Xamarin.AndroidX.VectorDrawable.Animated => 290
+	i64 u0xa46aa1eaa214539b, ; 665: ko/Microsoft.Maui.Controls.resources => 326
+	i64 u0xa4edc8f2ceae241a, ; 666: System.Data.Common.dll => 22
+	i64 u0xa5494f40f128ce6a, ; 667: System.Runtime.Serialization.Formatters.dll => 114
+	i64 u0xa54b74df83dce92b, ; 668: System.Reflection.DispatchProxy => 92
+	i64 u0xa5b7152421ed6d98, ; 669: lib_System.IO.FileSystem.Watcher.dll.so => 50
+	i64 u0xa5c3844f17b822db, ; 670: lib_System.Linq.Parallel.dll.so => 61
+	i64 u0xa5ce5c755bde8cb8, ; 671: lib_System.Security.Cryptography.Csp.dll.so => 124
+	i64 u0xa5e599d1e0524750, ; 672: System.Numerics.Vectors.dll => 85
+	i64 u0xa5f1ba49b85dd355, ; 673: System.Security.Cryptography.dll => 129
+	i64 u0xa61975a5a37873ea, ; 674: lib_System.Xml.XmlSerializer.dll.so => 166
+	i64 u0xa6593e21584384d2, ; 675: lib_Jsr305Binding.dll.so => 298
+	i64 u0xa66cbee0130865f7, ; 676: lib_WindowsBase.dll.so => 169
+	i64 u0xa67dbee13e1df9ca, ; 677: Xamarin.AndroidX.SavedState.dll => 279
+	i64 u0xa684b098dd27b296, ; 678: lib_Xamarin.AndroidX.Security.SecurityCrypto.dll.so => 282
+	i64 u0xa68a420042bb9b1f, ; 679: Xamarin.AndroidX.DrawerLayout.dll => 246
+	i64 u0xa6d26156d1cacc7c, ; 680: Xamarin.Android.Glide.dll => 218
+	i64 u0xa75386b5cb9595aa, ; 681: Xamarin.AndroidX.Lifecycle.Runtime.Android => 261
+	i64 u0xa763fbb98df8d9fb, ; 682: lib_Microsoft.Win32.Primitives.dll.so => 4
+	i64 u0xa78ce3745383236a, ; 683: Xamarin.AndroidX.Lifecycle.Common.Jvm => 255
+	i64 u0xa7c31b56b4dc7b33, ; 684: hu/Microsoft.Maui.Controls.resources => 322
+	i64 u0xa7eab29ed44b4e7a, ; 685: Mono.Android.Export => 173
+	i64 u0xa8195217cbf017b7, ; 686: Microsoft.VisualBasic.Core => 2
+	i64 u0xa859a95830f367ff, ; 687: lib_Xamarin.AndroidX.Lifecycle.ViewModel.Ktx.dll.so => 266
+	i64 u0xa8b52f21e0dbe690, ; 688: System.Runtime.Serialization.dll => 118
+	i64 u0xa8c84ce526c2b4bd, ; 689: Microsoft.VisualStudio.DesignTools.XamlTapContract.dll => 347
+	i64 u0xa8e6320dd07580ef, ; 690: lib_Microsoft.IdentityModel.JsonWebTokens.dll.so => 193
+	i64 u0xa8ee4ed7de2efaee, ; 691: Xamarin.AndroidX.Annotation.dll => 224
+	i64 u0xa9240518980b3aab, ; 692: BirdMessenger => 178
+	i64 u0xa95590e7c57438a4, ; 693: System.Configuration => 19
+	i64 u0xaa2219c8e3449ff5, ; 694: Microsoft.Extensions.Logging.Abstractions => 188
+	i64 u0xaa443ac34067eeef, ; 695: System.Private.Xml.dll => 91
+	i64 u0xaa52de307ef5d1dd, ; 696: System.Net.Http => 66
+	i64 u0xaa9a7b0214a5cc5c, ; 697: System.Diagnostics.StackTrace.dll => 30
+	i64 u0xaaaf86367285a918, ; 698: Microsoft.Extensions.DependencyInjection.Abstractions.dll => 183
+	i64 u0xaaf84bb3f052a265, ; 699: el/Microsoft.Maui.Controls.resources => 315
+	i64 u0xab9af77b5b67a0b8, ; 700: Xamarin.AndroidX.ConstraintLayout.Core => 238
+	i64 u0xab9c1b2687d86b0b, ; 701: lib_System.Linq.Expressions.dll.so => 60
+	i64 u0xac2af3fa195a15ce, ; 702: System.Runtime.Numerics => 113
+	i64 u0xac5376a2a538dc10, ; 703: Xamarin.AndroidX.Lifecycle.LiveData.Core.dll => 257
+	i64 u0xac5acae88f60357e, ; 704: System.Diagnostics.Tools.dll => 32
+	i64 u0xac79c7e46047ad98, ; 705: System.Security.Principal.Windows.dll => 130
+	i64 u0xac98d31068e24591, ; 706: System.Xml.XDocument => 162
+	i64 u0xacd46e002c3ccb97, ; 707: ro/Microsoft.Maui.Controls.resources => 333
+	i64 u0xacdd9e4180d56dda, ; 708: Xamarin.AndroidX.Concurrent.Futures => 236
+	i64 u0xacf42eea7ef9cd12, ; 709: System.Threading.Channels => 143
+	i64 u0xad89c07347f1bad6, ; 710: nl/Microsoft.Maui.Controls.resources.dll => 329
+	i64 u0xadbb53caf78a79d2, ; 711: System.Web.HttpUtility => 156
+	i64 u0xadc90ab061a9e6e4, ; 712: System.ComponentModel.TypeConverter.dll => 17
+	i64 u0xadca1b9030b9317e, ; 713: Xamarin.AndroidX.Collection.Ktx => 235
+	i64 u0xadd8eda2edf396ad, ; 714: Xamarin.Android.Glide.GifDecoder => 221
+	i64 u0xadf4cf30debbeb9a, ; 715: System.Net.ServicePoint.dll => 77
+	i64 u0xadf511667bef3595, ; 716: System.Net.Security => 75
+	i64 u0xae0aaa94fdcfce0f, ; 717: System.ComponentModel.EventBasedAsync.dll => 15
+	i64 u0xae282bcd03739de7, ; 718: Java.Interop => 172
+	i64 u0xae53579c90db1107, ; 719: System.ObjectModel.dll => 87
+	i64 u0xae7ea18c61eef394, ; 720: SQLite-net => 205
+	i64 u0xaf732d0b2193b8f5, ; 721: System.Security.Cryptography.OpenSsl.dll => 126
+	i64 u0xafdb94dbccd9d11c, ; 722: Xamarin.AndroidX.Lifecycle.LiveData.dll => 256
+	i64 u0xafe29f45095518e7, ; 723: lib_Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll.so => 267
+	i64 u0xb03ae931fb25607e, ; 724: Xamarin.AndroidX.ConstraintLayout => 237
+	i64 u0xb05b6f0a6cc8ddbb, ; 725: lib_Microsoft.IO.RecyclableMemoryStream.dll.so => 196
+	i64 u0xb05cc42cd94c6d9d, ; 726: lib-sv-Microsoft.Maui.Controls.resources.dll.so => 336
+	i64 u0xb0ac21bec8f428c5, ; 727: Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android.dll => 263
+	i64 u0xb0bb43dc52ea59f9, ; 728: System.Diagnostics.Tracing.dll => 34
+	i64 u0xb1dd05401aa8ee63, ; 729: System.Security.AccessControl => 120
+	i64 u0xb220631954820169, ; 730: System.Text.RegularExpressions => 141
+	i64 u0xb2376e1dbf8b4ed7, ; 731: System.Security.Cryptography.Csp => 124
+	i64 u0xb243b3e5f9a6350a, ; 732: Plugin.LocalNotification.Core.dll => 204
+	i64 u0xb2a1959fe95c5402, ; 733: lib_System.Runtime.InteropServices.JavaScript.dll.so => 108
+	i64 u0xb2a3f67f3bf29fce, ; 734: da/Microsoft.Maui.Controls.resources => 313
+	i64 u0xb3011a0a57f7ffb2, ; 735: Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll => 345
+	i64 u0xb3874072ee0ecf8c, ; 736: Xamarin.AndroidX.VectorDrawable.Animated.dll => 290
+	i64 u0xb3f0a0fcda8d3ebc, ; 737: Xamarin.AndroidX.CardView => 232
+	i64 u0xb46be1aa6d4fff93, ; 738: hi/Microsoft.Maui.Controls.resources => 320
+	i64 u0xb477491be13109d8, ; 739: ar/Microsoft.Maui.Controls.resources => 310
+	i64 u0xb4bd7015ecee9d86, ; 740: System.IO.Pipelines => 54
+	i64 u0xb4c53d9749c5f226, ; 741: lib_System.IO.FileSystem.AccessControl.dll.so => 47
+	i64 u0xb4ff710863453fda, ; 742: System.Diagnostics.FileVersionInfo.dll => 28
+	i64 u0xb54092076b15e062, ; 743: System.Threading.AccessControl => 142
+	i64 u0xb5c38bf497a4cfe2, ; 744: lib_System.Threading.Tasks.dll.so => 148
+	i64 u0xb5c7fcdafbc67ee4, ; 745: Microsoft.Extensions.Logging.Abstractions.dll => 188
+	i64 u0xb5ea31d5244c6626, ; 746: System.Threading.ThreadPool.dll => 150
+	i64 u0xb7212c4683a94afe, ; 747: System.Drawing.Primitives => 35
+	i64 u0xb7b7753d1f319409, ; 748: sv/Microsoft.Maui.Controls.resources => 336
+	i64 u0xb81a2c6e0aee50fe, ; 749: lib_System.Private.CoreLib.dll.so => 177
+	i64 u0xb8c60af47c08d4da, ; 750: System.Net.ServicePoint => 77
+	i64 u0xb8e68d20aad91196, ; 751: lib_System.Xml.XPath.dll.so => 164
+	i64 u0xb9185c33a1643eed, ; 752: Microsoft.CSharp.dll => 1
+	i64 u0xb960d6b2200ba320, ; 753: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android.dll => 268
+	i64 u0xb9b8001adf4ed7cc, ; 754: lib_Xamarin.AndroidX.SlidingPaneLayout.dll.so => 283
+	i64 u0xb9f64d3b230def68, ; 755: lib-pt-Microsoft.Maui.Controls.resources.dll.so => 332
+	i64 u0xb9fc3c8a556e3691, ; 756: ja/Microsoft.Maui.Controls.resources => 325
+	i64 u0xba4670aa94a2b3c6, ; 757: lib_System.Xml.XDocument.dll.so => 162
+	i64 u0xba48785529705af9, ; 758: System.Collections.dll => 12
+	i64 u0xba965b8c86359996, ; 759: lib_System.Windows.dll.so => 158
+	i64 u0xbb286883bc35db36, ; 760: System.Transactions.dll => 154
+	i64 u0xbb54fd4c9d1101e1, ; 761: lib_Supabase.dll.so => 208
+	i64 u0xbb65706fde942ce3, ; 762: System.Net.Sockets => 78
+	i64 u0xbba28979413cad9e, ; 763: lib_System.Runtime.CompilerServices.VisualC.dll.so => 105
+	i64 u0xbbd180354b67271a, ; 764: System.Runtime.Serialization.Formatters => 114
+	i64 u0xbc22a245dab70cb4, ; 765: lib_SQLitePCLRaw.provider.e_sqlite3.dll.so => 207
+	i64 u0xbc260cdba33291a3, ; 766: Xamarin.AndroidX.Arch.Core.Common.dll => 229
+	i64 u0xbd0e2c0d55246576, ; 767: System.Net.Http.dll => 66
+	i64 u0xbd3fbd85b9e1cb29, ; 768: lib_System.Net.HttpListener.dll.so => 67
+	i64 u0xbd437a2cdb333d0d, ; 769: Xamarin.AndroidX.ViewPager2 => 293
+	i64 u0xbd4f572d2bd0a789, ; 770: System.IO.Compression.ZipFile.dll => 45
+	i64 u0xbd5d0b88d3d647a5, ; 771: lib_Xamarin.AndroidX.Browser.dll.so => 231
+	i64 u0xbd877b14d0b56392, ; 772: System.Runtime.Intrinsics.dll => 111
+	i64 u0xbe359393a91995c2, ; 773: Asistente => 0
+	i64 u0xbe65a49036345cf4, ; 774: lib_System.Buffers.dll.so => 7
+	i64 u0xbee38d4a88835966, ; 775: Xamarin.AndroidX.AppCompat.AppCompatResources => 228
+	i64 u0xbef9919db45b4ca7, ; 776: System.IO.Pipes.AccessControl => 55
+	i64 u0xbf02c92392c99ce0, ; 777: Websocket.Client => 217
+	i64 u0xbf0fa68611139208, ; 778: lib_Xamarin.AndroidX.Annotation.dll.so => 224
+	i64 u0xbfc1e1fb3095f2b3, ; 779: lib_System.Net.Http.Json.dll.so => 65
+	i64 u0xc040a4ab55817f58, ; 780: ar/Microsoft.Maui.Controls.resources.dll => 310
+	i64 u0xc07cadab29efeba0, ; 781: Xamarin.AndroidX.Core.Core.Ktx.dll => 241
+	i64 u0xc0d928351ab5ca77, ; 782: System.Console.dll => 20
+	i64 u0xc0f5a221a9383aea, ; 783: System.Runtime.Intrinsics => 111
+	i64 u0xc111030af54d7191, ; 784: System.Resources.Writer => 103
+	i64 u0xc12b8b3afa48329c, ; 785: lib_System.Linq.dll.so => 63
+	i64 u0xc183ca0b74453aa9, ; 786: lib_System.Threading.Tasks.Dataflow.dll.so => 145
+	i64 u0xc1ff9ae3cdb6e1e6, ; 787: Xamarin.AndroidX.Activity.dll => 222
+	i64 u0xc26c064effb1dea9, ; 788: System.Buffers.dll => 7
+	i64 u0xc278de356ad8a9e3, ; 789: Microsoft.IdentityModel.Logging => 194
+	i64 u0xc28c50f32f81cc73, ; 790: ja/Microsoft.Maui.Controls.resources.dll => 325
+	i64 u0xc2902f6cf5452577, ; 791: lib_Mono.Android.Export.dll.so => 173
+	i64 u0xc2a3bca55b573141, ; 792: System.IO.FileSystem.Watcher => 50
+	i64 u0xc2bcfec99f69365e, ; 793: Xamarin.AndroidX.ViewPager2.dll => 293
+	i64 u0xc30b52815b58ac2c, ; 794: lib_System.Runtime.Serialization.Xml.dll.so => 117
+	i64 u0xc36d7d89c652f455, ; 795: System.Threading.Overlapped => 144
+	i64 u0xc396b285e59e5493, ; 796: GoogleGson.dll => 179
+	i64 u0xc3c86c1e5e12f03d, ; 797: WindowsBase => 169
+	i64 u0xc421b61fd853169d, ; 798: lib_System.Net.WebSockets.Client.dll.so => 82
+	i64 u0xc463e077917aa21d, ; 799: System.Runtime.Serialization.Json => 115
+	i64 u0xc4d3858ed4d08512, ; 800: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll => 267
+	i64 u0xc50fded0ded1418c, ; 801: lib_System.ComponentModel.TypeConverter.dll.so => 17
+	i64 u0xc519125d6bc8fb11, ; 802: lib_System.Net.Requests.dll.so => 74
+	i64 u0xc5293b19e4dc230e, ; 803: Xamarin.AndroidX.Navigation.Fragment => 272
+	i64 u0xc5325b2fcb37446f, ; 804: lib_System.Private.Xml.dll.so => 91
+	i64 u0xc535cb9a21385d9b, ; 805: lib_Xamarin.Android.Glide.DiskLruCache.dll.so => 220
+	i64 u0xc5a0f4b95a699af7, ; 806: lib_System.Private.Uri.dll.so => 89
+	i64 u0xc5cdcd5b6277579e, ; 807: lib_System.Security.Cryptography.Algorithms.dll.so => 122
+	i64 u0xc5ec286825cb0bf4, ; 808: Xamarin.AndroidX.Tracing.Tracing => 286
+	i64 u0xc6706bc8aa7fe265, ; 809: Xamarin.AndroidX.Annotation.Jvm => 226
+	i64 u0xc74d70d4aa96cef3, ; 810: Xamarin.AndroidX.Navigation.Runtime.Android => 274
+	i64 u0xc7c01e7d7c93a110, ; 811: System.Text.Encoding.Extensions.dll => 137
+	i64 u0xc7ce851898a4548e, ; 812: lib_System.Web.HttpUtility.dll.so => 156
+	i64 u0xc809d4089d2556b2, ; 813: System.Runtime.InteropServices.JavaScript.dll => 108
+	i64 u0xc858a28d9ee5a6c5, ; 814: lib_System.Collections.Specialized.dll.so => 11
+	i64 u0xc8ac7c6bf1c2ec51, ; 815: System.Reflection.DispatchProxy.dll => 92
+	i64 u0xc9c62c8f354ac568, ; 816: lib_System.Diagnostics.TextWriterTraceListener.dll.so => 31
+	i64 u0xca3a723e7342c5b6, ; 817: lib-tr-Microsoft.Maui.Controls.resources.dll.so => 338
+	i64 u0xca5801070d9fccfb, ; 818: System.Text.Encoding => 138
+	i64 u0xcab3493c70141c2d, ; 819: pl/Microsoft.Maui.Controls.resources => 330
+	i64 u0xcacfddc9f7c6de76, ; 820: ro/Microsoft.Maui.Controls.resources.dll => 333
+	i64 u0xcadbc92899a777f0, ; 821: Xamarin.AndroidX.Startup.StartupRuntime => 284
+	i64 u0xcb76efab0f56f81a, ; 822: System.Reactive => 216
+	i64 u0xcba1cb79f45292b5, ; 823: Xamarin.Android.Glide.GifDecoder.dll => 221
+	i64 u0xcbb5f80c7293e696, ; 824: lib_System.Globalization.Calendars.dll.so => 40
+	i64 u0xcbd4fdd9cef4a294, ; 825: lib__Microsoft.Android.Resource.Designer.dll.so => 348
+	i64 u0xcc15da1e07bbd994, ; 826: Xamarin.AndroidX.SlidingPaneLayout => 283
+	i64 u0xcc2876b32ef2794c, ; 827: lib_System.Text.RegularExpressions.dll.so => 141
+	i64 u0xcc5c3bb714c4561e, ; 828: Xamarin.KotlinX.Coroutines.Core.Jvm.dll => 307
+	i64 u0xcc76886e09b88260, ; 829: Xamarin.KotlinX.Serialization.Core.Jvm.dll => 309
+	i64 u0xcc9fa2923aa1c9ef, ; 830: System.Diagnostics.Contracts.dll => 25
+	i64 u0xccae9bb73e2326bd, ; 831: lib_System.IO.Hashing.dll.so => 176
+	i64 u0xccf25c4b634ccd3a, ; 832: zh-Hans/Microsoft.Maui.Controls.resources.dll => 342
+	i64 u0xcd10a42808629144, ; 833: System.Net.Requests => 74
+	i64 u0xcdca1b920e9f53ba, ; 834: Xamarin.AndroidX.Interpolator => 253
+	i64 u0xcdd0c48b6937b21c, ; 835: Xamarin.AndroidX.SwipeRefreshLayout => 285
+	i64 u0xcde1fa22dc303670, ; 836: Microsoft.VisualStudio.DesignTools.XamlTapContract => 347
+	i64 u0xcf23d8093f3ceadf, ; 837: System.Diagnostics.DiagnosticSource.dll => 27
+	i64 u0xcf5ff6b6b2c4c382, ; 838: System.Net.Mail.dll => 68
+	i64 u0xcf8fc898f98b0d34, ; 839: System.Private.Xml.Linq => 90
+	i64 u0xd04b5f59ed596e31, ; 840: System.Reflection.Metadata.dll => 97
+	i64 u0xd063299fcfc0c93f, ; 841: lib_System.Runtime.Serialization.Json.dll.so => 115
+	i64 u0xd0de8a113e976700, ; 842: System.Diagnostics.TextWriterTraceListener => 31
+	i64 u0xd0fc33d5ae5d4cb8, ; 843: System.Runtime.Extensions => 106
+	i64 u0xd1194e1d8a8de83c, ; 844: lib_Xamarin.AndroidX.Lifecycle.Common.Jvm.dll.so => 255
+	i64 u0xd12beacdfc14f696, ; 845: System.Dynamic.Runtime => 37
+	i64 u0xd16fd7fb9bbcd43e, ; 846: Microsoft.Extensions.Diagnostics.Abstractions => 184
+	i64 u0xd198e7ce1b6a8344, ; 847: System.Net.Quic.dll => 73
+	i64 u0xd3144156a3727ebe, ; 848: Xamarin.Google.Guava.ListenableFuture => 301
+	i64 u0xd333d0af9e423810, ; 849: System.Runtime.InteropServices => 110
+	i64 u0xd33a415cb4278969, ; 850: System.Security.Cryptography.Encoding.dll => 125
+	i64 u0xd3426d966bb704f5, ; 851: Xamarin.AndroidX.AppCompat.AppCompatResources.dll => 228
+	i64 u0xd3651b6fc3125825, ; 852: System.Private.Uri.dll => 89
+	i64 u0xd373685349b1fe8b, ; 853: Microsoft.Extensions.Logging.dll => 187
+	i64 u0xd3801faafafb7698, ; 854: System.Private.DataContractSerialization.dll => 88
+	i64 u0xd3e4c8d6a2d5d470, ; 855: it/Microsoft.Maui.Controls.resources => 324
+	i64 u0xd3edcc1f25459a50, ; 856: System.Reflection.Emit => 95
+	i64 u0xd4645626dffec99d, ; 857: lib_Microsoft.Extensions.DependencyInjection.Abstractions.dll.so => 183
+	i64 u0xd4fa0abb79079ea9, ; 858: System.Security.Principal.dll => 131
+	i64 u0xd5507e11a2b2839f, ; 859: Xamarin.AndroidX.Lifecycle.ViewModelSavedState => 267
+	i64 u0xd5d04bef8478ea19, ; 860: Xamarin.AndroidX.Tracing.Tracing.dll => 286
+	i64 u0xd60815f26a12e140, ; 861: Microsoft.Extensions.Logging.Debug.dll => 189
+	i64 u0xd65786d27a4ad960, ; 862: lib_Microsoft.Maui.Controls.HotReload.Forms.dll.so => 344
+	i64 u0xd6694f8359737e4e, ; 863: Xamarin.AndroidX.SavedState => 279
+	i64 u0xd6949e129339eae5, ; 864: lib_Xamarin.AndroidX.Core.Core.Ktx.dll.so => 241
+	i64 u0xd6d21782156bc35b, ; 865: Xamarin.AndroidX.SwipeRefreshLayout.dll => 285
+	i64 u0xd6de019f6af72435, ; 866: Xamarin.AndroidX.ConstraintLayout.Core.dll => 238
+	i64 u0xd70956d1e6deefb9, ; 867: Jsr305Binding => 298
+	i64 u0xd72329819cbbbc44, ; 868: lib_Microsoft.Extensions.Configuration.Abstractions.dll.so => 181
+	i64 u0xd72c760af136e863, ; 869: System.Xml.XmlSerializer.dll => 166
+	i64 u0xd753f071e44c2a03, ; 870: lib_System.Security.SecureString.dll.so => 132
+	i64 u0xd7aff209654fa011, ; 871: lib_Plugin.LocalNotification.Core.dll.so => 204
+	i64 u0xd7b3764ada9d341d, ; 872: lib_Microsoft.Extensions.Logging.Abstractions.dll.so => 188
+	i64 u0xd7f0088bc5ad71f2, ; 873: Xamarin.AndroidX.VersionedParcelable => 291
+	i64 u0xd824ef6ab33f8f7a, ; 874: Xamarin.AndroidX.Window.WindowCore.dll => 295
+	i64 u0xd8fb25e28ae30a12, ; 875: Xamarin.AndroidX.ProfileInstaller.ProfileInstaller.dll => 276
+	i64 u0xda1dfa4c534a9251, ; 876: Microsoft.Extensions.DependencyInjection => 182
+	i64 u0xdad05a11827959a3, ; 877: System.Collections.NonGeneric.dll => 10
+	i64 u0xdaefdfe71aa53cf9, ; 878: System.IO.FileSystem.Primitives => 49
+	i64 u0xdb5383ab5865c007, ; 879: lib-vi-Microsoft.Maui.Controls.resources.dll.so => 340
+	i64 u0xdb58816721c02a59, ; 880: lib_System.Reflection.Emit.ILGeneration.dll.so => 93
+	i64 u0xdbeda89f832aa805, ; 881: vi/Microsoft.Maui.Controls.resources.dll => 340
+	i64 u0xdbf2a779fbc3ac31, ; 882: System.Transactions.Local.dll => 153
+	i64 u0xdbf9607a441b4505, ; 883: System.Linq => 63
+	i64 u0xdbfc90157a0de9b0, ; 884: lib_System.Text.Encoding.dll.so => 138
+	i64 u0xdc75032002d1a212, ; 885: lib_System.Transactions.Local.dll.so => 153
+	i64 u0xdca8be7403f92d4f, ; 886: lib_System.Linq.Queryable.dll.so => 62
+	i64 u0xdce2c53525640bf3, ; 887: Microsoft.Extensions.Logging => 187
+	i64 u0xdceda8d644ac18a6, ; 888: Supabase.dll => 208
+	i64 u0xdd2b722d78ef5f43, ; 889: System.Runtime.dll => 119
+	i64 u0xdd67031857c72f96, ; 890: lib_System.Text.Encodings.Web.dll.so => 139
+	i64 u0xdd70765ad6162057, ; 891: Xamarin.JSpecify => 303
+	i64 u0xdd92e229ad292030, ; 892: System.Numerics.dll => 86
+	i64 u0xdde30e6b77aa6f6c, ; 893: lib-zh-Hans-Microsoft.Maui.Controls.resources.dll.so => 342
+	i64 u0xde110ae80fa7c2e2, ; 894: System.Xml.XDocument.dll => 162
+	i64 u0xde1223bb049720d1, ; 895: Supabase.Realtime => 213
+	i64 u0xde4726fcdf63a198, ; 896: Xamarin.AndroidX.Transition => 288
+	i64 u0xde572c2b2fb32f93, ; 897: lib_System.Threading.Tasks.Extensions.dll.so => 146
+	i64 u0xde8769ebda7d8647, ; 898: hr/Microsoft.Maui.Controls.resources.dll => 321
+	i64 u0xdee075f3477ef6be, ; 899: Xamarin.AndroidX.ExifInterface.dll => 250
+	i64 u0xdf25d9f36d8dc576, ; 900: lib_Supabase.Functions.dll.so => 210
+	i64 u0xdf4b773de8fb1540, ; 901: System.Net.dll => 84
+	i64 u0xdf9c7682560a9629, ; 902: System.Net.ServerSentEvents => 76
+	i64 u0xdfa254ebb4346068, ; 903: System.Net.Ping => 71
+	i64 u0xe0142572c095a480, ; 904: Xamarin.AndroidX.AppCompat.dll => 227
+	i64 u0xe021eaa401792a05, ; 905: System.Text.Encoding.dll => 138
+	i64 u0xe02f89350ec78051, ; 906: Xamarin.AndroidX.CoordinatorLayout.dll => 239
+	i64 u0xe0496b9d65ef5474, ; 907: Xamarin.Android.Glide.DiskLruCache.dll => 220
+	i64 u0xe10b760bb1462e7a, ; 908: lib_System.Security.Cryptography.Primitives.dll.so => 127
+	i64 u0xe1566bbdb759c5af, ; 909: Microsoft.Maui.Controls.HotReload.Forms.dll => 344
+	i64 u0xe192a588d4410686, ; 910: lib_System.IO.Pipelines.dll.so => 54
+	i64 u0xe1a08bd3fa539e0d, ; 911: System.Runtime.Loader => 112
+	i64 u0xe1a77eb8831f7741, ; 912: System.Security.SecureString.dll => 132
+	i64 u0xe1b52f9f816c70ef, ; 913: System.Private.Xml.Linq.dll => 90
+	i64 u0xe1e199c8ab02e356, ; 914: System.Data.DataSetExtensions.dll => 23
+	i64 u0xe1ecfdb7fff86067, ; 915: System.Net.Security.dll => 75
+	i64 u0xe2252a80fe853de4, ; 916: lib_System.Security.Principal.dll.so => 131
+	i64 u0xe22fa4c9c645db62, ; 917: System.Diagnostics.TextWriterTraceListener.dll => 31
+	i64 u0xe24095a7afddaab3, ; 918: lib_Microsoft.Extensions.Hosting.Abstractions.dll.so => 186
+	i64 u0xe2420585aeceb728, ; 919: System.Net.Requests.dll => 74
+	i64 u0xe26692647e6bcb62, ; 920: Xamarin.AndroidX.Lifecycle.Runtime.Ktx => 262
+	i64 u0xe29b73bc11392966, ; 921: lib-id-Microsoft.Maui.Controls.resources.dll.so => 323
+	i64 u0xe2ad448dee50fbdf, ; 922: System.Xml.Serialization => 161
+	i64 u0xe2d920f978f5d85c, ; 923: System.Data.DataSetExtensions => 23
+	i64 u0xe2e426c7714fa0bc, ; 924: Microsoft.Win32.Primitives.dll => 4
+	i64 u0xe332bacb3eb4a806, ; 925: Mono.Android.Export.dll => 173
+	i64 u0xe3811d68d4fe8463, ; 926: pt-BR/Microsoft.Maui.Controls.resources.dll => 331
+	i64 u0xe3a586956771a0ed, ; 927: lib_SQLite-net.dll.so => 205
+	i64 u0xe3b7cbae5ad66c75, ; 928: lib_System.Security.Cryptography.Encoding.dll.so => 125
+	i64 u0xe4292b48f3224d5b, ; 929: lib_Xamarin.AndroidX.Core.ViewTree.dll.so => 242
+	i64 u0xe494f7ced4ecd10a, ; 930: hu/Microsoft.Maui.Controls.resources.dll => 322
+	i64 u0xe4a9b1e40d1e8917, ; 931: lib-fi-Microsoft.Maui.Controls.resources.dll.so => 317
+	i64 u0xe4f74a0b5bf9703f, ; 932: System.Runtime.Serialization.Primitives => 116
+	i64 u0xe5434e8a119ceb69, ; 933: lib_Mono.Android.dll.so => 175
+	i64 u0xe55703b9ce5c038a, ; 934: System.Diagnostics.Tools => 32
+	i64 u0xe57013c8afc270b5, ; 935: Microsoft.VisualBasic => 3
+	i64 u0xe62913cc36bc07ec, ; 936: System.Xml.dll => 167
+	i64 u0xe7326f70f98e091c, ; 937: Plugin.LocalNotification.Core => 204
+	i64 u0xe7bea09c4900a191, ; 938: Xamarin.AndroidX.VectorDrawable.dll => 289
+	i64 u0xe7e03cc18dcdeb49, ; 939: lib_System.Diagnostics.StackTrace.dll.so => 30
+	i64 u0xe7e147ff99a7a380, ; 940: lib_System.Configuration.dll.so => 19
+	i64 u0xe86b0df4ba9e5db8, ; 941: lib_Xamarin.AndroidX.Lifecycle.Runtime.Android.dll.so => 261
+	i64 u0xe896622fe0902957, ; 942: System.Reflection.Emit.dll => 95
+	i64 u0xe89a2a9ef110899b, ; 943: System.Drawing.dll => 36
+	i64 u0xe8c5f8c100b5934b, ; 944: Microsoft.Win32.Registry => 5
+	i64 u0xe98163eb702ae5c5, ; 945: Xamarin.AndroidX.Arch.Core.Runtime => 230
+	i64 u0xe994f23ba4c143e5, ; 946: Xamarin.KotlinX.Coroutines.Android => 305
+	i64 u0xe9b9c8c0458fd92a, ; 947: System.Windows => 158
+	i64 u0xe9d166d87a7f2bdb, ; 948: lib_Xamarin.AndroidX.Startup.StartupRuntime.dll.so => 284
+	i64 u0xea5a4efc2ad81d1b, ; 949: Xamarin.Google.ErrorProne.Annotations => 300
+	i64 u0xeb2313fe9d65b785, ; 950: Xamarin.AndroidX.ConstraintLayout.dll => 237
+	i64 u0xed19c616b3fcb7eb, ; 951: Xamarin.AndroidX.VersionedParcelable.dll => 291
+	i64 u0xed60c6fa891c051a, ; 952: lib_Microsoft.VisualStudio.DesignTools.TapContract.dll.so => 346
+	i64 u0xedc4817167106c23, ; 953: System.Net.Sockets.dll => 78
+	i64 u0xedc632067fb20ff3, ; 954: System.Memory.dll => 64
+	i64 u0xedc8e4ca71a02a8b, ; 955: Xamarin.AndroidX.Navigation.Runtime.dll => 273
+	i64 u0xee81f5b3f1c4f83b, ; 956: System.Threading.ThreadPool => 150
+	i64 u0xeeb7ebb80150501b, ; 957: lib_Xamarin.AndroidX.Collection.Jvm.dll.so => 234
+	i64 u0xeefc635595ef57f0, ; 958: System.Security.Cryptography.Cng => 123
+	i64 u0xef03b1b5a04e9709, ; 959: System.Text.Encoding.CodePages.dll => 136
+	i64 u0xef5bcbe61622ee5f, ; 960: Xamarin.AndroidX.Tracing.Tracing.Android.dll => 287
+	i64 u0xef602c523fe2e87a, ; 961: lib_Xamarin.Google.Guava.ListenableFuture.dll.so => 301
+	i64 u0xef72742e1bcca27a, ; 962: Microsoft.Maui.Essentials.dll => 200
+	i64 u0xefd1e0c4e5c9b371, ; 963: System.Resources.ResourceManager.dll => 102
+	i64 u0xefe8f8d5ed3c72ea, ; 964: System.Formats.Tar.dll => 39
+	i64 u0xefec0b7fdc57ec42, ; 965: Xamarin.AndroidX.Activity => 222
+	i64 u0xeff59cbde4363ec3, ; 966: System.Threading.AccessControl.dll => 142
+	i64 u0xf00c29406ea45e19, ; 967: es/Microsoft.Maui.Controls.resources.dll => 316
+	i64 u0xf09e47b6ae914f6e, ; 968: System.Net.NameResolution => 69
+	i64 u0xf0ac2b489fed2e35, ; 969: lib_System.Diagnostics.Debug.dll.so => 26
+	i64 u0xf0bb49dadd3a1fe1, ; 970: lib_System.Net.ServicePoint.dll.so => 77
+	i64 u0xf0c16dff90fbf5d6, ; 971: Xamarin.AndroidX.Window.WindowCore.Jvm => 296
+	i64 u0xf0de2537ee19c6ca, ; 972: lib_System.Net.WebHeaderCollection.dll.so => 80
+	i64 u0xf1138779fa181c68, ; 973: lib_Xamarin.AndroidX.Lifecycle.Runtime.dll.so => 260
+	i64 u0xf11b621fc87b983f, ; 974: Microsoft.Maui.Controls.Xaml.dll => 198
+	i64 u0xf161f4f3c3b7e62c, ; 975: System.Data => 24
+	i64 u0xf16eb650d5a464bc, ; 976: System.ValueTuple => 155
+	i64 u0xf1c4b4005493d871, ; 977: System.Formats.Asn1.dll => 38
+	i64 u0xf22514cfad2d598b, ; 978: lib_Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android.dll.so => 268
+	i64 u0xf238bd79489d3a96, ; 979: lib-nl-Microsoft.Maui.Controls.resources.dll.so => 329
+	i64 u0xf2feea356ba760af, ; 980: Xamarin.AndroidX.Arch.Core.Runtime.dll => 230
+	i64 u0xf300e085f8acd238, ; 981: lib_System.ServiceProcess.dll.so => 135
+	i64 u0xf34e52b26e7e059d, ; 982: System.Runtime.CompilerServices.VisualC.dll => 105
+	i64 u0xf37221fda4ef8830, ; 983: lib_Xamarin.Google.Android.Material.dll.so => 297
+	i64 u0xf3ad9b8fb3eefd12, ; 984: lib_System.IO.UnmanagedMemoryStream.dll.so => 57
+	i64 u0xf3ddfe05336abf29, ; 985: System => 168
+	i64 u0xf408654b2a135055, ; 986: System.Reflection.Emit.ILGeneration.dll => 93
+	i64 u0xf4103170a1de5bd0, ; 987: System.Linq.Queryable.dll => 62
+	i64 u0xf42d20c23173d77c, ; 988: lib_System.ServiceModel.Web.dll.so => 134
+	i64 u0xf47e294cbe68c2b0, ; 989: lib_Websocket.Client.dll.so => 217
+	i64 u0xf4c1dd70a5496a17, ; 990: System.IO.Compression => 46
+	i64 u0xf4ecf4b9afc64781, ; 991: System.ServiceProcess.dll => 135
+	i64 u0xf4eeeaa566e9b970, ; 992: lib_Xamarin.AndroidX.CustomView.PoolingContainer.dll.so => 245
+	i64 u0xf518f63ead11fcd1, ; 993: System.Threading.Tasks => 148
+	i64 u0xf5fc7602fe27b333, ; 994: System.Net.WebHeaderCollection => 80
+	i64 u0xf6077741019d7428, ; 995: Xamarin.AndroidX.CoordinatorLayout => 239
+	i64 u0xf61ade9836ad4692, ; 996: Microsoft.IdentityModel.Tokens.dll => 195
+	i64 u0xf6742cbf457c450b, ; 997: Xamarin.AndroidX.Lifecycle.Runtime.Android.dll => 261
+	i64 u0xf6c0e7d55a7a4e4f, ; 998: Microsoft.IdentityModel.JsonWebTokens => 193
+	i64 u0xf6e8de2aebcbb422, ; 999: lib_Xamarin.AndroidX.Window.WindowCore.Jvm.dll.so => 296
+	i64 u0xf70c0a7bf8ccf5af, ; 1000: System.Web => 157
+	i64 u0xf77b20923f07c667, ; 1001: de/Microsoft.Maui.Controls.resources.dll => 314
+	i64 u0xf7d5da3db84fa88c, ; 1002: Supabase.Postgrest => 212
+	i64 u0xf7e2cac4c45067b3, ; 1003: lib_System.Numerics.Vectors.dll.so => 85
+	i64 u0xf7e74930e0e3d214, ; 1004: zh-HK/Microsoft.Maui.Controls.resources.dll => 341
+	i64 u0xf84773b5c81e3cef, ; 1005: lib-uk-Microsoft.Maui.Controls.resources.dll.so => 339
+	i64 u0xf8aac5ea82de1348, ; 1006: System.Linq.Queryable => 62
+	i64 u0xf8b77539b362d3ba, ; 1007: lib_System.Reflection.Primitives.dll.so => 98
+	i64 u0xf8e045dc345b2ea3, ; 1008: lib_Xamarin.AndroidX.RecyclerView.dll.so => 277
+	i64 u0xf915dc29808193a1, ; 1009: System.Web.HttpUtility.dll => 156
+	i64 u0xf96c777a2a0686f4, ; 1010: hi/Microsoft.Maui.Controls.resources.dll => 320
+	i64 u0xf9be54c8bcf8ff3b, ; 1011: System.Security.AccessControl.dll => 120
+	i64 u0xf9eec5bb3a6aedc6, ; 1012: Microsoft.Extensions.Options => 190
+	i64 u0xfa0e82300e67f913, ; 1013: lib_System.AppContext.dll.so => 6
+	i64 u0xfa2fdb27e8a2c8e8, ; 1014: System.ComponentModel.EventBasedAsync => 15
+	i64 u0xfa3f278f288b0e84, ; 1015: lib_System.Net.Security.dll.so => 75
+	i64 u0xfa504dfa0f097d72, ; 1016: Microsoft.Extensions.FileProviders.Abstractions.dll => 185
+	i64 u0xfa5ed7226d978949, ; 1017: lib-ar-Microsoft.Maui.Controls.resources.dll.so => 310
+	i64 u0xfa645d91e9fc4cba, ; 1018: System.Threading.Thread => 149
+	i64 u0xfad4d2c770e827f9, ; 1019: lib_System.IO.IsolatedStorage.dll.so => 52
+	i64 u0xfb06dd2338e6f7c4, ; 1020: System.Net.Ping.dll => 71
+	i64 u0xfb087abe5365e3b7, ; 1021: lib_System.Data.DataSetExtensions.dll.so => 23
+	i64 u0xfb35173928a89083, ; 1022: Supabase.Functions.dll => 210
+	i64 u0xfb3cb754cb2d9fc0, ; 1023: lib_Plugin.LocalNotification.dll.so => 203
+	i64 u0xfb7a682b00f50271, ; 1024: lib_Supabase.Storage.dll.so => 214
+	i64 u0xfb846e949baff5ea, ; 1025: System.Xml.Serialization.dll => 161
+	i64 u0xfbad3e4ce4b98145, ; 1026: System.Security.Cryptography.X509Certificates => 128
+	i64 u0xfbba65887a38c94f, ; 1027: lib_Supabase.Core.dll.so => 209
+	i64 u0xfbf0a31c9fc34bc4, ; 1028: lib_System.Net.Http.dll.so => 66
+	i64 u0xfc6b7527cc280b3f, ; 1029: lib_System.Runtime.Serialization.Formatters.dll.so => 114
+	i64 u0xfc719aec26adf9d9, ; 1030: Xamarin.AndroidX.Navigation.Fragment.dll => 272
+	i64 u0xfc82690c2fe2735c, ; 1031: Xamarin.AndroidX.Lifecycle.Process.dll => 259
+	i64 u0xfc93fc307d279893, ; 1032: System.IO.Pipes.AccessControl.dll => 55
+	i64 u0xfcd302092ada6328, ; 1033: System.IO.MemoryMappedFiles.dll => 53
+	i64 u0xfd22f00870e40ae0, ; 1034: lib_Xamarin.AndroidX.DrawerLayout.dll.so => 246
+	i64 u0xfd49b3c1a76e2748, ; 1035: System.Runtime.InteropServices.RuntimeInformation => 109
+	i64 u0xfd536c702f64dc47, ; 1036: System.Text.Encoding.Extensions => 137
+	i64 u0xfd583f7657b6a1cb, ; 1037: Xamarin.AndroidX.Fragment => 251
+	i64 u0xfd8dd91a2c26bd5d, ; 1038: Xamarin.AndroidX.Lifecycle.Runtime => 260
+	i64 u0xfda36abccf05cf5c, ; 1039: System.Net.WebSockets.Client => 82
+	i64 u0xfddbe9695626a7f5, ; 1040: Xamarin.AndroidX.Lifecycle.Common => 254
+	i64 u0xfeae9952cf03b8cb, ; 1041: tr/Microsoft.Maui.Controls.resources => 338
+	i64 u0xfebe1950717515f9, ; 1042: Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx.dll => 258
+	i64 u0xff270a55858bac8d, ; 1043: System.Security.Principal => 131
+	i64 u0xff9b54613e0d2cc8, ; 1044: System.Net.Http.Json => 65
+	i64 u0xffa1fe933cabf8e4, ; 1045: Websocket.Client.dll => 217
+	i64 u0xffdb7a971be4ec73 ; 1046: System.ValueTuple.dll => 155
 ], align 8
 
-@assembly_image_cache_indices = dso_local local_unnamed_addr constant [1035 x i32] [
+@assembly_image_cache_indices = dso_local local_unnamed_addr constant [1047 x i32] [
 	i32 42, i32 306, i32 285, i32 13, i32 273, i32 107, i32 211, i32 174,
 	i32 48, i32 227, i32 196, i32 7, i32 207, i32 88, i32 334, i32 312,
 	i32 340, i32 192, i32 247, i32 72, i32 277, i32 12, i32 199, i32 104,
@@ -1064,88 +1076,89 @@ target triple = "aarch64-unknown-linux-android21"
 	i32 335, i32 309, i32 292, i32 331, i32 175, i32 221, i32 5, i32 200,
 	i32 68, i32 282, i32 132, i32 210, i32 281, i32 248, i32 69, i32 214,
 	i32 235, i32 67, i32 213, i32 57, i32 244, i32 52, i32 43, i32 127,
-	i32 68, i32 83, i32 262, i32 161, i32 94, i32 101, i32 277, i32 144,
-	i32 154, i32 231, i32 318, i32 165, i32 172, i32 319, i32 183, i32 83,
-	i32 303, i32 235, i32 4, i32 5, i32 51, i32 103, i32 56, i32 122,
-	i32 100, i32 171, i32 120, i32 306, i32 21, i32 322, i32 139, i32 99,
-	i32 309, i32 79, i32 328, i32 284, i32 121, i32 8, i32 168, i32 337,
-	i32 71, i32 220, i32 263, i32 278, i32 174, i32 148, i32 40, i32 282,
-	i32 47, i32 30, i32 275, i32 211, i32 326, i32 147, i32 190, i32 166,
-	i32 28, i32 86, i32 286, i32 79, i32 43, i32 213, i32 29, i32 42,
-	i32 105, i32 119, i32 225, i32 45, i32 93, i32 337, i32 56, i32 151,
-	i32 149, i32 102, i32 49, i32 20, i32 240, i32 116, i32 218, i32 318,
-	i32 299, i32 304, i32 191, i32 96, i32 58, i32 215, i32 323, i32 321,
-	i32 295, i32 83, i32 299, i32 172, i32 26, i32 72, i32 276, i32 184,
-	i32 250, i32 271, i32 339, i32 70, i32 33, i32 317, i32 14, i32 141,
-	i32 215, i32 38, i32 343, i32 236, i32 202, i32 330, i32 136, i32 94,
-	i32 90, i32 152, i32 296, i32 336, i32 24, i32 140, i32 57, i32 142,
-	i32 51, i32 315, i32 29, i32 160, i32 34, i32 167, i32 178, i32 251,
-	i32 192, i32 52, i32 344, i32 294, i32 92, i32 232, i32 35, i32 318,
-	i32 160, i32 209, i32 9, i32 316, i32 78, i32 59, i32 55, i32 199,
-	i32 312, i32 197, i32 13, i32 293, i32 180, i32 229, i32 111, i32 266,
-	i32 32, i32 106, i32 86, i32 94, i32 53, i32 98, i32 302, i32 58,
-	i32 9, i32 104, i32 244, i32 69, i32 292, i32 216, i32 311, i32 216,
-	i32 185, i32 127, i32 278, i32 118, i32 137, i32 280, i32 195, i32 128,
-	i32 108, i32 304, i32 133, i32 231, i32 301, i32 150, i32 159, i32 252,
-	i32 240, i32 247, i32 278, i32 99, i32 24, i32 283, i32 146, i32 186,
-	i32 212, i32 270, i32 3, i32 170, i32 228, i32 102, i32 164, i32 101,
-	i32 242, i32 25, i32 95, i32 171, i32 175, i32 223, i32 3, i32 330,
-	i32 287, i32 249, i32 1, i32 116, i32 304, i32 252, i32 259, i32 215,
-	i32 33, i32 6, i32 334, i32 159, i32 332, i32 53, i32 87, i32 291,
-	i32 275, i32 44, i32 258, i32 106, i32 47, i32 140, i32 268, i32 65,
-	i32 269, i32 70, i32 82, i32 60, i32 91, i32 157, i32 229, i32 135,
-	i32 112, i32 59, i32 324, i32 269, i32 276, i32 174, i32 136, i32 208,
-	i32 143, i32 40, i32 202, i32 311, i32 195, i32 197, i32 61, i32 265,
-	i32 81, i32 25, i32 36, i32 101, i32 262, i32 72, i32 22, i32 240,
-	i32 201, i32 335, i32 123, i32 70, i32 109, i32 341, i32 121, i32 119,
-	i32 254, i32 271, i32 255, i32 11, i32 2, i32 126, i32 117, i32 145,
-	i32 41, i32 89, i32 224, i32 206, i32 177, i32 186, i32 27, i32 151,
-	i32 325, i32 182, i32 300, i32 223, i32 1, i32 225, i32 44, i32 239,
-	i32 152, i32 18, i32 88, i32 313, i32 41, i32 258, i32 233, i32 263,
-	i32 96, i32 187, i32 28, i32 41, i32 80, i32 248, i32 236, i32 147,
-	i32 110, i32 234, i32 11, i32 107, i32 139, i32 16, i32 124, i32 67,
-	i32 160, i32 22, i32 315, i32 308, i32 104, i32 182, i32 307, i32 64,
-	i32 58, i32 198, i32 314, i32 112, i32 177, i32 274, i32 305, i32 9,
-	i32 297, i32 122, i32 100, i32 107, i32 76, i32 266, i32 197, i32 113,
-	i32 226, i32 49, i32 59, i32 20, i32 265, i32 243, i32 73, i32 238,
-	i32 158, i32 39, i32 313, i32 35, i32 38, i32 319, i32 110, i32 328,
-	i32 21, i32 302, i32 214, i32 264, i32 201, i32 15, i32 191, i32 81,
-	i32 81, i32 243, i32 191, i32 272, i32 281, i32 155, i32 21, i32 211,
-	i32 199, i32 312, i32 50, i32 51, i32 338, i32 328, i32 96, i32 219,
-	i32 184, i32 324, i32 16, i32 242, i32 125, i32 321, i32 163, i32 45,
-	i32 300, i32 179, i32 118, i32 64, i32 169, i32 203, i32 180, i32 14,
-	i32 279, i32 113, i32 226, i32 61, i32 76, i32 123, i32 327, i32 2,
-	i32 337, i32 251, i32 264, i32 303, i32 0, i32 264, i32 6, i32 233,
-	i32 317, i32 247, i32 193, i32 17, i32 335, i32 314, i32 79, i32 237,
-	i32 271, i32 133, i32 302, i32 327, i32 85, i32 189, i32 12, i32 34,
-	i32 121, i32 308, i32 259, i32 176, i32 249, i32 87, i32 218, i32 18,
-	i32 292, i32 181, i32 257, i32 73, i32 97, i32 207, i32 168, i32 253,
-	i32 84, i32 343, i32 227, i32 232, i32 157, i32 36, i32 154, i32 339,
-	i32 205, i32 202, i32 192, i32 342, i32 147, i32 56, i32 115, i32 233,
-	i32 289, i32 288, i32 37, i32 343, i32 180, i32 117, i32 225, i32 14,
-	i32 219, i32 149, i32 43, i32 200, i32 223, i32 100, i32 307, i32 171,
-	i32 16, i32 280, i32 48, i32 109, i32 99, i32 269, i32 27, i32 130,
-	i32 29, i32 319, i32 185, i32 281, i32 130, i32 44, i32 243, i32 248,
-	i32 152, i32 8, i32 287, i32 270, i32 320, i32 333, i32 206, i32 332,
-	i32 134, i32 331, i32 42, i32 308, i32 206, i32 33, i32 344, i32 46,
-	i32 146, i32 265, i32 198, i32 256, i32 244, i32 140, i32 63, i32 134,
-	i32 311, i32 48, i32 163, i32 230, i32 256, i32 219, i32 254, i32 327,
-	i32 288, i32 46, i32 167, i32 194, i32 176, i32 253, i32 194, i32 316,
-	i32 250, i32 323, i32 201, i32 18, i32 8, i32 179, i32 241, i32 280,
-	i32 126, i32 60, i32 144, i32 273, i32 326, i32 260, i32 298, i32 196,
-	i32 294, i32 153, i32 145, i32 306, i32 128, i32 212, i32 305, i32 163,
-	i32 165, i32 245, i32 222, i32 181, i32 274, i32 329, i32 26, i32 270,
-	i32 257, i32 203, i32 84, i32 294, i32 129, i32 299, i32 103, i32 178,
-	i32 151, i32 209, i32 297, i32 295, i32 275, i32 54, i32 165, i32 170,
-	i32 133, i32 37, i32 290, i32 326, i32 22, i32 114, i32 92, i32 50,
-	i32 61, i32 124, i32 85, i32 129, i32 166, i32 298, i32 169, i32 279,
-	i32 282, i32 246, i32 218, i32 261, i32 4, i32 255, i32 322, i32 173,
-	i32 2, i32 266, i32 118, i32 193, i32 224, i32 178, i32 19, i32 188,
-	i32 91, i32 66, i32 30, i32 183, i32 315, i32 238, i32 60, i32 113,
-	i32 257, i32 32, i32 130, i32 162, i32 333, i32 236, i32 143, i32 329,
-	i32 156, i32 17, i32 235, i32 221, i32 77, i32 75, i32 15, i32 172,
-	i32 87, i32 205, i32 126, i32 256, i32 267, i32 237, i32 196, i32 336,
-	i32 263, i32 34, i32 120, i32 141, i32 124, i32 204, i32 108, i32 313,
+	i32 68, i32 83, i32 262, i32 346, i32 161, i32 94, i32 101, i32 277,
+	i32 144, i32 154, i32 231, i32 318, i32 165, i32 172, i32 319, i32 183,
+	i32 83, i32 346, i32 303, i32 235, i32 4, i32 5, i32 51, i32 103,
+	i32 56, i32 122, i32 100, i32 171, i32 120, i32 306, i32 21, i32 322,
+	i32 139, i32 99, i32 309, i32 79, i32 328, i32 284, i32 121, i32 8,
+	i32 168, i32 337, i32 71, i32 220, i32 263, i32 278, i32 174, i32 148,
+	i32 40, i32 282, i32 47, i32 30, i32 275, i32 211, i32 326, i32 147,
+	i32 190, i32 166, i32 28, i32 86, i32 286, i32 79, i32 43, i32 213,
+	i32 29, i32 42, i32 105, i32 119, i32 225, i32 45, i32 93, i32 337,
+	i32 56, i32 151, i32 345, i32 149, i32 102, i32 49, i32 20, i32 240,
+	i32 116, i32 218, i32 318, i32 299, i32 304, i32 191, i32 96, i32 58,
+	i32 215, i32 323, i32 321, i32 295, i32 83, i32 299, i32 172, i32 26,
+	i32 72, i32 276, i32 184, i32 250, i32 271, i32 344, i32 339, i32 70,
+	i32 33, i32 317, i32 14, i32 141, i32 215, i32 38, i32 343, i32 236,
+	i32 202, i32 330, i32 136, i32 94, i32 90, i32 152, i32 296, i32 336,
+	i32 24, i32 140, i32 57, i32 142, i32 51, i32 315, i32 29, i32 160,
+	i32 34, i32 167, i32 178, i32 251, i32 192, i32 52, i32 348, i32 294,
+	i32 92, i32 232, i32 35, i32 318, i32 160, i32 209, i32 9, i32 316,
+	i32 78, i32 59, i32 55, i32 199, i32 312, i32 197, i32 13, i32 293,
+	i32 180, i32 229, i32 111, i32 266, i32 32, i32 106, i32 86, i32 94,
+	i32 53, i32 98, i32 302, i32 58, i32 9, i32 104, i32 244, i32 69,
+	i32 292, i32 216, i32 311, i32 216, i32 185, i32 127, i32 278, i32 118,
+	i32 137, i32 280, i32 195, i32 128, i32 108, i32 304, i32 133, i32 231,
+	i32 301, i32 150, i32 159, i32 252, i32 240, i32 247, i32 278, i32 99,
+	i32 24, i32 283, i32 146, i32 186, i32 212, i32 270, i32 3, i32 170,
+	i32 228, i32 102, i32 164, i32 101, i32 242, i32 25, i32 95, i32 171,
+	i32 175, i32 223, i32 3, i32 330, i32 287, i32 249, i32 1, i32 116,
+	i32 304, i32 252, i32 259, i32 215, i32 33, i32 6, i32 334, i32 159,
+	i32 332, i32 53, i32 87, i32 291, i32 275, i32 44, i32 258, i32 106,
+	i32 47, i32 140, i32 268, i32 65, i32 269, i32 70, i32 82, i32 60,
+	i32 91, i32 157, i32 229, i32 135, i32 112, i32 59, i32 324, i32 269,
+	i32 276, i32 174, i32 136, i32 208, i32 143, i32 40, i32 202, i32 311,
+	i32 195, i32 197, i32 61, i32 265, i32 81, i32 25, i32 36, i32 101,
+	i32 262, i32 72, i32 22, i32 240, i32 201, i32 335, i32 123, i32 70,
+	i32 109, i32 341, i32 121, i32 119, i32 254, i32 271, i32 255, i32 11,
+	i32 2, i32 126, i32 117, i32 145, i32 41, i32 89, i32 224, i32 206,
+	i32 177, i32 186, i32 27, i32 151, i32 325, i32 182, i32 300, i32 223,
+	i32 1, i32 225, i32 44, i32 239, i32 152, i32 18, i32 88, i32 313,
+	i32 41, i32 258, i32 233, i32 263, i32 96, i32 187, i32 28, i32 41,
+	i32 80, i32 248, i32 236, i32 147, i32 110, i32 234, i32 11, i32 107,
+	i32 139, i32 16, i32 124, i32 67, i32 160, i32 22, i32 315, i32 308,
+	i32 104, i32 182, i32 307, i32 64, i32 58, i32 198, i32 314, i32 112,
+	i32 177, i32 274, i32 347, i32 305, i32 9, i32 297, i32 122, i32 100,
+	i32 107, i32 76, i32 266, i32 197, i32 113, i32 226, i32 49, i32 59,
+	i32 20, i32 265, i32 243, i32 73, i32 238, i32 158, i32 39, i32 313,
+	i32 35, i32 38, i32 319, i32 110, i32 328, i32 21, i32 302, i32 214,
+	i32 264, i32 201, i32 15, i32 191, i32 81, i32 81, i32 243, i32 191,
+	i32 272, i32 281, i32 155, i32 21, i32 211, i32 199, i32 312, i32 50,
+	i32 51, i32 338, i32 328, i32 96, i32 219, i32 184, i32 324, i32 16,
+	i32 242, i32 125, i32 321, i32 163, i32 45, i32 300, i32 179, i32 118,
+	i32 64, i32 169, i32 203, i32 180, i32 14, i32 279, i32 113, i32 226,
+	i32 61, i32 76, i32 123, i32 327, i32 2, i32 337, i32 251, i32 264,
+	i32 303, i32 0, i32 264, i32 6, i32 233, i32 317, i32 247, i32 193,
+	i32 17, i32 335, i32 314, i32 79, i32 237, i32 271, i32 133, i32 302,
+	i32 327, i32 85, i32 189, i32 12, i32 34, i32 121, i32 308, i32 259,
+	i32 176, i32 249, i32 87, i32 218, i32 18, i32 292, i32 181, i32 257,
+	i32 73, i32 345, i32 97, i32 207, i32 168, i32 253, i32 84, i32 343,
+	i32 227, i32 232, i32 157, i32 36, i32 154, i32 339, i32 205, i32 202,
+	i32 192, i32 342, i32 147, i32 56, i32 115, i32 233, i32 289, i32 288,
+	i32 37, i32 343, i32 180, i32 117, i32 225, i32 14, i32 219, i32 149,
+	i32 43, i32 200, i32 223, i32 100, i32 307, i32 171, i32 16, i32 280,
+	i32 48, i32 109, i32 99, i32 269, i32 27, i32 130, i32 29, i32 319,
+	i32 185, i32 281, i32 130, i32 44, i32 243, i32 248, i32 152, i32 8,
+	i32 287, i32 270, i32 320, i32 333, i32 206, i32 332, i32 134, i32 331,
+	i32 42, i32 308, i32 206, i32 33, i32 348, i32 46, i32 146, i32 265,
+	i32 198, i32 256, i32 244, i32 140, i32 63, i32 134, i32 311, i32 48,
+	i32 163, i32 230, i32 256, i32 219, i32 254, i32 327, i32 288, i32 46,
+	i32 167, i32 194, i32 176, i32 253, i32 194, i32 316, i32 250, i32 323,
+	i32 201, i32 18, i32 8, i32 179, i32 241, i32 280, i32 126, i32 60,
+	i32 144, i32 273, i32 326, i32 260, i32 298, i32 196, i32 294, i32 153,
+	i32 145, i32 306, i32 128, i32 212, i32 305, i32 163, i32 165, i32 245,
+	i32 222, i32 181, i32 274, i32 329, i32 26, i32 270, i32 257, i32 203,
+	i32 84, i32 294, i32 129, i32 299, i32 103, i32 178, i32 151, i32 209,
+	i32 297, i32 295, i32 275, i32 54, i32 165, i32 170, i32 133, i32 37,
+	i32 290, i32 326, i32 22, i32 114, i32 92, i32 50, i32 61, i32 124,
+	i32 85, i32 129, i32 166, i32 298, i32 169, i32 279, i32 282, i32 246,
+	i32 218, i32 261, i32 4, i32 255, i32 322, i32 173, i32 2, i32 266,
+	i32 118, i32 347, i32 193, i32 224, i32 178, i32 19, i32 188, i32 91,
+	i32 66, i32 30, i32 183, i32 315, i32 238, i32 60, i32 113, i32 257,
+	i32 32, i32 130, i32 162, i32 333, i32 236, i32 143, i32 329, i32 156,
+	i32 17, i32 235, i32 221, i32 77, i32 75, i32 15, i32 172, i32 87,
+	i32 205, i32 126, i32 256, i32 267, i32 237, i32 196, i32 336, i32 263,
+	i32 34, i32 120, i32 141, i32 124, i32 204, i32 108, i32 313, i32 345,
 	i32 290, i32 232, i32 320, i32 310, i32 54, i32 47, i32 28, i32 142,
 	i32 148, i32 188, i32 150, i32 35, i32 336, i32 177, i32 77, i32 164,
 	i32 1, i32 268, i32 283, i32 332, i32 325, i32 162, i32 12, i32 158,
@@ -1157,34 +1170,34 @@ target triple = "aarch64-unknown-linux-android21"
 	i32 267, i32 17, i32 74, i32 272, i32 91, i32 220, i32 89, i32 122,
 	i32 286, i32 226, i32 274, i32 137, i32 156, i32 108, i32 11, i32 92,
 	i32 31, i32 338, i32 138, i32 330, i32 333, i32 284, i32 216, i32 221,
-	i32 40, i32 344, i32 283, i32 141, i32 307, i32 309, i32 25, i32 176,
-	i32 342, i32 74, i32 253, i32 285, i32 27, i32 68, i32 90, i32 97,
-	i32 115, i32 31, i32 106, i32 255, i32 37, i32 184, i32 73, i32 301,
-	i32 110, i32 125, i32 228, i32 89, i32 187, i32 88, i32 324, i32 95,
-	i32 183, i32 131, i32 267, i32 286, i32 189, i32 279, i32 241, i32 285,
-	i32 238, i32 298, i32 181, i32 166, i32 132, i32 204, i32 188, i32 291,
-	i32 295, i32 276, i32 182, i32 10, i32 49, i32 340, i32 93, i32 340,
-	i32 153, i32 63, i32 138, i32 153, i32 62, i32 187, i32 208, i32 119,
-	i32 139, i32 303, i32 86, i32 342, i32 162, i32 213, i32 288, i32 146,
-	i32 321, i32 250, i32 210, i32 84, i32 76, i32 71, i32 227, i32 138,
-	i32 239, i32 220, i32 127, i32 54, i32 112, i32 132, i32 90, i32 23,
-	i32 75, i32 131, i32 31, i32 186, i32 74, i32 262, i32 323, i32 161,
-	i32 23, i32 4, i32 173, i32 331, i32 205, i32 125, i32 242, i32 322,
-	i32 317, i32 116, i32 175, i32 32, i32 3, i32 167, i32 204, i32 289,
-	i32 30, i32 19, i32 261, i32 95, i32 36, i32 5, i32 230, i32 305,
-	i32 158, i32 284, i32 300, i32 237, i32 291, i32 78, i32 64, i32 273,
-	i32 150, i32 234, i32 123, i32 136, i32 287, i32 301, i32 200, i32 102,
-	i32 39, i32 222, i32 142, i32 316, i32 69, i32 26, i32 77, i32 296,
-	i32 80, i32 260, i32 198, i32 24, i32 155, i32 38, i32 268, i32 329,
-	i32 230, i32 135, i32 105, i32 297, i32 57, i32 168, i32 93, i32 62,
-	i32 134, i32 217, i32 46, i32 135, i32 245, i32 148, i32 80, i32 239,
-	i32 195, i32 261, i32 193, i32 296, i32 157, i32 314, i32 212, i32 85,
-	i32 341, i32 339, i32 62, i32 98, i32 277, i32 156, i32 320, i32 120,
-	i32 190, i32 6, i32 15, i32 75, i32 185, i32 310, i32 149, i32 52,
-	i32 71, i32 23, i32 210, i32 203, i32 214, i32 161, i32 128, i32 209,
-	i32 66, i32 114, i32 272, i32 259, i32 55, i32 53, i32 246, i32 109,
-	i32 137, i32 251, i32 260, i32 82, i32 254, i32 338, i32 258, i32 131,
-	i32 65, i32 217, i32 155
+	i32 40, i32 348, i32 283, i32 141, i32 307, i32 309, i32 25, i32 176,
+	i32 342, i32 74, i32 253, i32 285, i32 347, i32 27, i32 68, i32 90,
+	i32 97, i32 115, i32 31, i32 106, i32 255, i32 37, i32 184, i32 73,
+	i32 301, i32 110, i32 125, i32 228, i32 89, i32 187, i32 88, i32 324,
+	i32 95, i32 183, i32 131, i32 267, i32 286, i32 189, i32 344, i32 279,
+	i32 241, i32 285, i32 238, i32 298, i32 181, i32 166, i32 132, i32 204,
+	i32 188, i32 291, i32 295, i32 276, i32 182, i32 10, i32 49, i32 340,
+	i32 93, i32 340, i32 153, i32 63, i32 138, i32 153, i32 62, i32 187,
+	i32 208, i32 119, i32 139, i32 303, i32 86, i32 342, i32 162, i32 213,
+	i32 288, i32 146, i32 321, i32 250, i32 210, i32 84, i32 76, i32 71,
+	i32 227, i32 138, i32 239, i32 220, i32 127, i32 344, i32 54, i32 112,
+	i32 132, i32 90, i32 23, i32 75, i32 131, i32 31, i32 186, i32 74,
+	i32 262, i32 323, i32 161, i32 23, i32 4, i32 173, i32 331, i32 205,
+	i32 125, i32 242, i32 322, i32 317, i32 116, i32 175, i32 32, i32 3,
+	i32 167, i32 204, i32 289, i32 30, i32 19, i32 261, i32 95, i32 36,
+	i32 5, i32 230, i32 305, i32 158, i32 284, i32 300, i32 237, i32 291,
+	i32 346, i32 78, i32 64, i32 273, i32 150, i32 234, i32 123, i32 136,
+	i32 287, i32 301, i32 200, i32 102, i32 39, i32 222, i32 142, i32 316,
+	i32 69, i32 26, i32 77, i32 296, i32 80, i32 260, i32 198, i32 24,
+	i32 155, i32 38, i32 268, i32 329, i32 230, i32 135, i32 105, i32 297,
+	i32 57, i32 168, i32 93, i32 62, i32 134, i32 217, i32 46, i32 135,
+	i32 245, i32 148, i32 80, i32 239, i32 195, i32 261, i32 193, i32 296,
+	i32 157, i32 314, i32 212, i32 85, i32 341, i32 339, i32 62, i32 98,
+	i32 277, i32 156, i32 320, i32 120, i32 190, i32 6, i32 15, i32 75,
+	i32 185, i32 310, i32 149, i32 52, i32 71, i32 23, i32 210, i32 203,
+	i32 214, i32 161, i32 128, i32 209, i32 66, i32 114, i32 272, i32 259,
+	i32 55, i32 53, i32 246, i32 109, i32 137, i32 251, i32 260, i32 82,
+	i32 254, i32 338, i32 258, i32 131, i32 65, i32 217, i32 155
 ], align 4
 
 @marshal_methods_number_of_classes = dso_local local_unnamed_addr constant i32 0, align 4
@@ -1206,7 +1219,7 @@ target triple = "aarch64-unknown-linux-android21"
 
 ; Functions
 
-; Function attributes: memory(write, argmem: none, inaccessiblemem: none) "min-legal-vector-width"="0" mustprogress "no-trapping-math"="true" nofree norecurse nosync nounwind "stack-protector-buffer-size"="8" uwtable willreturn
+; Function attributes: memory(write, argmem: none, inaccessiblemem: none) "min-legal-vector-width"="0" mustprogress nofree norecurse nosync "no-trapping-math"="true" nounwind "stack-protector-buffer-size"="8" uwtable willreturn
 define void @xamarin_app_init(ptr nocapture noundef readnone %env, ptr noundef %fn) local_unnamed_addr #0
 {
 	%fnIsNull = icmp eq ptr %fn, null
@@ -1230,14 +1243,14 @@ define void @xamarin_app_init(ptr nocapture noundef readnone %env, ptr noundef %
 
 ; External functions
 
-; Function attributes: "no-trapping-math"="true" noreturn nounwind "stack-protector-buffer-size"="8"
+; Function attributes: noreturn "no-trapping-math"="true" nounwind "stack-protector-buffer-size"="8"
 declare void @abort() local_unnamed_addr #2
 
 ; Function attributes: nofree nounwind
 declare noundef i32 @puts(ptr noundef) local_unnamed_addr #1
-attributes #0 = { memory(write, argmem: none, inaccessiblemem: none) "min-legal-vector-width"="0" mustprogress "no-trapping-math"="true" nofree norecurse nosync nounwind "stack-protector-buffer-size"="8" "target-cpu"="generic" "target-features"="+fix-cortex-a53-835769,+neon,+outline-atomics,+v8a" uwtable willreturn }
+attributes #0 = { memory(write, argmem: none, inaccessiblemem: none) "min-legal-vector-width"="0" mustprogress nofree norecurse nosync "no-trapping-math"="true" nounwind "stack-protector-buffer-size"="8" "target-cpu"="generic" "target-features"="+fix-cortex-a53-835769,+neon,+outline-atomics,+v8a" uwtable willreturn }
 attributes #1 = { nofree nounwind }
-attributes #2 = { "no-trapping-math"="true" noreturn nounwind "stack-protector-buffer-size"="8" "target-cpu"="generic" "target-features"="+fix-cortex-a53-835769,+neon,+outline-atomics,+v8a" }
+attributes #2 = { noreturn "no-trapping-math"="true" nounwind "stack-protector-buffer-size"="8" "target-cpu"="generic" "target-features"="+fix-cortex-a53-835769,+neon,+outline-atomics,+v8a" }
 
 ; Metadata
 !llvm.module.flags = !{!0, !1, !7, !8, !9, !10}

@@ -381,7 +381,7 @@
         <!-- BOTÓN CERRAR SESIÓN (ESQUINA SUP. IZQUIERDA) -->
         <!-- ========================================= -->
 
-        <Button Text="⏻"
+        <Button Text="SALIR"
                 Clicked="OnLogoutClicked"
                 BackgroundColor="#450A0A"
                 BorderColor="#F87171"
@@ -389,7 +389,7 @@
                 TextColor="#F87171"
                 FontAttributes="Bold"
                 FontSize="14"
-                WidthRequest="34"
+                WidthRequest="54"
                 HeightRequest="34"
                 Padding="0,0"
                 CornerRadius="17"

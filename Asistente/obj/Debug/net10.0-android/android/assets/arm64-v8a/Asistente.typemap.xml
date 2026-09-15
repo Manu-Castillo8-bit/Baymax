@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="Asistente" mvid="cccd6e05251048bf8263b11a297be0e8">
+<api type="debug" assembly-name="Asistente" mvid="3ebf2f6f6f4542ed8ee6166f920717cf">
   <java-to-managed>
     <entry java-name="crc64ce4bcd770eab3382/MainActivity" managed-name="Asistente.MainActivity, Asistente" managed-type-token-id="33554446" />
     <entry java-name="crc64ce4bcd770eab3382/MainApplication" managed-name="Asistente.MainApplication, Asistente" managed-type-token-id="33554447" />

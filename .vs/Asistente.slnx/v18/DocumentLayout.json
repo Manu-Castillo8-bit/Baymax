@@ -108,6 +108,10 @@
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "LoginPage.xaml",
@@ -117,8 +121,7 @@
               "RelativeToolTip": "Asistente\\LoginPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-03T23:32:46.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T23:32:46.957Z"
             },
             {
               "$type": "Document",
@@ -130,8 +133,24 @@
               "RelativeToolTip": "Asistente\\LoginPage.xaml.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAswJYAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T01:49:05.626Z",
+              "WhenOpened": "2026-09-04T01:49:05.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
+              "RelativeToolTip": "Asistente\\MainPage.xaml",
+              "ViewState": "AgIAAHoBAAAAYGZmZmYkwIQBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-09-02T15:09:38.041Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
@@ -143,25 +162,7 @@
               "RelativeToolTip": "Asistente\\RegisterPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T01:53:41.577Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
-              "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
-              "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
-              "RelativeToolTip": "Asistente\\MainPage.xaml",
-              "ViewState": "AgIAAHoBAAAAYGZmZmYkwIIBAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-02T15:09:38.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+              "WhenOpened": "2026-09-04T01:53:41.577Z"
             },
             {
               "$type": "Document",
@@ -173,8 +174,7 @@
               "RelativeToolTip": "Asistente\\SyncService.cs",
               "ViewState": "AgIAAF8AAAAAAAAAAAAwwAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-04T13:50:45.641Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-04T13:50:45.641Z"
             },
             {
               "$type": "Document",
@@ -186,8 +186,7 @@
               "RelativeToolTip": "Asistente\\UsuarioLocal.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T14:12:20.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-11T14:12:20.656Z"
             },
             {
               "$type": "Document",
@@ -199,8 +198,7 @@
               "RelativeToolTip": "Asistente\\TareaLocal.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T14:12:40.979Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-11T14:12:40.979Z"
             },
             {
               "$type": "Document",

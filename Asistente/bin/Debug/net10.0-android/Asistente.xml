@@ -4,11 +4,99 @@
         <name>Asistente</name>
     </assembly>
     <members>
+        <member name="M:Asistente.AgenteIAServicio.ObtenerTokenValidoAsync">
+            <summary>
+            Devuelve un access token JWT válido para llamar a la Edge Function.
+            Si el token guardado expiró (los access tokens de Supabase duran ~1 hora),
+            se renueva automáticamente con el refresh token almacenado, sin obligar
+            al usuario a cerrar sesión y volver a iniciar sesión al reabrir la app.
+            </summary>
+        </member>
+        <member name="M:Asistente.AgenteIAServicio.EsMensajeDeSesion(System.String)">
+            <summary>
+            Detecta si un texto suelto (p.ej. el mensaje de una excepción) indica un
+            problema de sesión con Supabase y no otro tipo de fallo del servidor.
+            </summary>
+        </member>
+        <member name="M:Asistente.AgenteIAServicio.EsJsonDeErrorDeSesion(System.String)">
+            <summary>
+            Detecta si la respuesta JSON de la función es un error de sesión
+            (p.ej. {"code":"UNAUTORIZED_ASYMETRIC_JWT","message":"invalid JWT"})
+            y no el resultado de éxito del agente.
+            </summary>
+        </member>
+        <member name="T:Asistente.PrioridadViewModel">
+            <summary>
+            Una prioridad mostrada dentro de la consola del asistente (tarjeta con ranking).
+            </summary>
+        </member>
+        <member name="P:Asistente.PrioridadViewModel.Numero">
+            <summary>Ranking formateado ("01", "02", ...).</summary>
+        </member>
+        <member name="P:Asistente.PrioridadViewModel.Razon">
+            <summary>Motivo por el que el agente considera prioritaria la tarea.</summary>
+        </member>
+        <member name="T:Asistente.TareaVencidaViewModel">
+            <summary>
+            Tarea que ya pasó su fecha de vencimiento y sigue sin completarse.
+            Se muestra como "no terminada" en la consola del asistente.
+            </summary>
+        </member>
+        <member name="P:Asistente.TareaVencidaViewModel.Numero">
+            <summary>Posición en el listado de vencidas ("01", "02", ...).</summary>
+        </member>
+        <member name="P:Asistente.TareaVencidaViewModel.Detalle">
+            <summary>Fecha de vencimiento y días de retraso, p. ej. "Venció el 12/03/2026 · hace 3 días".</summary>
+        </member>
+        <member name="T:Asistente.AgenteViewModel">
+            <summary>
+            Estado y contenido de la consola del Asistente IA. Alimenta el overlay
+            de MainPage para poder enlazar tarjetas sin llenarlas a mano.
+            </summary>
+        </member>
+        <member name="P:Asistente.AgenteViewModel.Saludo">
+            <summary>Saludo del asistente dentro de la burbuja principal.</summary>
+        </member>
+        <member name="P:Asistente.AgenteViewModel.SaludoDetalle">
+            <summary>Línea secundaria de la burbuja de saludo.</summary>
+        </member>
+        <member name="P:Asistente.AgenteViewModel.Plan">
+            <summary>Plan de acción devuelto por el agente.</summary>
+        </member>
+        <member name="P:Asistente.AgenteViewModel.Prioridades">
+            <summary>Lista enlazada con BindableLayout para las tarjetas de prioridad.</summary>
+        </member>
+        <member name="P:Asistente.AgenteViewModel.Vencidas">
+            <summary>Tareas ya vencidas y sin completar, ordenadas de más antigua a más reciente.</summary>
+        </member>
+        <member name="M:Asistente.AgenteViewModel.Reiniciar">
+            <summary>Reinicia la consola para un nuevo análisis.</summary>
+        </member>
         <member name="M:Asistente.MainPage.ReautenticarSiNecesarioAsync">
             <summary>
-            Si hay conexión y el usuario inició sesión en modo offline (sin JWT),
-            re-autentica contra Supabase para activar el token y permitir el uso
-            de la IA y servicios online sin cerrar sesión ni volver a entrar.
+            Si hay conexión, asegura un JWT válido para Supabase:
+            A) usuario que entró offline (sin JWT): inicia sesión real para activar el token.
+            B) JWT guardado pero cliente sin sesión viva: lo renueva con el refresh token
+               para que la IA y los servicios online funcionen tras reabrir la app.
+            </summary>
+        </member>
+        <member name="M:Asistente.MainPage.PrepararConsola">
+            <summary>Deja la consola en su estado inicial para un nuevo análisis.</summary>
+        </member>
+        <member name="M:Asistente.MainPage.RotarAgenteLoop(Microsoft.Maui.Controls.VisualElement,System.UInt32,System.Boolean,System.Int32)">
+            <summary>
+            Giro continuo de un anillo. Al terminar la vuelta devuelve la rotación a 0
+            (360° es visualmente idéntico a 0°, así que no se nota el salto).
+            </summary>
+        </member>
+        <member name="M:Asistente.MainPage.ParpadeoStatusDotAsync(System.String)">
+            <summary>Punto de estado: cambia de color y parpadea al entrar en una etapa.</summary>
+        </member>
+        <member name="M:Asistente.MainPage.CargarVencidasAsync(System.Int32)">
+            <summary>
+            Arma la sección "TAREAS VENCIDAS": tareas cuya fecha de vencimiento ya pasó
+            y que siguen sin completarse. Se calcula contra SQLite local para que la
+            sección exista aunque el agente no responda o no haya internet.
             </summary>
         </member>
         <member name="T:Asistente.NotificadorTareas">

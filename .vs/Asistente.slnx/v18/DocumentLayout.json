@@ -109,7 +109,7 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
@@ -143,14 +143,10 @@
               "RelativeDocumentMoniker": "Asistente\\MainPage.xaml",
               "ToolTip": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\MainPage.xaml",
               "RelativeToolTip": "Asistente\\MainPage.xaml",
-              "ViewState": "AgIAAHoBAAAAYGZmZmYkwIQBAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAGQCAAAAGDMzMzMLwOcBAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-02T15:09:38.041Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",

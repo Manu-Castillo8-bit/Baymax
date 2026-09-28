@@ -81,6 +81,7 @@ namespace Asistente
                             UserSession.CurrentUserName = user.Nombre;
                             UserSession.CurrentAuthId = authId;
                             UserSession.CurrentJwt = session.AccessToken ?? "";
+                            UserSession.CurrentRefreshToken = session.RefreshToken ?? "";
                             UserSession.OfflineEmail = string.Empty;
                             UserSession.OfflinePassword = string.Empty;
 

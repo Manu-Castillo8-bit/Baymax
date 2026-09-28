@@ -487,26 +487,50 @@ private async Task InitializeAndSyncAsync()
 }
 
         /// <summary>
-        /// Si hay conexión y el usuario inició sesión en modo offline (sin JWT),
-        /// re-autentica contra Supabase para activar el token y permitir el uso
-        /// de la IA y servicios online sin cerrar sesión ni volver a entrar.
+        /// Si hay conexión, asegura un JWT válido para Supabase:
+        /// A) usuario que entró offline (sin JWT): inicia sesión real para activar el token.
+        /// B) JWT guardado pero cliente sin sesión viva: lo renueva con el refresh token
+        ///    para que la IA y los servicios online funcionen tras reabrir la app.
         /// </summary>
         private async Task ReautenticarSiNecesarioAsync()
         {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
+
             try
             {
+                // Caso A: sesión iniciada sin internet → re-autenticar contra Supabase
                 if (string.IsNullOrEmpty(UserSession.CurrentJwt) &&
                     !string.IsNullOrEmpty(UserSession.OfflineEmail) &&
-                    !string.IsNullOrEmpty(UserSession.OfflinePassword) &&
-                    Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+                    !string.IsNullOrEmpty(UserSession.OfflinePassword))
                 {
                     var session = await _supabase.Auth.SignIn(UserSession.OfflineEmail, UserSession.OfflinePassword);
                     if (session?.User != null)
                     {
                         UserSession.CurrentJwt = session.AccessToken ?? "";
+                        UserSession.CurrentRefreshToken = session.RefreshToken ?? "";
                         UserSession.CurrentAuthId = session.User.Id;
                         UserSession.OfflineEmail = string.Empty;
                         UserSession.OfflinePassword = string.Empty;
+                        UserSession.GuardarSesion();
+                    }
+                    return;
+                }
+
+                // Caso B: hay JWT guardado pero el cliente local no tiene sesión activa.
+                // El access token expira (~1h); el refresh token lo renueva sin relogin.
+                if (_supabase.Auth.CurrentSession == null &&
+                    !string.IsNullOrEmpty(UserSession.CurrentJwt) &&
+                    !string.IsNullOrEmpty(UserSession.CurrentRefreshToken))
+                {
+                    var refrescada = await _supabase.Auth.SetSession(
+                        UserSession.CurrentJwt, UserSession.CurrentRefreshToken, forceAccessTokenRefresh: true);
+
+                    if (refrescada != null && !string.IsNullOrEmpty(refrescada.AccessToken))
+                    {
+                        UserSession.CurrentJwt = refrescada.AccessToken;
+                        UserSession.CurrentRefreshToken = refrescada.RefreshToken ?? "";
+                        UserSession.CurrentAuthId = refrescada.User?.Id ?? UserSession.CurrentAuthId;
+                        UserSession.GuardarSesion();
                     }
                 }
             }

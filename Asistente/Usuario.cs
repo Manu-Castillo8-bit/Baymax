@@ -62,6 +62,10 @@ namespace Asistente
         // Token JWT del usuario (para llamar Edge Functions autenticadas)
         public static string CurrentJwt { get; set; } = string.Empty;
 
+        // Refresh token de Supabase: permite renovar el JWT cuando expira (~1h)
+        // sin obligar al usuario a volver a iniciar sesión tras reabrir la app.
+        public static string CurrentRefreshToken { get; set; } = string.Empty;
+
         // Credenciales temporales (solo en memoria) para re-autenticación
         // con Supabase al recuperar conexión (nunca se guardan en disco)
         public static string OfflineEmail { get; set; } = string.Empty;
@@ -75,6 +79,7 @@ namespace Asistente
             Preferences.Default.Set("Session.Nombre", CurrentUserName);
             Preferences.Default.Set("Session.AuthId", CurrentAuthId);
             Preferences.Default.Set("Session.Jwt", CurrentJwt);
+            Preferences.Default.Set("Session.RefreshToken", CurrentRefreshToken);
             Preferences.Default.Set("Session.OfflineEmail", OfflineEmail);
             Preferences.Default.Set("Session.OfflinePassword", OfflinePassword);
         }
@@ -91,6 +96,7 @@ namespace Asistente
             CurrentUserName = Preferences.Default.Get("Session.Nombre", string.Empty);
             CurrentAuthId = Preferences.Default.Get("Session.AuthId", string.Empty);
             CurrentJwt = Preferences.Default.Get("Session.Jwt", string.Empty);
+            CurrentRefreshToken = Preferences.Default.Get("Session.RefreshToken", string.Empty);
             OfflineEmail = Preferences.Default.Get("Session.OfflineEmail", string.Empty);
             OfflinePassword = Preferences.Default.Get("Session.OfflinePassword", string.Empty);
             return true;
@@ -103,6 +109,7 @@ namespace Asistente
             CurrentUserName = string.Empty;
             CurrentAuthId = string.Empty;
             CurrentJwt = string.Empty;
+            CurrentRefreshToken = string.Empty;
             OfflineEmail = string.Empty;
             OfflinePassword = string.Empty;
 
@@ -110,6 +117,7 @@ namespace Asistente
             Preferences.Default.Remove("Session.Nombre");
             Preferences.Default.Remove("Session.AuthId");
             Preferences.Default.Remove("Session.Jwt");
+            Preferences.Default.Remove("Session.RefreshToken");
             Preferences.Default.Remove("Session.OfflineEmail");
             Preferences.Default.Remove("Session.OfflinePassword");
         }

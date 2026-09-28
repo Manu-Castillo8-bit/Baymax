@@ -261,6 +261,8 @@ namespace Asistente
         private int _agenteEtapa = 0;
         private int _agentePasoPuntos = 0;
         private int _agenteGeneracion = 0;
+        private int _agenteSesion = 0;
+        private bool _agenteOcupado = false;
 
         // Popup: tarea que se está editando (null = nueva)
         private TareaLocal _tareaEditando;
@@ -819,21 +821,32 @@ private async Task RefreshAllAsync()
                 return;
             }
 
-            // Prevenir doble toque mientras trabaja
-            AgenteBoton.IsEnabled = false;
-
             await AbrirConsolaAsync();
         }
 
         private async Task AbrirConsolaAsync()
         {
-            PrepararConsola();
+            // Guarda de reentrada: si ya hay una apertura o un cierre en curso,
+            // ignoramos el toque en lugar de apilar dos consolas sobre la misma.
+            if (_agenteOcupado || AgentePopupOverlay.IsVisible) return;
 
-            AgentePopupOverlay.IsVisible = true;
-            await AnimarEntradaAsync();
+            _agenteOcupado = true;
+            AgenteBoton.IsEnabled = false;
 
-            IniciarAnimacionesAsistente();
-            _ = EjecutarAnalisisAsync();
+            try
+            {
+                PrepararConsola();
+
+                AgentePopupOverlay.IsVisible = true;
+                await AnimarEntradaAsync();
+
+                IniciarAnimacionesAsistente();
+                _ = EjecutarAnalisisAsync();
+            }
+            finally
+            {
+                _agenteOcupado = false;
+            }
         }
 
         /// <summary>Deja la consola en su estado inicial para un nuevo análisis.</summary>
@@ -855,6 +868,9 @@ private async Task RefreshAllAsync()
 
             AgentePensandoCard.IsVisible = true;
             AgentePensandoCard.Opacity = 1;
+            AgenteVencidasCard.IsVisible = false;
+            AgenteVencidasContador.Text = "0";
+            AgenteVencidasAviso.Text = "Pasaron su fecha de vencimiento y siguen sin completarse.";
             AgenteContadorCard.IsVisible = false;
             AgentePlanCard.IsVisible = false;
             AgentePrioridadesCabecera.IsVisible = false;
@@ -898,19 +914,29 @@ private async Task RefreshAllAsync()
 
         private void IniciarAnimacionesAsistente()
         {
+            // Cada apertura abre una sesión nueva. Los bucles de la sesión anterior
+            // comparan el id al salir de cada vuelta y terminan para siempre; si solo
+            // miraran un booleano, al reabrir volverían a activarse y se acumularían,
+            // con varias animaciones compitiendo sobre los mismos elementos.
+            _agenteSesion++;
             _agenteAnimando = true;
 
-            _ = RotarAgenteLoop(AgenteAnilloExt, 9000, true);
-            _ = RotarAgenteLoop(AgenteAnilloInt, 5500, false);
-            _ = PulsoNucleoAgenteLoop();
+            int sesion = _agenteSesion;
+
+            _ = RotarAgenteLoop(AgenteAnilloExt, 9000, true, sesion);
+            _ = RotarAgenteLoop(AgenteAnilloInt, 5500, false, sesion);
+            _ = PulsoNucleoAgenteLoop(sesion);
 
             IniciarRelojEtapas();
             IniciarRelojPuntos();
         }
 
+        private bool SesionAgenteVigente(int sesion) => _agenteAnimando && sesion == _agenteSesion;
+
         private void DetenerAnimacionesAsistente()
         {
             _agenteAnimando = false;
+            _agenteSesion++;
 
             if (_agenteRelojEtapas != null)
             {
@@ -931,20 +957,23 @@ private async Task RefreshAllAsync()
         /// Giro continuo de un anillo. Al terminar la vuelta devuelve la rotación a 0
         /// (360° es visualmente idéntico a 0°, así que no se nota el salto).
         /// </summary>
-        private async Task RotarAgenteLoop(VisualElement element, uint duration, bool clockwise)
+        private async Task RotarAgenteLoop(VisualElement element, uint duration, bool clockwise, int sesion)
         {
             double paso = clockwise ? 360 : -360;
 
-            while (_agenteAnimando)
+            while (SesionAgenteVigente(sesion))
             {
                 await element.RotateToAsync(paso, duration, Easing.Linear);
-                element.Rotation = 0;
+
+                // Solo se recentra si esta sesión sigue viva: si no, el próximo
+                // arranque ya lo deja en 0 con RestablecerOrbe().
+                if (SesionAgenteVigente(sesion)) element.Rotation = 0;
             }
         }
 
-        private async Task PulsoNucleoAgenteLoop()
+        private async Task PulsoNucleoAgenteLoop(int sesion)
         {
-            while (_agenteAnimando)
+            while (SesionAgenteVigente(sesion))
             {
                 await Task.WhenAll(
                     AgenteNucleo.ScaleToAsync(1.18, 900, Easing.SinInOut),
@@ -952,7 +981,7 @@ private async Task RefreshAllAsync()
                     AgenteGlowOrb.FadeToAsync(0.55, 900, Easing.SinInOut)
                 );
 
-                if (!_agenteAnimando) break;
+                if (!SesionAgenteVigente(sesion)) break;
 
                 await Task.WhenAll(
                     AgenteNucleo.ScaleToAsync(1.0, 900, Easing.SinInOut),
@@ -1067,6 +1096,11 @@ private async Task RefreshAllAsync()
                 // Asegurar que las ediciones locales estén subidas antes de analizar
                 await RefreshAllAsync();
 
+                // Detectar vencidas en local: es instantáneo y funciona sin conexión
+                await CargarVencidasAsync(generacion);
+
+                if (generacion != _agenteGeneracion) return;
+
                 var resultado = await _agenteIA.AnalizarTareasAsync();
 
                 if (resultado == null)
@@ -1108,13 +1142,27 @@ private async Task RefreshAllAsync()
             var prioridades = resultado.Prioridades ?? new List<AgenteIAServicio.Prioridad>();
 
             // 1. Saludo personalizado en la burbuja principal
-            _agenteVM.Saludo = $"Hola {nombre}, ya analicé tus tareas.";
-            _agenteVM.SaludoDetalle = pendientes == 0
-                ? "No tienes nada pendiente. Todo tu plan de trabajo está al día."
-                : $"Tienes {pendientes} tarea(s) en la cola. Este es el plan que armé para ti.";
+            int vencidas = _agenteVM.Vencidas.Count;
+
+            _agenteVM.Saludo = vencidas > 0
+                ? $"Hola {nombre}, atendé esto primero: tenés tareas vencidas."
+                : $"Hola {nombre}, ya analicé tus tareas.";
+
+            if (vencidas > 0)
+            {
+                _agenteVM.SaludoDetalle = $"{vencidas} tarea(s) pasaron su fecha y siguen sin completarse. Marcadas como NO TERMINADAS más abajo.";
+            }
+            else
+            {
+                _agenteVM.SaludoDetalle = pendientes == 0
+                    ? "No tienes nada pendiente. Todo tu plan de trabajo está al día."
+                    : $"Tienes {pendientes} tarea(s) en la cola, ninguna vencida. Este es el plan que armé para ti.";
+            }
 
             AgenteEstadoLabel.Text = "ANÁLISIS COMPLETO";
-            AgenteSubEstadoLabel.Text = $"{pendientes} pendientes · {prioridades.Count} prioridad(es)";
+            AgenteSubEstadoLabel.Text = vencidas > 0
+                ? $"{vencidas} vencida(s) · {pendientes} pendientes · {prioridades.Count} prioridad(es)"
+                : $"{pendientes} pendientes · {prioridades.Count} prioridad(es)";
             AgenteProgresoBar.Progress = 1.0;
             AgenteProgresoLabel.Text = "Análisis completado.";
             AgenteLogLabel.Text += "\n> respuesta recibida del agente.";
@@ -1127,9 +1175,11 @@ private async Task RefreshAllAsync()
 
             // 3. Contador con cuenta ascendente
             _agenteVM.Pendientes = pendientes;
-            AgenteContadorDetalle.Text = pendientes == 0
-                ? "Sin tareas en la cola. Buen trabajo."
-                : $"El agente revisó {pendientes} tarea(s) y armó este orden de trabajo.";
+            AgenteContadorDetalle.Text = vencidas > 0
+                ? $"{vencidas} de {pendientes} ya están vencidas y siguen sin completarse."
+                : pendientes == 0
+                    ? "Sin tareas en la cola. Buen trabajo."
+                    : $"El agente revisó {pendientes} tarea(s) y armó este orden de trabajo.";
 
             await RevelarAsync(AgenteContadorCard);
             await AnimarContadorAsync(pendientes);
@@ -1166,6 +1216,74 @@ private async Task RefreshAllAsync()
             // 6. Llevar la vista al final del reporte
             await Task.Delay(150);
             await ScrollToFinalAsync();
+        }
+
+        /// <summary>
+        /// Arma la sección "TAREAS VENCIDAS": tareas cuya fecha de vencimiento ya pasó
+        /// y que siguen sin completarse. Se calcula contra SQLite local para que la
+        /// sección exista aunque el agente no responda o no haya internet.
+        /// </summary>
+        private async Task CargarVencidasAsync(int generacion)
+        {
+            try
+            {
+                int usuario = UserSession.CurrentUserId;
+                DateTime hoy = DateTime.Today;
+
+                var propias = await _dbLocal.Table<TareaLocal>()
+                    .Where(t => t.IdUsuario == usuario && !t.IsDeleted)
+                    .ToListAsync();
+
+                // El filtrado por fecha va en memoria: sqlite-net no traduce la
+                // comparación de un DateTime? dentro del Where.
+                var vencidas = propias
+                    .Where(t => t.Estado != "Completado"
+                             && t.FechaVencimiento.HasValue
+                             && t.FechaVencimiento.Value.Date < hoy)
+                    .OrderBy(t => t.FechaVencimiento)
+                    .ToList();
+
+                if (generacion != _agenteGeneracion) return;
+
+                _agenteVM.Vencidas.Clear();
+
+                int posicion = 0;
+                foreach (var tarea in vencidas)
+                {
+                    posicion++;
+
+                    DateTime vencimiento = tarea.FechaVencimiento!.Value;
+                    int dias = (hoy - vencimiento.Date).Days;
+
+                    string retraso = dias switch
+                    {
+                        0 => "vence hoy",
+                        1 => "hace 1 día",
+                        _ => $"hace {dias} días"
+                    };
+
+                    _agenteVM.Vencidas.Add(new TareaVencidaViewModel(
+                        posicion.ToString("00"),
+                        string.IsNullOrWhiteSpace(tarea.Titulo) ? "(tarea sin título)" : tarea.Titulo,
+                        $"Venció el {vencimiento:dd/MM/yyyy} · {retraso}"));
+                }
+
+                if (_agenteVM.Vencidas.Count == 0) return;
+
+                int total = _agenteVM.Vencidas.Count;
+                AgenteVencidasContador.Text = total.ToString();
+                AgenteVencidasAviso.Text = total == 1
+                    ? "1 tarea pasó su fecha de vencimiento y sigue sin completarse."
+                    : $"{total} tareas pasaron su fecha de vencimiento y siguen sin completarse.";
+
+                AgenteLogLabel.Text += $"\n> {total} tarea(s) vencida(s) detectada(s).";
+
+                await RevelarAsync(AgenteVencidasCard, 320);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"No se pudieron leer las tareas vencidas: {ex.Message}");
+            }
         }
 
         private void MostrarError(string mensaje)
@@ -1222,6 +1340,8 @@ private async Task RefreshAllAsync()
 
         private async void OnAgenteReanalizarClicked(object sender, EventArgs e)
         {
+            if (_agenteOcupado) return;
+
             await CerrarConsolaAsync();
             await Task.Delay(220);
             await AbrirConsolaAsync();
@@ -1229,22 +1349,31 @@ private async Task RefreshAllAsync()
 
         private async Task CerrarConsolaAsync()
         {
-            if (!AgentePopupOverlay.IsVisible) return;
+            if (!AgentePopupOverlay.IsVisible || _agenteOcupado) return;
 
-            DetenerAnimacionesAsistente();
+            _agenteOcupado = true;
 
-            await Task.WhenAll(
-                AgenteConsolaCard.FadeToAsync(0, 190, Easing.CubicIn),
-                AgenteConsolaCard.ScaleToAsync(0.95, 190, Easing.CubicIn),
-                AgenteConsolaCard.TranslateToAsync(0, 20, 190, Easing.CubicIn)
-            );
+            try
+            {
+                DetenerAnimacionesAsistente();
 
-            AgenteConsolaCard.Opacity = 1;
-            AgenteConsolaCard.Scale = 1;
-            AgenteConsolaCard.TranslationY = 0;
+                await Task.WhenAll(
+                    AgenteConsolaCard.FadeToAsync(0, 190, Easing.CubicIn),
+                    AgenteConsolaCard.ScaleToAsync(0.95, 190, Easing.CubicIn),
+                    AgenteConsolaCard.TranslateToAsync(0, 20, 190, Easing.CubicIn)
+                );
 
-            AgentePopupOverlay.IsVisible = false;
-            AgenteBoton.IsEnabled = true;
+                AgenteConsolaCard.Opacity = 1;
+                AgenteConsolaCard.Scale = 1;
+                AgenteConsolaCard.TranslationY = 0;
+
+                AgentePopupOverlay.IsVisible = false;
+                AgenteBoton.IsEnabled = true;
+            }
+            finally
+            {
+                _agenteOcupado = false;
+            }
         }
 
         protected override bool OnBackButtonPressed()

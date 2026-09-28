@@ -44,6 +44,28 @@ namespace Asistente
     }
 
     /// <summary>
+    /// Tarea que ya pasó su fecha de vencimiento y sigue sin completarse.
+    /// Se muestra como "no terminada" en la consola del asistente.
+    /// </summary>
+    public class TareaVencidaViewModel
+    {
+        /// <summary>Posición en el listado de vencidas ("01", "02", ...).</summary>
+        public string Numero { get; }
+
+        public string Titulo { get; }
+
+        /// <summary>Fecha de vencimiento y días de retraso, p. ej. "Venció el 12/03/2026 · hace 3 días".</summary>
+        public string Detalle { get; }
+
+        public TareaVencidaViewModel(string numero, string titulo, string detalle)
+        {
+            Numero = numero;
+            Titulo = titulo;
+            Detalle = detalle;
+        }
+    }
+
+    /// <summary>
     /// Estado y contenido de la consola del Asistente IA. Alimenta el overlay
     /// de MainPage para poder enlazar tarjetas sin llenarlas a mano.
     /// </summary>
@@ -105,9 +127,14 @@ namespace Asistente
         /// <summary>Lista enlazada con BindableLayout para las tarjetas de prioridad.</summary>
         public ObservableCollection<PrioridadViewModel> Prioridades { get; } = new();
 
+        /// <summary>Tareas ya vencidas y sin completar, ordenadas de más antigua a más reciente.</summary>
+        public ObservableCollection<TareaVencidaViewModel> Vencidas { get; } = new();
+
         public bool TienePrioridades => Prioridades.Count > 0;
 
         public bool TienePlan => !string.IsNullOrWhiteSpace(Plan);
+
+        public bool TieneVencidas => Vencidas.Count > 0;
 
         /// <summary>Reinicia la consola para un nuevo análisis.</summary>
         public void Reiniciar()
@@ -120,7 +147,9 @@ namespace Asistente
             Plan = string.Empty;
             Pendientes = 0;
             Prioridades.Clear();
+            Vencidas.Clear();
             OnPropertyChanged(nameof(TienePrioridades));
+            OnPropertyChanged(nameof(TieneVencidas));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

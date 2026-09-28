@@ -508,59 +508,605 @@
         </Grid>
 
         <!-- ========================================= -->
-        <!-- POPUP AGENTE IA                           -->
+        <!-- CONSOLA DEL ASISTENTE IA                  -->
         <!-- ========================================= -->
 
         <Grid x:Name="AgentePopupOverlay"
-              IsVisible="False"
-              BackgroundColor="#0B1120">
+              IsVisible="False">
 
-            <Grid Padding="30"
-                  RowSpacing="15"
-                  VerticalOptions="Center"
-                  RowDefinitions="Auto, Auto, Auto, Auto">
+            <!-- Velo de fondo -->
+            <Grid BackgroundColor="#F00B1120" />
 
-                <!-- ENCABEZADO -->
-                <Label Grid.Row="0"
-                       Text="🤖 Asistente IA"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       TextColor="#A78BFA"
-                       HorizontalOptions="Center"/>
+            <Border x:Name="AgenteConsolaCard"
+                    Margin="18"
+                    Padding="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    MaximumWidthRequest="540"
+                    MaximumHeightRequest="780"
+                    StrokeThickness="2">
 
-                <!-- INDICADOR DE CARGA -->
-                <ActivityIndicator Grid.Row="1"
-                                   x:Name="AgenteActivityIndicator"
-                                   IsRunning="False"
-                                   IsVisible="False"
-                                   Color="#A78BFA"
-                                   WidthRequest="40"
-                                   HeightRequest="40"
-                                   HorizontalOptions="Center"/>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="22" />
+                </Border.StrokeShape>
 
-                <!-- MENSAJE / RESULTADO -->
-                <Label Grid.Row="2"
-                       x:Name="AgenteResultadoLabel"
-                       Text="Analizando tus tareas..."
-                       FontSize="14"
-                       TextColor="#E2E8F0"
-                       VerticalTextAlignment="Start"
-                       LineBreakMode="WordWrap"
-                       MaxLines="0"
-                       MinimumWidthRequest="260"
-                       HorizontalTextAlignment="Start"/>
+                <!-- Marco neón violeta → cian -->
+                <Border.Stroke>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#7C3AED" Offset="0.0" />
+                        <GradientStop Color="#A78BFA" Offset="0.4" />
+                        <GradientStop Color="#22D3EE" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Stroke>
 
-                <!-- CERRAR -->
-                <Button Grid.Row="3"
-                        Text="Cerrar"
-                        Clicked="OnAgentePopupCerrarClicked"
-                        BackgroundColor="#172554"
-                        BorderColor="#245B78"
-                        BorderWidth="1"
-                        TextColor="#22D3EE"
-                        CornerRadius="6"/>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#0B1220" Offset="0.0" />
+                        <GradientStop Color="#141A2E" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
 
-            </Grid>
+                <Grid RowDefinitions="Auto,*,Auto">
+
+                    <!-- ==================== -->
+                    <!-- ENCABEZADO / ORBE   -->
+                    <!-- ==================== -->
+
+                    <Grid Grid.Row="0"
+                          RowDefinitions="Auto,Auto">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                              Padding="18,16"
+                              ColumnSpacing="14">
+
+                            <!-- Orbe del asistente: núcleo + anillos HUD -->
+                            <Grid Grid.Column="0"
+                                  WidthRequest="62"
+                                  HeightRequest="62"
+                                  HorizontalOptions="Start"
+                                  VerticalOptions="Center">
+
+                                <Ellipse x:Name="AgenteGlowOrb"
+                                         WidthRequest="46"
+                                         HeightRequest="46"
+                                         Opacity="0.3"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                                            <GradientStop Color="#A78BFA" Offset="0.0" />
+                                            <GradientStop Color="#7C3AED" Offset="0.45" />
+                                            <GradientStop Color="Transparent" Offset="1.0" />
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+
+                                <Ellipse x:Name="AgenteAnilloExt"
+                                         WidthRequest="60"
+                                         HeightRequest="60"
+                                         Stroke="#A78BFA"
+                                         StrokeThickness="2"
+                                         StrokeDashArray="8, 5"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center" />
+
+                                <Ellipse x:Name="AgenteAnilloInt"
+                                         WidthRequest="44"
+                                         HeightRequest="44"
+                                         Stroke="#22D3EE"
+                                         StrokeThickness="1.5"
+                                         StrokeDashArray="2, 4"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center" />
+
+                                <Ellipse x:Name="AgenteNucleo"
+                                         WidthRequest="22"
+                                         HeightRequest="22"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                                            <GradientStop Color="#F5D0FE" Offset="0.0" />
+                                            <GradientStop Color="#A78BFA" Offset="0.5" />
+                                            <GradientStop Color="#6D28D9" Offset="1.0" />
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+
+                                <!-- Esquinas HUD del orbe -->
+                                <Path Data="M 0,16 L 0,0 L 16,0
+                                            M 46,0 L 62,0 L 62,16
+                                            M 62,46 L 62,62 L 46,62
+                                            M 16,62 L 0,62 L 0,46"
+                                      Stroke="#A78BFA"
+                                      StrokeThickness="1.2"
+                                      Opacity="0.45"
+                                      HorizontalOptions="Fill"
+                                      VerticalOptions="Fill" />
+
+                            </Grid>
+
+                            <!-- Estado del agente -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="4"
+                                                 VerticalOptions="Center">
+
+                                <HorizontalStackLayout Spacing="8">
+                                    <Ellipse x:Name="AgenteStatusDot"
+                                             WidthRequest="9"
+                                             HeightRequest="9"
+                                             VerticalOptions="Center">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="#34D399" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+
+                                    <Label x:Name="AgenteEstadoLabel"
+                                           Text="NÚCLEO EN LÍNEA"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="15"
+                                           CharacterSpacing="1.2"
+                                           TextColor="#E2E8F0"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                                <Label x:Name="AgenteSubEstadoLabel"
+                                       Text="analizar-tareas · listo para recibir consultas"
+                                       FontFamily="Monospace"
+                                       FontSize="11"
+                                       TextColor="#94A3B8"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1" />
+
+                            </VerticalStackLayout>
+
+                            <!-- Cerrar (esquina superior derecha) -->
+                            <Button Grid.Column="2"
+                                    x:Name="AgenteCerrarBotonSuperior"
+                                    Text="✕"
+                                    Clicked="OnAgentePopupCerrarClicked"
+                                    BackgroundColor="#1E1B4B"
+                                    BorderColor="#4C1D95"
+                                    BorderWidth="1"
+                                    TextColor="#C4B5FD"
+                                    FontSize="16"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    Padding="0,0"
+                                    CornerRadius="20"
+                                    VerticalOptions="Center"
+                                    ToolTipProperties.Text="Cerrar asistente" />
+
+                        </Grid>
+
+                        <BoxView Grid.Row="1"
+                                 HeightRequest="1"
+                                 Color="#1E293B" />
+
+                    </Grid>
+
+                    <!-- ==================== -->
+                    <!-- CUERPO DE LA CONSOLA -->
+                    <!-- ==================== -->
+
+                    <ScrollView Grid.Row="1"
+                                x:Name="AgenteScrollView">
+
+                        <VerticalStackLayout x:Name="AgenteMensajesStack"
+                                             Padding="18,16"
+                                             Spacing="14">
+
+                            <!-- TARJETA PRINCIPAL: SALUDO -->
+                            <Border Padding="14"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16" />
+                                </Border.StrokeShape>
+                                <Border.Stroke>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#4C1D95" Offset="0.0" />
+                                        <GradientStop Color="#0E7490" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Stroke>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#111C30" />
+                                </Border.Background>
+
+                                <Grid ColumnDefinitions="Auto,*"
+                                      ColumnSpacing="10">
+
+                                    <Border Grid.Column="0"
+                                            WidthRequest="4"
+                                            BackgroundColor="#A78BFA">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="2" />
+                                        </Border.StrokeShape>
+                                    </Border>
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="8">
+
+                                        <Label Text="{Binding Saludo}"
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="15"
+                                               TextColor="#E2E8F0"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="0" />
+
+                                        <Label Text="{Binding SaludoDetalle}"
+                                               FontSize="12"
+                                               TextColor="#94A3B8"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="0" />
+
+                                    </VerticalStackLayout>
+
+                                </Grid>
+                            </Border>
+
+                            <!-- TARJETA: EL AGENTE ESTÁ PENSANDO -->
+                            <Border x:Name="AgentePensandoCard"
+                                    IsVisible="False"
+                                    Padding="14"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16" />
+                                </Border.StrokeShape>
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="#312E81" />
+                                </Border.Stroke>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#0F172A" />
+                                </Border.Background>
+
+                                <VerticalStackLayout Spacing="10">
+
+                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                          ColumnSpacing="10">
+
+                                        <HorizontalStackLayout Grid.Column="0"
+                                                               Spacing="5"
+                                                               VerticalOptions="Center">
+                                            <Ellipse x:Name="AgentePunto1"
+                                                     WidthRequest="8"
+                                                     HeightRequest="8"
+                                                     Opacity="1"
+                                                     Fill="#A78BFA" />
+                                            <Ellipse x:Name="AgentePunto2"
+                                                     WidthRequest="8"
+                                                     HeightRequest="8"
+                                                     Opacity="0.25"
+                                                     Fill="#A78BFA" />
+                                            <Ellipse x:Name="AgentePunto3"
+                                                     WidthRequest="8"
+                                                     HeightRequest="8"
+                                                     Opacity="0.25"
+                                                     Fill="#A78BFA" />
+                                        </HorizontalStackLayout>
+
+                                        <Label Grid.Column="1"
+                                               x:Name="AgenteProgresoLabel"
+                                               Text="Analizando tus tareas..."
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="13"
+                                               TextColor="#C4B5FD"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="0"
+                                               VerticalOptions="Center" />
+
+                                        <Label Grid.Column="2"
+                                               Text="IA"
+                                               FontFamily="Monospace"
+                                               FontSize="10"
+                                               CharacterSpacing="1"
+                                               TextColor="#6366F1"
+                                               VerticalOptions="Center" />
+
+                                    </Grid>
+
+                                    <ProgressBar x:Name="AgenteProgresoBar"
+                                                 Progress="0.15"
+                                                 ProgressColor="#A78BFA"
+                                                 HeightRequest="4" />
+
+                                    <Label x:Name="AgenteLogLabel"
+                                           FontFamily="Monospace"
+                                           FontSize="10"
+                                           TextColor="#475569"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="0" />
+
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- TARJETA: CONTADOR DE PENDIENTES -->
+                            <Border x:Name="AgenteContadorCard"
+                                    IsVisible="False"
+                                    Padding="16"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16" />
+                                </Border.StrokeShape>
+                                <Border.Stroke>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#7C3AED" Offset="0.0" />
+                                        <GradientStop Color="#22D3EE" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Stroke>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#1E1B4B" Offset="0.0" />
+                                        <GradientStop Color="#0F172A" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+
+                                <Grid ColumnDefinitions="Auto,Auto,*"
+                                      ColumnSpacing="16">
+
+                                    <VerticalStackLayout Grid.Column="0"
+                                                         Spacing="0"
+                                                         HorizontalOptions="Center">
+
+                                        <Label x:Name="AgenteContadorNumero"
+                                               Text="0"
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="40"
+                                               TextColor="#C4B5FD"
+                                               HorizontalTextAlignment="Center" />
+
+                                        <Label Text="PENDIENTES"
+                                               FontSize="9"
+                                               CharacterSpacing="1.6"
+                                               TextColor="#94A3B8"
+                                               HorizontalTextAlignment="Center" />
+
+                                    </VerticalStackLayout>
+
+                                    <BoxView Grid.Column="1"
+                                             WidthRequest="1"
+                                             Color="#312E81" />
+
+                                    <VerticalStackLayout Grid.Column="2"
+                                                         Spacing="5"
+                                                         VerticalOptions="Center">
+
+                                        <Label x:Name="AgenteContadorTitulo"
+                                               Text="ESTADO DE TUS TAREAS"
+                                               FontSize="10"
+                                               CharacterSpacing="1.4"
+                                               TextColor="#67E8F9"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="0" />
+
+                                        <Label x:Name="AgenteContadorDetalle"
+                                               Text="El agente revisó tu lista completa."
+                                               FontSize="12"
+                                               TextColor="#94A3B8"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="0" />
+
+                                    </VerticalStackLayout>
+
+                                </Grid>
+                            </Border>
+
+                            <!-- TARJETA: PLAN DE ACCIÓN -->
+                            <Border x:Name="AgentePlanCard"
+                                    IsVisible="False"
+                                    Padding="16"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16" />
+                                </Border.StrokeShape>
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="#155E75" />
+                                </Border.Stroke>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#0C1626" />
+                                </Border.Background>
+
+                                <VerticalStackLayout Spacing="10">
+
+                                    <Grid ColumnDefinitions="Auto,*"
+                                          ColumnSpacing="10">
+
+                                        <Label Grid.Column="0"
+                                               Text="📋"
+                                               FontSize="15"
+                                               VerticalOptions="Center" />
+
+                                        <Label Grid.Column="1"
+                                               Text="PLAN DE ACCIÓN"
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="12"
+                                               CharacterSpacing="1.4"
+                                               TextColor="#67E8F9"
+                                               VerticalOptions="Center" />
+
+                                    </Grid>
+
+                                    <Label x:Name="AgentePlanLabel"
+                                           FontSize="13"
+                                           TextColor="#CBD5E1"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="0" />
+
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- CABECERA DE PRIORIDADES -->
+                            <Grid x:Name="AgentePrioridadesCabecera"
+                                  IsVisible="False"
+                                  ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="10">
+                                <Label Grid.Column="0"
+                                       Text="🎯"
+                                       FontSize="15"
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="1"
+                                       Text="PRIORIDADES DEL AGENTE"
+                                       FontFamily="OpenSansSemibold"
+                                       FontSize="12"
+                                       CharacterSpacing="1.4"
+                                       TextColor="#A78BFA"
+                                       VerticalOptions="Center" />
+                            </Grid>
+
+                            <!-- TARJETAS DE PRIORIDAD (generadas por código) -->
+                            <VerticalStackLayout x:Name="AgentePrioridadesStack"
+                                                 BindableLayout.ItemsSource="{Binding Prioridades}"
+                                                 Spacing="10">
+
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="12"
+                                                StrokeThickness="1">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="14" />
+                                            </Border.StrokeShape>
+                                            <Border.Stroke>
+                                                <SolidColorBrush Color="#243B57" />
+                                            </Border.Stroke>
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#0F172A" />
+                                            </Border.Background>
+
+                                            <Grid ColumnDefinitions="Auto,*"
+                                                  ColumnSpacing="12">
+
+                                                <Border Grid.Column="0"
+                                                        WidthRequest="34"
+                                                        HeightRequest="34"
+                                                        BackgroundColor="#1E1B4B"
+                                                        Stroke="#7C3AED"
+                                                        StrokeThickness="1"
+                                                        VerticalOptions="Start">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="10" />
+                                                    </Border.StrokeShape>
+                                                    <Label Text="{Binding Numero}"
+                                                           FontFamily="Monospace"
+                                                           FontSize="13"
+                                                           TextColor="#C4B5FD"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center" />
+                                                </Border>
+
+                                                <VerticalStackLayout Grid.Column="1"
+                                                                     Spacing="4">
+
+                                                    <Label Text="{Binding Titulo}"
+                                                           FontFamily="OpenSansSemibold"
+                                                           FontSize="14"
+                                                           TextColor="#E2E8F0"
+                                                           LineBreakMode="WordWrap"
+                                                           MaxLines="0" />
+
+                                                    <Label Text="{Binding Razon}"
+                                                           FontSize="11"
+                                                           TextColor="#94A3B8"
+                                                           LineBreakMode="WordWrap"
+                                                           MaxLines="0" />
+
+                                                </VerticalStackLayout>
+
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+
+                            </VerticalStackLayout>
+
+                            <!-- TARJETA: ERROR DE ENLACE -->
+                            <Border x:Name="AgenteErrorCard"
+                                    IsVisible="False"
+                                    Padding="14"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16" />
+                                </Border.StrokeShape>
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="#7F1D1D" />
+                                </Border.Stroke>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#1F1013" />
+                                </Border.Background>
+
+                                <VerticalStackLayout Spacing="8">
+
+                                    <Label Text="⚠ ENLACE INTERRUMPIDO"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="12"
+                                           CharacterSpacing="1.4"
+                                           TextColor="#F87171" />
+
+                                    <Label x:Name="AgenteErrorLabel"
+                                           FontSize="13"
+                                           TextColor="#FECACA"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="0" />
+
+                                    <Label Text="Pulsa «Analizar de nuevo» para reintentar."
+                                           FontSize="11"
+                                           TextColor="#94A3B8" />
+
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </VerticalStackLayout>
+                    </ScrollView>
+
+                    <!-- ==================== -->
+                    <!-- PIE / ACCIONES       -->
+                    <!-- ==================== -->
+
+                    <Grid Grid.Row="2"
+                          Padding="16,12"
+                          RowSpacing="10"
+                          RowDefinitions="Auto,Auto">
+
+                        <BoxView Grid.Row="0"
+                                 HeightRequest="1"
+                                 Color="#1E293B" />
+
+                        <HorizontalStackLayout Grid.Row="1"
+                                               Spacing="10"
+                                               HorizontalOptions="Fill">
+
+                            <Button x:Name="AgenteBotonReanalizar"
+                                    Text="⟳  Analizar de nuevo"
+                                    Clicked="OnAgenteReanalizarClicked"
+                                    BackgroundColor="#6D28D9"
+                                    BorderColor="#A78BFA"
+                                    BorderWidth="1"
+                                    TextColor="#F5D0FE"
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="13"
+                                    HeightRequest="46"
+                                    Padding="16,0"
+                                    CornerRadius="23"
+                                    HorizontalOptions="Fill" />
+
+                            <Button x:Name="AgenteCerrarBoton"
+                                    Text="✕  Cerrar"
+                                    Clicked="OnAgentePopupCerrarClicked"
+                                    BackgroundColor="#0B1220"
+                                    BorderColor="#245B78"
+                                    BorderWidth="1"
+                                    TextColor="#22D3EE"
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="13"
+                                    HeightRequest="46"
+                                    Padding="16,0"
+                                    CornerRadius="23" />
+
+                        </HorizontalStackLayout>
+
+                    </Grid>
+
+                </Grid>
+
+            </Border>
 
         </Grid>
 

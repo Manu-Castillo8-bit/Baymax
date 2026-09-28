@@ -249,9 +249,18 @@ namespace Asistente
         private SQLiteAsyncConnection _dbLocal;
         private SyncService _syncService;
         private AgenteIAServicio _agenteIA;
+        private AgenteViewModel _agenteVM;
 
         private IDispatcherTimer _syncTimer;
         private bool _isSyncing = false;
+
+        // Consola del asistente IA
+        private IDispatcherTimer? _agenteRelojEtapas;
+        private IDispatcherTimer? _agenteRelojPuntos;
+        private bool _agenteAnimando = false;
+        private int _agenteEtapa = 0;
+        private int _agentePasoPuntos = 0;
+        private int _agenteGeneracion = 0;
 
         // Popup: tarea que se está editando (null = nueva)
         private TareaLocal _tareaEditando;
@@ -294,6 +303,10 @@ namespace Asistente
             
             _syncService = new SyncService(dbPath, _supabase);
             _agenteIA = new AgenteIAServicio(_supabase);
+
+            // Estado de la consola del asistente (enlaza las tarjetas del overlay)
+            _agenteVM = new AgenteViewModel();
+            AgentePopupOverlay.BindingContext = _agenteVM;
 
             // Inicializar opciones del picker de frecuencia del popup
             foreach (var opcion in _opcionesFrecuencia)
@@ -374,6 +387,9 @@ private void EnviarNotificacionPC(string titulo, string mensaje)
                 _syncTimer.Tick -= OnAutoSyncTick;
                 _syncTimer = null;
             }
+
+            // Detener los temporizadores y animaciones de la consola del asistente
+            DetenerAnimacionesAsistente();
         }
 
         #region 1. ANIMACIONES DE LA INTERFAZ HUD (Sin cambios)
@@ -782,6 +798,19 @@ private async Task RefreshAllAsync()
             }
         }
 
+        #endregion
+
+        #region 3. CONSOLA DEL ASISTENTE IA
+
+        // Etapas que el asistente va reportando mientras "piensa"
+        private readonly (string Estado, string Detalle, string Log)[] _agenteEtapas = new[]
+        {
+            ("ENLACE",   "estableciendo sesión segura",     "> handshake con el agente..."),
+            ("LECTURA",  "leyendo tu lista de tareas",     "> consultando tarea_local..."),
+            ("NUBE",     "sincronizando con el servidor",  "> POST /functions/v1/analizar-tareas"),
+            ("ANÁLISIS", "generando plan con IA",          "> modelo priorizando tus tareas...")
+        };
+
         private async void OnAgenteClicked(object sender, EventArgs e)
         {
             if (UserSession.CurrentUserId == 0)
@@ -793,66 +822,447 @@ private async Task RefreshAllAsync()
             // Prevenir doble toque mientras trabaja
             AgenteBoton.IsEnabled = false;
 
+            await AbrirConsolaAsync();
+        }
+
+        private async Task AbrirConsolaAsync()
+        {
+            PrepararConsola();
+
             AgentePopupOverlay.IsVisible = true;
-            AgenteResultadoLabel.Text = "Analizando tus tareas...";
-            AgenteActivityIndicator.IsRunning = true;
-            AgenteActivityIndicator.IsVisible = true;
+            await AnimarEntradaAsync();
+
+            IniciarAnimacionesAsistente();
+            _ = EjecutarAnalisisAsync();
+        }
+
+        /// <summary>Deja la consola en su estado inicial para un nuevo análisis.</summary>
+        private void PrepararConsola()
+        {
+            // Cada apertura invalida el análisis anterior en vuelo
+            _agenteGeneracion++;
+
+            _agenteVM.Reiniciar();
+
+            AgenteContadorNumero.Text = "0";
+            AgenteContadorTitulo.Text = "ESTADO DE TUS TAREAS";
+            AgenteContadorDetalle.Text = "El agente está revisando tu lista completa.";
+
+            AgenteProgresoBar.Progress = 0.15;
+            AgenteProgresoLabel.Text = "Analizando tus tareas...";
+            AgenteLogLabel.Text = string.Empty;
+            AgenteErrorLabel.Text = string.Empty;
+
+            AgentePensandoCard.IsVisible = true;
+            AgentePensandoCard.Opacity = 1;
+            AgenteContadorCard.IsVisible = false;
+            AgentePlanCard.IsVisible = false;
+            AgentePrioridadesCabecera.IsVisible = false;
+            AgentePrioridadesStack.IsVisible = false;
+            AgenteErrorCard.IsVisible = false;
+
+            // Los tres puntos de "pensando" arrancan todos encendidos
+            AgentePunto1.Opacity = 1;
+            AgentePunto2.Opacity = 0.25;
+            AgentePunto3.Opacity = 0.25;
+            _agentePasoPuntos = 0;
+
+            RestablecerOrbe();
+        }
+
+        private void RestablecerOrbe()
+        {
+            AgenteNucleo.Scale = 1;
+            AgenteAnilloExt.Rotation = 0;
+            AgenteAnilloInt.Rotation = 0;
+            AgenteGlowOrb.Scale = 1;
+            AgenteGlowOrb.Opacity = 0.3;
+            AgenteStatusDot.Fill = new SolidColorBrush(Color.FromArgb("#34D399"));
+            AgenteStatusDot.Opacity = 1;
+        }
+
+        #region 3.1 ANIMACIONES DE LA CONSOLA
+
+        private async Task AnimarEntradaAsync()
+        {
+            AgenteConsolaCard.Opacity = 0;
+            AgenteConsolaCard.Scale = 0.94;
+            AgenteConsolaCard.TranslationY = 30;
+
+            await Task.WhenAll(
+                AgenteConsolaCard.FadeToAsync(1, 240, Easing.CubicOut),
+                AgenteConsolaCard.ScaleToAsync(1, 280, Easing.CubicOut),
+                AgenteConsolaCard.TranslateToAsync(0, 0, 280, Easing.CubicOut)
+            );
+        }
+
+        private void IniciarAnimacionesAsistente()
+        {
+            _agenteAnimando = true;
+
+            _ = RotarAgenteLoop(AgenteAnilloExt, 9000, true);
+            _ = RotarAgenteLoop(AgenteAnilloInt, 5500, false);
+            _ = PulsoNucleoAgenteLoop();
+
+            IniciarRelojEtapas();
+            IniciarRelojPuntos();
+        }
+
+        private void DetenerAnimacionesAsistente()
+        {
+            _agenteAnimando = false;
+
+            if (_agenteRelojEtapas != null)
+            {
+                _agenteRelojEtapas.Stop();
+                _agenteRelojEtapas.Tick -= OnEtapasTick;
+                _agenteRelojEtapas = null;
+            }
+
+            if (_agenteRelojPuntos != null)
+            {
+                _agenteRelojPuntos.Stop();
+                _agenteRelojPuntos.Tick -= OnPuntosTick;
+                _agenteRelojPuntos = null;
+            }
+        }
+
+        /// <summary>
+        /// Giro continuo de un anillo. Al terminar la vuelta devuelve la rotación a 0
+        /// (360° es visualmente idéntico a 0°, así que no se nota el salto).
+        /// </summary>
+        private async Task RotarAgenteLoop(VisualElement element, uint duration, bool clockwise)
+        {
+            double paso = clockwise ? 360 : -360;
+
+            while (_agenteAnimando)
+            {
+                await element.RotateToAsync(paso, duration, Easing.Linear);
+                element.Rotation = 0;
+            }
+        }
+
+        private async Task PulsoNucleoAgenteLoop()
+        {
+            while (_agenteAnimando)
+            {
+                await Task.WhenAll(
+                    AgenteNucleo.ScaleToAsync(1.18, 900, Easing.SinInOut),
+                    AgenteGlowOrb.ScaleToAsync(1.25, 900, Easing.SinInOut),
+                    AgenteGlowOrb.FadeToAsync(0.55, 900, Easing.SinInOut)
+                );
+
+                if (!_agenteAnimando) break;
+
+                await Task.WhenAll(
+                    AgenteNucleo.ScaleToAsync(1.0, 900, Easing.SinInOut),
+                    AgenteGlowOrb.ScaleToAsync(1.0, 900, Easing.SinInOut),
+                    AgenteGlowOrb.FadeToAsync(0.3, 900, Easing.SinInOut)
+                );
+            }
+        }
+
+        /// <summary>Punto de estado: cambia de color y parpadea al entrar en una etapa.</summary>
+        private async Task ParpadeoStatusDotAsync(string hex)
+        {
+            AgenteStatusDot.Fill = new SolidColorBrush(Color.FromArgb(hex));
+
+            await Task.WhenAll(
+                AgenteStatusDot.FadeToAsync(0.25, 180, Easing.CubicOut),
+                AgenteStatusDot.ScaleToAsync(1.35, 180, Easing.CubicOut)
+            );
+
+            await Task.WhenAll(
+                AgenteStatusDot.FadeToAsync(1, 260, Easing.CubicOut),
+                AgenteStatusDot.ScaleToAsync(1, 260, Easing.CubicOut)
+            );
+        }
+
+        private async Task RevelarAsync(VisualElement element, uint duracion = 280)
+        {
+            element.IsVisible = true;
+            element.Opacity = 0;
+            element.TranslationY = 20;
+
+            await Task.WhenAll(
+                element.FadeToAsync(1, duracion, Easing.CubicOut),
+                element.TranslateToAsync(0, 0, duracion, Easing.CubicOut)
+            );
+        }
+
+        private async Task OcultarAsync(VisualElement element, uint duracion = 200)
+        {
+            await element.FadeToAsync(0, duracion, Easing.CubicIn);
+            element.IsVisible = false;
+        }
+
+        #endregion
+
+        #region 3.2 CICLO DE ESTADOS Y ANÁLISIS
+
+        private void IniciarRelojEtapas()
+        {
+            _agenteEtapa = 0;
+            AplicarEtapa(0);
+
+            _agenteRelojEtapas = Dispatcher.CreateTimer();
+            _agenteRelojEtapas.Interval = TimeSpan.FromMilliseconds(1100);
+            _agenteRelojEtapas.Tick += OnEtapasTick;
+            _agenteRelojEtapas.Start();
+        }
+
+        private void OnEtapasTick(object? sender, EventArgs e)
+        {
+            if (_agenteEtapa >= _agenteEtapas.Length - 1)
+            {
+                _agenteRelojEtapas?.Stop();
+                return;
+            }
+
+            _agenteEtapa++;
+            AplicarEtapa(_agenteEtapa);
+        }
+
+        private void AplicarEtapa(int indice)
+        {
+            var etapa = _agenteEtapas[indice];
+
+            AgenteEstadoLabel.Text = etapa.Estado;
+            AgenteSubEstadoLabel.Text = etapa.Detalle;
+            AgenteProgresoBar.Progress = Math.Min(0.9, 0.15 + indice * 0.2);
+
+            string salto = indice == 0 ? string.Empty : AgenteLogLabel.Text + "\n";
+            AgenteLogLabel.Text = salto + etapa.Log;
+
+            _ = ParpadeoStatusDotAsync(etapa.Estado == "ANÁLISIS" ? "#22D3EE" : "#A78BFA");
+        }
+
+        private void IniciarRelojPuntos()
+        {
+            _agenteRelojPuntos = Dispatcher.CreateTimer();
+            _agenteRelojPuntos.Interval = TimeSpan.FromMilliseconds(340);
+            _agenteRelojPuntos.Tick += OnPuntosTick;
+            _agenteRelojPuntos.Start();
+        }
+
+        private void OnPuntosTick(object? sender, EventArgs e)
+        {
+            Microsoft.Maui.Controls.Shapes.Ellipse[] puntos = { AgentePunto1, AgentePunto2, AgentePunto3 };
+
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                int desfase = (_agentePasoPuntos + i) % puntos.Length;
+                puntos[i].Opacity = desfase == 0 ? 1.0 : 0.25;
+            }
+
+            _agentePasoPuntos++;
+        }
+
+        private async Task EjecutarAnalisisAsync()
+        {
+            int generacion = _agenteGeneracion;
 
             try
             {
-                // Asegurar que la edición de fechas se suba a Supabase antes de analizar
+                // Asegurar que las ediciones locales estén subidas antes de analizar
                 await RefreshAllAsync();
 
                 var resultado = await _agenteIA.AnalizarTareasAsync();
 
                 if (resultado == null)
                 {
-                    AgenteResultadoLabel.Text = "No obtuve respuesta del agente. Intenta nuevamente.";
-                    return;
+                    throw new InvalidOperationException("El agente no devolvió respuesta. Vuelve a intentarlo en un momento.");
                 }
 
-                var texto = new System.Text.StringBuilder();
-                texto.AppendLine($"Hola {resultado.Nombre ?? "Operador"}. Tienes {resultado.Pendientes} tareas pendientes.");
-                texto.AppendLine();
-                texto.AppendLine("📋 PLAN:");
-                texto.AppendLine(resultado.Plan ?? "Sin plan.");
+                // El usuario pidió otro análisis mientras este esperaba: descartar
+                if (generacion != _agenteGeneracion) return;
 
-                if (resultado.Prioridades is { Count: > 0 })
-                {
-                    texto.AppendLine();
-                    texto.AppendLine("🎯 PRIORIDADES:");
-                    foreach (var p in resultado.Prioridades)
-                    {
-                        texto.AppendLine($"• {p.Titulo}");
-                        if (!string.IsNullOrWhiteSpace(p.Razon))
-                        {
-                            texto.AppendLine($"   ↳ {p.Razon}");
-                        }
-                    }
-                }
+                if (_agenteRelojEtapas != null) _agenteRelojEtapas.Stop();
+                if (_agenteRelojPuntos != null) _agenteRelojPuntos.Stop();
 
-                AgenteResultadoLabel.Text = texto.ToString();
+                await MostrarResultadoAsync(resultado);
             }
             catch (Exception ex)
             {
-                AgenteResultadoLabel.Text = $"No pude contactar al agente:\n{ex.Message}";
+                if (generacion != _agenteGeneracion) return;
+
+                if (_agenteRelojEtapas != null) _agenteRelojEtapas.Stop();
+                if (_agenteRelojPuntos != null) _agenteRelojPuntos.Stop();
+
+                MostrarError(ex.Message);
             }
             finally
             {
-                AgenteActivityIndicator.IsRunning = false;
-                AgenteActivityIndicator.IsVisible = false;
-                AgenteBoton.IsEnabled = true;
+                if (generacion == _agenteGeneracion)
+                {
+                    _agenteVM.EstaCargando = false;
+                    AgenteBoton.IsEnabled = true;
+                }
             }
         }
 
-        private void OnAgentePopupCerrarClicked(object sender, EventArgs e)
+        private async Task MostrarResultadoAsync(AgenteIAServicio.ResultadoAgente resultado)
         {
-            AgentePopupOverlay.IsVisible = false;
+            string nombre = string.IsNullOrWhiteSpace(resultado.Nombre) ? "Operador" : resultado.Nombre;
+            int pendientes = resultado.Pendientes;
+            var prioridades = resultado.Prioridades ?? new List<AgenteIAServicio.Prioridad>();
+
+            // 1. Saludo personalizado en la burbuja principal
+            _agenteVM.Saludo = $"Hola {nombre}, ya analicé tus tareas.";
+            _agenteVM.SaludoDetalle = pendientes == 0
+                ? "No tienes nada pendiente. Todo tu plan de trabajo está al día."
+                : $"Tienes {pendientes} tarea(s) en la cola. Este es el plan que armé para ti.";
+
+            AgenteEstadoLabel.Text = "ANÁLISIS COMPLETO";
+            AgenteSubEstadoLabel.Text = $"{pendientes} pendientes · {prioridades.Count} prioridad(es)";
+            AgenteProgresoBar.Progress = 1.0;
+            AgenteProgresoLabel.Text = "Análisis completado.";
+            AgenteLogLabel.Text += "\n> respuesta recibida del agente.";
+            _ = ParpadeoStatusDotAsync("#34D399");
+
+            await Task.Delay(260);
+
+            // 2. Cerrar la tarjeta de "pensando"
+            await OcultarAsync(AgentePensandoCard);
+
+            // 3. Contador con cuenta ascendente
+            _agenteVM.Pendientes = pendientes;
+            AgenteContadorDetalle.Text = pendientes == 0
+                ? "Sin tareas en la cola. Buen trabajo."
+                : $"El agente revisó {pendientes} tarea(s) y armó este orden de trabajo.";
+
+            await RevelarAsync(AgenteContadorCard);
+            await AnimarContadorAsync(pendientes);
+
+            // 4. Plan de acción
+            string plan = string.IsNullOrWhiteSpace(resultado.Plan)
+                ? "No pude generar un plan esta vez. Intenta de nuevo en un momento."
+                : resultado.Plan;
+
+            _agenteVM.Plan = plan;
+            await RevelarAsync(AgentePlanCard);
+            await Task.Delay(80);
+
+            // 5. Prioridades en tarjetas
+            if (prioridades.Count > 0)
+            {
+                await RevelarAsync(AgentePrioridadesCabecera, 220);
+
+                int posicion = 0;
+                foreach (var p in prioridades)
+                {
+                    posicion++;
+                    _agenteVM.Prioridades.Add(new PrioridadViewModel
+                    {
+                        Numero = posicion.ToString("00"),
+                        Titulo = string.IsNullOrWhiteSpace(p.Titulo) ? "(tarea sin título)" : p.Titulo,
+                        Razon = string.IsNullOrWhiteSpace(p.Razon) ? "Sin detalle" : p.Razon
+                    });
+                }
+
+                await RevelarAsync(AgentePrioridadesStack, 320);
+            }
+
+            // 6. Llevar la vista al final del reporte
+            await Task.Delay(150);
+            await ScrollToFinalAsync();
+        }
+
+        private void MostrarError(string mensaje)
+        {
+            _agenteVM.EstaCargando = false;
+            _agenteVM.TieneError = true;
+            _agenteVM.MensajeError = mensaje;
+
+            AgenteErrorLabel.Text = mensaje;
+            AgenteErrorCard.IsVisible = true;
+            AgenteProgresoLabel.Text = "No pude completar el análisis.";
+
+            AgenteEstadoLabel.Text = "ENLACE FALLIDO";
+            AgenteSubEstadoLabel.Text = "revisando la conexión...";
+            _ = ParpadeoStatusDotAsync("#F87171");
+        }
+
+        private async Task AnimarContadorAsync(int valor)
+        {
+            const int pasos = 20;
+
+            for (int i = 1; i <= pasos; i++)
+            {
+                if (!AgentePopupOverlay.IsVisible) return;
+
+                int mostrado = (int)Math.Round(valor * (i / (double)pasos));
+                AgenteContadorNumero.Text = mostrado.ToString();
+                await Task.Delay(20);
+            }
+
+            AgenteContadorNumero.Text = valor.ToString();
+        }
+
+        private async Task ScrollToFinalAsync()
+        {
+            try
+            {
+                await AgenteScrollView.ScrollToAsync(0, 100000, animated: true);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"No se pudo desplazar la consola del asistente: {ex.Message}");
+            }
         }
 
         #endregion
 
-        #region 3. POPUP NUEVA TAREA / EDITAR TAREA
+        #region 3.3 CIERRE Y ACCIONES DE LA CONSOLA
+
+        private async void OnAgentePopupCerrarClicked(object sender, EventArgs e)
+        {
+            await CerrarConsolaAsync();
+        }
+
+        private async void OnAgenteReanalizarClicked(object sender, EventArgs e)
+        {
+            await CerrarConsolaAsync();
+            await Task.Delay(220);
+            await AbrirConsolaAsync();
+        }
+
+        private async Task CerrarConsolaAsync()
+        {
+            if (!AgentePopupOverlay.IsVisible) return;
+
+            DetenerAnimacionesAsistente();
+
+            await Task.WhenAll(
+                AgenteConsolaCard.FadeToAsync(0, 190, Easing.CubicIn),
+                AgenteConsolaCard.ScaleToAsync(0.95, 190, Easing.CubicIn),
+                AgenteConsolaCard.TranslateToAsync(0, 20, 190, Easing.CubicIn)
+            );
+
+            AgenteConsolaCard.Opacity = 1;
+            AgenteConsolaCard.Scale = 1;
+            AgenteConsolaCard.TranslationY = 0;
+
+            AgentePopupOverlay.IsVisible = false;
+            AgenteBoton.IsEnabled = true;
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            if (AgentePopupOverlay.IsVisible)
+            {
+                _ = CerrarConsolaAsync();
+                return true;
+            }
+
+            return base.OnBackButtonPressed();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 4. POPUP NUEVA TAREA / EDITAR TAREA
 
         private async void OnPopupGuardarClicked(object sender, EventArgs e)
         {

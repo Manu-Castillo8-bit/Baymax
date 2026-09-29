@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj": {
-      "version": "1.1.0",
+      "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\User\\Desktop\\Asistente\\Asistente\\Asistente.csproj",
         "projectName": "Asistente",
@@ -1078,6 +1078,10 @@
           "framework": "net10.0-windows10.0.19041",
           "targetAlias": "net10.0-windows10.0.19041.0",
           "dependencies": {
+            "H.NotifyIcon.WinUI": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[10.0.0, )"
@@ -1112,8 +1116,24 @@
           "warn": true,
           "downloadDependencies": [
             {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.10, 10.0.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
+              "version": "[10.0.10, 10.0.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.10, 10.0.10]"
+            },
+            {
               "name": "Microsoft.Windows.SDK.NET.Ref",
               "version": "[10.0.19041.57, 10.0.19041.57]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.10, 10.0.10]"
             }
           ],
           "frameworkReferences": {
@@ -1409,6 +1429,9 @@
           "#import": []
         },
         "iossimulator-x64": {
+          "#import": []
+        },
+        "maccatalyst-arm64": {
           "#import": []
         },
         "maccatalyst-x64": {

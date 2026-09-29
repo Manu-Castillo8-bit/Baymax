@@ -127,7 +127,7 @@ namespace Asistente
                 var tasks = response.Models;
 
                 TasksCollectionView.ItemsSource = tasks;
-                int pendingCount = tasks.Count(t => t.Estado != "Completado");
+                int pendingCount = tasks.Count(t => !EstadoTarea.EsCompletado(t.Estado));
 
                 await TriggerCorePulseAsync();
 
@@ -159,7 +159,7 @@ namespace Asistente
                 Titulo = titulo,
                 Descripcion = "Registrada desde la app mobile",
                 FechaVencimiento = DateTime.Now.AddDays(1),
-                Estado = "Pendiente"
+                Estado = EstadoTarea.Pendiente
             };
 
             try
@@ -186,7 +186,7 @@ namespace Asistente
                     .Get();
 
                 var urgente = response.Models
-                    .Where(t => t.Estado != "Completado" && t.FechaVencimiento.HasValue)
+                    .Where(t => !EstadoTarea.EsCompletado(t.Estado) && t.FechaVencimiento.HasValue)
                     .OrderBy(t => t.FechaVencimiento)
                     .FirstOrDefault();
 
@@ -292,19 +292,17 @@ namespace Asistente
         {
             InitializeComponent();
 
-            var options = new SupabaseOptions
-            {
-                AutoRefreshToken = true,
-                AutoConnectRealtime = true
-            };
-
-            _supabase = new Supabase.Client(Configuracion.SupabaseUrl, Configuracion.SupabaseAnonKey, options);
-
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "asistente.db3");
-            _dbLocal = new SQLiteAsyncConnection(dbPath);
-            
-            _syncService = new SyncService(dbPath, _supabase);
+            // Cliente de Supabase, conexión a SQLite y servicio de sincronización
+            // se comparten con el servicio en segundo plano: así hay una sola
+            // sesión de Supabase y una sola conexión a la base de datos local.
+            _supabase = ServicioFondo.ClienteSupabase;
+            _dbLocal = BaseDatos.Conexion;
+            _syncService = ServicioFondo.ServicioSync;
             _agenteIA = new AgenteIAServicio(_supabase);
+
+            // Cuando la sincronización en segundo plano trae cambios de otro
+            // dispositivo, la lista se refresca sola aunque la ventana esté oculta.
+            ServicioFondo.DatosSincronizados += OnDatosSincronizados;
 
             // Estado de la consola del asistente (enlaza las tarjetas del overlay)
             _agenteVM = new AgenteViewModel();
@@ -322,6 +320,37 @@ namespace Asistente
 
             // Inicializar estilo de botones de filtro
             ActualizarEstiloBotonesFiltro();
+
+            // El acceso al panel depende del rol de la cuenta activa
+            ActualizarAccesoAdmin();
+        }
+
+        /// <summary>
+        /// Muestra el botón de administración solo a las cuentas con ese rol. Como
+        /// el rol se relee del servidor en cada sincronización, el botón aparece o
+        /// desaparece solo, sin necesidad de reiniciar sesión.
+        /// </summary>
+        private void ActualizarAccesoAdmin()
+        {
+            AdminBoton.IsVisible = AdminService.EsAdmin;
+        }
+
+        private async void OnAdminClicked(object sender, EventArgs e)
+        {
+            if (!AdminService.EsAdmin)
+            {
+                await DisplayAlertAsync("Aviso", "No tienes permisos de administrador.", "OK");
+                return;
+            }
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                await DisplayAlertAsync("Sin conexión",
+                    "El panel de administración necesita internet para hablar con el servidor.", "OK");
+                return;
+            }
+
+            await Navigation.PushAsync(new AdminPage());
         }
 
         private void OnTestNotificationClicked(object sender, EventArgs e)
@@ -346,14 +375,30 @@ namespace Asistente
     _isAnimating = true;
     StartHudAnimations();
 
-    await _dbLocal.CreateTableAsync<TareaLocal>();
+    await BaseDatos.ObtenerAsync();
     await InitializeAndSyncAsync();
 
-    // Sincronización automática cada 30 segundos mientras la app está visible
+    // Refresco de la lista mientras la app está a la vista. La sincronización y
+    // los recordatorios los lleva ServicioFondo, que sigue activo con la ventana
+    // oculta, así que aquí solo se repinta la interfaz.
     _syncTimer = Dispatcher.CreateTimer();
     _syncTimer.Interval = TimeSpan.FromSeconds(30);
     _syncTimer.Tick += OnAutoSyncTick;
     _syncTimer.Start();
+}
+
+/// <summary>La sincronización en segundo plano trajo cambios: se repinta la lista.</summary>
+private void OnDatosSincronizados()
+{
+    try
+    {
+        ActualizarAccesoAdmin();
+        _ = LoadTasksFromLocalDbAsync();
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine($"MainPage: error al refrescar tras sincronizar: {ex.Message}");
+    }
 }
 
 private async void OnAutoSyncTick(object sender, EventArgs e)
@@ -382,7 +427,9 @@ private void EnviarNotificacionPC(string titulo, string mensaje)
             base.OnDisappearing();
             _isAnimating = false;
 
-            // Detener la sincronización automática al salir de la página
+            // Parar el refresco visual de la lista. El servicio en segundo plano
+            // NO se detiene aqui: debe seguir enviando recordatorios y sincronizando
+            // aunque la ventana este oculta en la bandeja del sistema.
             if (_syncTimer != null)
             {
                 _syncTimer.Stop();
@@ -452,10 +499,10 @@ private async Task InitializeAndSyncAsync()
     // 1. Cargar SIEMPRE datos de SQLite primero (Funciona 100% offline)
     await LoadTasksFromLocalDbAsync();
 
-    // 2. Reprogramar las notificaciones de tareas pendientes: al reabrir la app
-    //    el SO pudo limpiar las programadas, y al estar en modo offline tampoco
-    //    dependen del internet, así se aseguran en su tiempo establecido.
-    await NotificadorTareas.ReprogramarRecordatoriosPendientesAsync();
+    // 2. Poner al día los recordatorios de las tareas pendientes. La primera vez
+    //    solo se agenda el próximo aviso (no salta ninguno), así que abrir la app
+    //    no provoca una avalancha de notificaciones atrasadas.
+    await ServicioFondo.EvaluarRecordatoriosAsync();
 
     // 3. Verificar si realmente hay conexión antes de hablar con Supabase
     if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
@@ -466,7 +513,7 @@ private async Task InitializeAndSyncAsync()
 
             // Si el usuario entró con sesión offline, re-autenticar ahora que hay
             // conexión para que el token JWT quede activo y la IA funcione sin relogin.
-            await ReautenticarSiNecesarioAsync();
+            await ServicioFondo.AsegurarSesionSupabaseAsync();
 
             // Sincronizar en segundo plano
             _ = _syncService.SincronizarTareasAsync().ContinueWith(_ => 
@@ -486,60 +533,6 @@ private async Task InitializeAndSyncAsync()
     }
 }
 
-        /// <summary>
-        /// Si hay conexión, asegura un JWT válido para Supabase:
-        /// A) usuario que entró offline (sin JWT): inicia sesión real para activar el token.
-        /// B) JWT guardado pero cliente sin sesión viva: lo renueva con el refresh token
-        ///    para que la IA y los servicios online funcionen tras reabrir la app.
-        /// </summary>
-        private async Task ReautenticarSiNecesarioAsync()
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
-
-            try
-            {
-                // Caso A: sesión iniciada sin internet → re-autenticar contra Supabase
-                if (string.IsNullOrEmpty(UserSession.CurrentJwt) &&
-                    !string.IsNullOrEmpty(UserSession.OfflineEmail) &&
-                    !string.IsNullOrEmpty(UserSession.OfflinePassword))
-                {
-                    var session = await _supabase.Auth.SignIn(UserSession.OfflineEmail, UserSession.OfflinePassword);
-                    if (session?.User != null)
-                    {
-                        UserSession.CurrentJwt = session.AccessToken ?? "";
-                        UserSession.CurrentRefreshToken = session.RefreshToken ?? "";
-                        UserSession.CurrentAuthId = session.User.Id;
-                        UserSession.OfflineEmail = string.Empty;
-                        UserSession.OfflinePassword = string.Empty;
-                        UserSession.GuardarSesion();
-                    }
-                    return;
-                }
-
-                // Caso B: hay JWT guardado pero el cliente local no tiene sesión activa.
-                // El access token expira (~1h); el refresh token lo renueva sin relogin.
-                if (_supabase.Auth.CurrentSession == null &&
-                    !string.IsNullOrEmpty(UserSession.CurrentJwt) &&
-                    !string.IsNullOrEmpty(UserSession.CurrentRefreshToken))
-                {
-                    var refrescada = await _supabase.Auth.SetSession(
-                        UserSession.CurrentJwt, UserSession.CurrentRefreshToken, forceAccessTokenRefresh: true);
-
-                    if (refrescada != null && !string.IsNullOrEmpty(refrescada.AccessToken))
-                    {
-                        UserSession.CurrentJwt = refrescada.AccessToken;
-                        UserSession.CurrentRefreshToken = refrescada.RefreshToken ?? "";
-                        UserSession.CurrentAuthId = refrescada.User?.Id ?? UserSession.CurrentAuthId;
-                        UserSession.GuardarSesion();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al re-autenticar tras recuperar conexión: {ex.Message}");
-            }
-        }
-
         private async Task LoadTasksFromLocalDbAsync()
         {
             int currentUserId = UserSession.CurrentUserId;
@@ -556,8 +549,8 @@ private async Task InitializeAndSyncAsync()
                     .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted)
                     .ToListAsync();
 
-                var pendientes = tasks.Where(t => t.Estado != "Completado").ToList();
-                var completadas = tasks.Where(t => t.Estado == "Completado").ToList();
+                var pendientes = tasks.Where(t => !EstadoTarea.EsCompletado(t.Estado)).ToList();
+                var completadas = tasks.Where(t => EstadoTarea.EsCompletado(t.Estado)).ToList();
 
                 // Actualizar textos de los botones de filtro
                 BtnFiltroPendientes.Text = $"Pendientes ({pendientes.Count})";
@@ -646,20 +639,16 @@ private async void OnToggleCompleteClicked(object sender, EventArgs e)
 {
     if ((sender as Button)?.BindingContext is TareaLocal tarea)
     {
-        tarea.Estado = (tarea.Estado == "Completado") ? "Pendiente" : "Completado";
+        tarea.Estado = EstadoTarea.EsCompletado(tarea.Estado)
+            ? EstadoTarea.Pendiente
+            : EstadoTarea.Completado;
         tarea.UltimaModificacion = DateTime.Now;
         tarea.IsSynced = false; // <-- marcar para re-sincronizar el cambio de estado
         await _dbLocal.UpdateAsync(tarea);
 
-        if (tarea.Estado == "Completado")
-        {
-            // Al completar la tarea ya no hacen falta recordatorios
-            NotificadorTareas.CancelarRecordatorio(tarea.IdLocal);
-        }
-        else
-        {
-            NotificadorTareas.ProgramarRecordatorio(tarea.IdLocal, tarea.Titulo, tarea.FechaVencimiento, tarea.FrecuenciaRecordatorioHoras ?? 0);
-        }
+        // El recordatorio se recalcula desde cero: si la tarea pasa a "Completado"
+        // se cancela, y si vuelve a "Pendiente" se vuelve a agendar.
+        ServicioFondo.ReiniciarRecordatorio(tarea.IdLocal);
 
         await LoadTasksFromLocalDbAsync();
         _ = _syncService.SincronizarTareasAsync();
@@ -682,7 +671,7 @@ private async void OnDeleteTaskClicked(object sender, EventArgs e)
         await _dbLocal.UpdateAsync(tarea);
 
         // Cancelar recordatorios de la tarea
-        NotificadorTareas.CancelarRecordatorio(tarea.IdLocal);
+        ServicioFondo.ReiniciarRecordatorio(tarea.IdLocal);
 
         await LoadTasksFromLocalDbAsync();
         _ = _syncService.SincronizarTareasAsync();
@@ -702,13 +691,21 @@ private async void OnLogoutClicked(object sender, EventArgs e)
         "Cerrar sesión", "Cancelar");
     if (!confirmado) return;
 
-    // Detener la sincronización automática y las animaciones
+    // Detener el refresco visual de la lista y las animaciones.
     OnDisappearing();
+
+    // Dejar de escuchar los refrescos del servicio en segundo plano: esta pantalla
+    // se destruye al cerrar sesión y si no, seguiría recibiendo los avisos.
+    ServicioFondo.DatosSincronizados -= OnDatosSincronizados;
+
+    // Cancelar los recordatorios del usuario que está cerrando sesión, para que
+    // no le sigan llegando avisos de sus tareas.
+    await ServicioFondo.DetenerTodoAsync();
 
     // Limpiar la sesión activa y la guardada (para volver a pedir login)
     UserSession.LimpiarSesion();
 
-    Application.Current.MainPage = new NavigationPage(new LoginPage());
+    App.IrA(new NavigationPage(new LoginPage()));
 }
 
 private void OnFiltroPendientesClicked(object sender, EventArgs e)
@@ -775,8 +772,12 @@ private async Task RefreshAllAsync()
         if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
         {
             await _supabase.InitializeAsync();
-            await ReautenticarSiNecesarioAsync();
+            await ServicioFondo.AsegurarSesionSupabaseAsync();
             await _syncService.SincronizarTareasAsync();
+
+            // El rol puede haber cambiado en el servidor desde el último refresco.
+            await AdminService.RefrescarRolAsync();
+            ActualizarAccesoAdmin();
         }
         else
         {
@@ -800,10 +801,14 @@ private async Task RefreshAllAsync()
 
             try
             {
-                // Consulta de resumen desde SQLite
-                var tasks = await _dbLocal.Table<TareaLocal>()
-                    .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted && t.Estado != "Completado")
-                    .ToListAsync();
+                // El estado se filtra en memoria: sqlite-net no puede traducir la
+                // comparación tolerante de EstadoTarea.EsCompletado a SQL, y así
+                // una tarea antigua marcada como "completada" no se cuela aquí.
+                var tasks = (await _dbLocal.Table<TareaLocal>()
+                    .Where(t => t.IdUsuario == currentUserId && !t.IsDeleted)
+                    .ToListAsync())
+                    .Where(t => !EstadoTarea.EsCompletado(t.Estado))
+                    .ToList();
 
                 var urgente = tasks.Where(t => t.FechaVencimiento.HasValue)
                     .OrderBy(t => t.FechaVencimiento)
@@ -1261,7 +1266,7 @@ private async Task RefreshAllAsync()
                 // El filtrado por fecha va en memoria: sqlite-net no traduce la
                 // comparación de un DateTime? dentro del Where.
                 var vencidas = propias
-                    .Where(t => t.Estado != "Completado"
+                    .Where(t => !EstadoTarea.EsCompletado(t.Estado)
                              && t.FechaVencimiento.HasValue
                              && t.FechaVencimiento.Value.Date < hoy)
                     .OrderBy(t => t.FechaVencimiento)
@@ -1441,13 +1446,13 @@ private async Task RefreshAllAsync()
                     Descripcion = "Registrada desde la app",
                     FechaVencimiento = PopupFechaPicker.Date,
                     FrecuenciaRecordatorioHoras = horas,
-                    Estado = "Pendiente",
+                    Estado = EstadoTarea.Pendiente,
                     IsSynced = false,
                     UltimaModificacion = DateTime.Now
                 };
 
                 await _dbLocal.InsertAsync(nuevaTareaLocal);
-                NotificadorTareas.ProgramarRecordatorio(nuevaTareaLocal.IdLocal, nuevaTareaLocal.Titulo, nuevaTareaLocal.FechaVencimiento, nuevaTareaLocal.FrecuenciaRecordatorioHoras ?? 0);
+                ServicioFondo.ReiniciarRecordatorio(nuevaTareaLocal.IdLocal);
                 _ = _syncService.SincronizarTareasAsync();
                 EnviarNotificacionPC("✔ Tarea Creada", $"'{titulo}' se guardó correctamente.");
             }
@@ -1460,8 +1465,10 @@ private async Task RefreshAllAsync()
                 _tareaEditando.IsSynced = false; // <-- marcar para re-sincronizar la edición
 
                 await _dbLocal.UpdateAsync(_tareaEditando);
-                NotificadorTareas.CancelarRecordatorio(_tareaEditando.IdLocal);
-                NotificadorTareas.ProgramarRecordatorio(_tareaEditando.IdLocal, _tareaEditando.Titulo, _tareaEditando.FechaVencimiento, _tareaEditando.FrecuenciaRecordatorioHoras ?? 0);
+
+                // La frecuencia o la fecha pueden haber cambiado: el recordatorio
+                // se recalcula desde cero con los valores nuevos.
+                ServicioFondo.ReiniciarRecordatorio(_tareaEditando.IdLocal);
                 _ = _syncService.SincronizarTareasAsync();
                 EnviarNotificacionPC("✏️ Tarea Actualizada", $"'{titulo}' se editó correctamente.");
             }

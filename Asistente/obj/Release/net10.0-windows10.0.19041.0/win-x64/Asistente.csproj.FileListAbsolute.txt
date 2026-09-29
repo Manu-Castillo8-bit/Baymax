@@ -562,3 +562,6 @@ C:\Users\User\Desktop\Asistente\Asistente\obj\Release\net10.0-windows10.0.19041.
 C:\Users\User\Desktop\Asistente\Asistente\obj\Release\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt
 C:\Users\User\Desktop\Asistente\Asistente\obj\Release\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt.intermediate
 C:\Users\User\Desktop\Asistente\Asistente\obj\Release\net10.0-windows10.0.19041.0\win-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\User\Desktop\Asistente\Asistente\bin\Release\net10.0-windows10.0.19041.0\win-x64\H.GeneratedIcons.System.Drawing.dll
+C:\Users\User\Desktop\Asistente\Asistente\bin\Release\net10.0-windows10.0.19041.0\win-x64\H.NotifyIcon.dll
+C:\Users\User\Desktop\Asistente\Asistente\bin\Release\net10.0-windows10.0.19041.0\win-x64\H.NotifyIcon.WinUI.dll

@@ -1,4 +1,3 @@
-using SQLite;
 using Supabase;
 using System.Security.Cryptography;
 using System.Text;
@@ -52,9 +51,9 @@ namespace Asistente
                 return;
             }
 
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "asistente.db3");
-            var dbLocal = new SQLiteAsyncConnection(dbPath);
-            await dbLocal.CreateTableAsync<UsuarioLocal>();
+            // La base local se abre por el punto único de acceso para no competir
+            // con el servicio en segundo plano por el mismo archivo.
+            var dbLocal = await BaseDatos.ObtenerAsync();
 
             // 1. MODO ONLINE: Hay conexión a Internet
             if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
@@ -80,6 +79,9 @@ namespace Asistente
                             UserSession.CurrentUserId = user.IdUsuario;
                             UserSession.CurrentUserName = user.Nombre;
                             UserSession.CurrentAuthId = authId;
+                            UserSession.CurrentRol = string.IsNullOrWhiteSpace(user.Rol)
+                                ? UserSession.EstadoUsuario
+                                : user.Rol;
                             UserSession.CurrentJwt = session.AccessToken ?? "";
                             UserSession.CurrentRefreshToken = session.RefreshToken ?? "";
                             UserSession.OfflineEmail = string.Empty;
@@ -101,7 +103,7 @@ namespace Asistente
                             // C. Guardar la sesión para entrar directo la próxima vez
                             UserSession.GuardarSesion();
 
-                            Application.Current.MainPage = new MainPage();
+                            App.IrA(new NavigationPage(new MainPage()));
                         }
                         else
                         {
@@ -136,6 +138,9 @@ namespace Asistente
                             UserSession.CurrentUserId = usuarioLocal.IdUsuario;
                             UserSession.CurrentUserName = usuarioLocal.Nombre;
                             UserSession.CurrentAuthId = usuarioLocal.AuthUserId;
+                            UserSession.CurrentRol = string.IsNullOrWhiteSpace(usuarioLocal.Rol)
+                                ? UserSession.EstadoUsuario
+                                : usuarioLocal.Rol;
                             UserSession.CurrentJwt = string.Empty;
                             // Guardar credenciales (solo en memoria) para re-autenticarse
                             // con Supabase al recuperar conexión
@@ -145,7 +150,7 @@ namespace Asistente
                             // Guardar la sesión para entrar directo la próxima vez
                             UserSession.GuardarSesion();
 
-                            Application.Current.MainPage = new MainPage();
+                            App.IrA(new NavigationPage(new MainPage()));
                         }
                         else
                         {

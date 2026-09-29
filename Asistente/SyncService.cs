@@ -3,191 +3,439 @@ using Supabase;
 
 namespace Asistente
 {
+    /// <summary>
+    /// Sincroniza las tareas entre SQLite (la fuente de verdad local) y Supabase,
+    /// la tabla "tarea" que comparte con Proyectito.
+    ///
+    /// El orden importa: primero se sube lo que el usuario hizo en esta app y
+    /// después se baja lo que cambió en el otro lado. Así, un cambio hecho en
+    /// Proyectito (completar, editar, borrar) aparece en Asistente, y al revés.
+    ///
+    /// Reglas de conflicto, ya que la tabla no lleva marca de tiempo:
+    ///   - Si la fila local tiene cambios sin enviar (IsSynced = false), manda el
+    ///     cambio local y la fila no se sobrescribe al bajar del servidor.
+    ///   - Si la fila local ya está sincronizada, manda el servidor.
+    ///   - Los borrados locales se propagan al servidor y se limpian de SQLite.
+    ///   - Las filas que el servidor ya no tiene (borradas en otro dispositivo)
+    ///     se borran también de SQLite.
+    /// </summary>
     public class SyncService
     {
-        private readonly SQLiteAsyncConnection _dbLocal;
+        /// <summary>
+        /// Evita que dos sincronizaciones se pisen: la de segundo plano, el
+        /// temporizador de la ventana y el botón de actualizar pueden pedirla a
+        /// la vez. Quien pierde la carrera simplemente no hace nada esta ronda.
+        /// </summary>
+        private static readonly SemaphoreSlim SincronizacionEnCurso = new(1, 1);
+
+        /// <summary>
+        /// Se activa cuando el servidor rechaza "frecuencia_recordatorio_horas".
+        /// Mientras dure la sesión ya no se compara ni se manda ese campo: si se
+        /// siguiera comparando, el PULL vería siempre "local con valor, servidor
+        /// sin columna" y borraría la frecuencia del usuario en cada ronda.
+        /// </summary>
+        private static bool _frecuenciaNoSoportada;
+
         private readonly Supabase.Client _supabase;
 
-        public SyncService(string dbPath, Supabase.Client supabase)
+        public SyncService(Supabase.Client supabase)
         {
-            _dbLocal = new SQLiteAsyncConnection(dbPath);
-            _dbLocal.CreateTableAsync<TareaLocal>().Wait();
             _supabase = supabase;
-
-            // Escuchar cambios de conectividad
-            Connectivity.Current.ConnectivityChanged += OnConnectivityChanged;
-        }
-
-        private async void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
-        {
-            if (e.NetworkAccess == NetworkAccess.Internet)
-            {
-                // Si el usuario inició sesión sin internet, al recuperar conexión
-                // re-autenticamos con Supabase para que el token JWT quede activo
-                // (así la IA y el resto de servicios online funcionan sin relogin).
-                if (string.IsNullOrEmpty(UserSession.CurrentJwt) &&
-                    !string.IsNullOrEmpty(UserSession.OfflineEmail) &&
-                    !string.IsNullOrEmpty(UserSession.OfflinePassword))
-                {
-                    try
-                    {
-                        await _supabase.InitializeAsync();
-                        var session = await _supabase.Auth.SignIn(UserSession.OfflineEmail, UserSession.OfflinePassword);
-
-                        if (session?.User != null)
-                        {
-                            UserSession.CurrentJwt = session.AccessToken ?? "";
-                            UserSession.CurrentRefreshToken = session.RefreshToken ?? "";
-                            UserSession.CurrentAuthId = session.User.Id;
-                            UserSession.OfflineEmail = string.Empty;
-                            UserSession.OfflinePassword = string.Empty;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error al re-autenticar tras recuperar conexión: {ex.Message}");
-                    }
-                }
-
-                await SincronizarTareasAsync();
-            }
         }
 
         public async Task SincronizarTareasAsync()
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
+            if (UserSession.CurrentUserId == 0) return;
+
+            if (!await SincronizacionEnCurso.WaitAsync(0)) return;
 
             try
             {
-                // 0. Sincronizar borrados: eliminar en Supabase y limpiar localmente
-                var borradas = await _dbLocal.Table<TareaLocal>()
-                    .Where(t => t.IsDeleted && t.IdUsuario == UserSession.CurrentUserId)
-                    .ToListAsync();
+                var db = await BaseDatos.ObtenerAsync();
+                int idUsuario = UserSession.CurrentUserId;
 
-                foreach (var borrada in borradas)
+                // La tabla local se crea aquí además de en BaseDatos para que el
+                // servicio siga siendo utilizable aunque se construya aislado.
+                await db.CreateTableAsync<TareaLocal>();
+
+                await PropagarBorradosAsync(db, idUsuario);
+                await PropagarCambiosAsync(db, idUsuario);
+                await TraerDelServidorAsync(db, idUsuario);
+            }
+            catch (Exception ex)
+            {
+                await AvisarErrorAsync(ex);
+            }
+            finally
+            {
+                SincronizacionEnCurso.Release();
+            }
+        }
+
+        #region PUSH
+
+        /// <summary>
+        /// Borra en Supabase las tareas marcadas como eliminadas y, si el servidor
+        /// confirma, las quita también de SQLite. Si la llamada falla la fila se
+        /// queda marcada para reintentar en la próxima ronda.
+        /// </summary>
+        private async Task PropagarBorradosAsync(SQLiteAsyncConnection db, int idUsuario)
+        {
+            var borradas = await db.Table<TareaLocal>()
+                .Where(t => t.IdUsuario == idUsuario && t.IsDeleted)
+                .ToListAsync();
+
+            foreach (var borrada in borradas)
+            {
+                try
                 {
                     if (borrada.IdTareaServer.HasValue)
                     {
-                        // La tarea ya existía en el servidor: eliminarla de Supabase
                         await _supabase.From<Tarea>()
                             .Where(x => x.IdTarea == borrada.IdTareaServer.Value)
                             .Delete();
                     }
-                    // Eliminar la fila local (marcada como borrada)
-                    await _dbLocal.DeleteAsync(borrada);
+
+                    await db.DeleteAsync(borrada);
                 }
-
-                // 1. Subir cambios locales no sincronizados a Supabase
-                var noSincronizadas = await _dbLocal.Table<TareaLocal>()
-                    .Where(t => !t.IsSynced && !t.IsDeleted && t.IdUsuario == UserSession.CurrentUserId)
-                    .ToListAsync();
-
-                foreach (var local in noSincronizadas)
+                catch (Exception ex)
                 {
-                    var tareaServer = new Tarea
-                    {
-                        IdTarea = local.IdTareaServer ?? 0,
-                        IdUsuario = local.IdUsuario,
-                        Titulo = local.Titulo,
-                        Descripcion = local.Descripcion,
-                        FechaVencimiento = local.FechaVencimiento,
-                        FrecuenciaRecordatorioHoras = local.FrecuenciaRecordatorioHoras,
-                        Estado = local.Estado
-                    };
+                    System.Diagnostics.Debug.WriteLine(
+                        $"SyncService: no se pudo borrar la tarea {borrada.IdLocal} en el servidor: {ex.Message}");
+                }
+            }
+        }
 
+        /// <summary>
+        /// Sube las tareas nuevas y las editadas. Cada fila va por separado: si una
+        /// falla (por ejemplo, una columna que el servidor no tiene) las demás
+        /// siguen subiendo y esa queda pendiente para el siguiente intento.
+        /// </summary>
+        private async Task PropagarCambiosAsync(SQLiteAsyncConnection db, int idUsuario)
+        {
+            var pendientes = await db.Table<TareaLocal>()
+                .Where(t => t.IdUsuario == idUsuario && !t.IsSynced && !t.IsDeleted)
+                .ToListAsync();
+
+            foreach (var local in pendientes)
+            {
+                try
+                {
                     if (local.IdTareaServer.HasValue)
                     {
-                        // Ya existía en el servidor: actualizarla (no crear duplicado)
-                        await _supabase.From<Tarea>()
-                            .Where(x => x.IdTarea == local.IdTareaServer.Value)
-                            .Set(x => x.Titulo, local.Titulo)
-                            .Set(x => x.Descripcion, local.Descripcion)
-                            .Set(x => x.FechaVencimiento, local.FechaVencimiento)
-                            .Set(x => x.FrecuenciaRecordatorioHoras, local.FrecuenciaRecordatorioHoras)
-                            .Set(x => x.Estado, local.Estado)
-                            .Update();
+                        await ActualizarEnServidorAsync(local);
                     }
                     else
                     {
-                        // Tarea nueva: insertarla en el servidor
-                        var res = await _supabase.From<Tarea>().Insert(tareaServer);
-                        var insertada = res.Models.FirstOrDefault();
-                        if (insertada != null)
-                        {
-                            local.IdTareaServer = insertada.IdTarea;
-                        }
+                        await InsertarEnServidorAsync(local);
                     }
 
                     local.IsSynced = true;
-                    await _dbLocal.UpdateAsync(local);
+                    await db.UpdateAsync(local);
                 }
-
-                // 2. Descargar tareas más recientes desde Supabase y actualizar SQLite
-                var respuestaServer = await _supabase.From<Tarea>()
-                    .Where(t => t.IdUsuario == UserSession.CurrentUserId)
-                    .Get();
-
-                var idsDelServidor = respuestaServer.Models.Select(m => m.IdTarea).ToHashSet();
-
-                // 2a. Tareas locales sincronizadas que el servidor ya no tiene => fueron borradas
-                //     en otro dispositivo: borrarlas también localmente.
-                var locales = await _dbLocal.Table<TareaLocal>()
-                    .Where(t => t.IdUsuario == UserSession.CurrentUserId && !t.IsDeleted)
-                    .ToListAsync();
-
-                foreach (var local in locales)
+                catch (Exception ex)
                 {
-                    if (local.IdTareaServer.HasValue && !idsDelServidor.Contains(local.IdTareaServer.Value))
-                    {
-                        await _dbLocal.DeleteAsync(local);
-                    }
-                }
-
-                // 2b. Insertar las del servidor que no existen localmente
-                foreach (var server in respuestaServer.Models)
-                {
-                    var existeLocal = await _dbLocal.Table<TareaLocal>()
-                        .FirstOrDefaultAsync(t => t.IdTareaServer == server.IdTarea);
-
-                    if (existeLocal == null)
-                    {
-                        await _dbLocal.InsertAsync(new TareaLocal
-                        {
-                            IdTareaServer = server.IdTarea,
-                            IdUsuario = server.IdUsuario,
-                            Titulo = server.Titulo,
-                            Descripcion = server.Descripcion,
-                            FechaVencimiento = server.FechaVencimiento,
-                            FrecuenciaRecordatorioHoras = server.FrecuenciaRecordatorioHoras,
-                            Estado = server.Estado ?? "Pendiente",
-                            IsSynced = true,
-                            UltimaModificacion = DateTime.Now
-                        });
-                    }
+                    System.Diagnostics.Debug.WriteLine(
+                        $"SyncService: la tarea {local.IdLocal} sigue pendiente de enviar: {ex.Message}");
                 }
             }
-            catch (Exception ex)
+        }
+
+        private async Task InsertarEnServidorAsync(TareaLocal local)
+        {
+            int? idInsertada;
+
+            try
             {
-                // Mostrar el error de forma visible (no tragárselo en silencio)
-                string mensaje = $"Error al sincronizar con el servidor: {ex.Message}";
-                System.Diagnostics.Debug.WriteLine(mensaje);
-                try
+                var respuesta = await _supabase.From<Tarea>().Insert(new Tarea
                 {
-                    MainThread.BeginInvokeOnMainThread(async () =>
+                    IdUsuario = local.IdUsuario,
+                    Titulo = local.Titulo,
+                    Descripcion = local.Descripcion,
+                    FechaVencimiento = local.FechaVencimiento,
+                    FrecuenciaRecordatorioHoras = local.FrecuenciaRecordatorioHoras,
+                    Estado = EstadoTarea.Normalizar(local.Estado)
+                });
+
+                idInsertada = respuesta.Models.FirstOrDefault()?.IdTarea;
+            }
+            catch (Exception ex) when (EsColumnaDesconocida(ex))
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"SyncService: la tabla del servidor no admite la frecuencia; la tarea {local.IdLocal} se sube sin ella ({ex.Message})");
+                _frecuenciaNoSoportada = true;
+
+                var respuesta = await _supabase.From<TareaSinFrecuencia>().Insert(new TareaSinFrecuencia
+                {
+                    IdUsuario = local.IdUsuario,
+                    Titulo = local.Titulo,
+                    Descripcion = local.Descripcion,
+                    FechaVencimiento = local.FechaVencimiento,
+                    Estado = EstadoTarea.Normalizar(local.Estado)
+                });
+
+                idInsertada = respuesta.Models.FirstOrDefault()?.IdTarea;
+            }
+
+            if (idInsertada is > 0)
+            {
+                local.IdTareaServer = idInsertada;
+                return;
+            }
+
+            // Sin la fila devuelta no se puede guardar el id del servidor. Antes
+            // de rendirse se reintenta el insert: si la tarea ya existía, el
+            // servidor no acepta el duplicado y así se recupera su id en vez de
+            // dejar la tarea local huérfana y crear un duplicado en cada ronda.
+            var existentes = await _supabase.From<Tarea>()
+                .Where(x => x.IdUsuario == local.IdUsuario && x.Titulo == local.Titulo)
+                .Get();
+
+            var encontrada = existentes.Models.FirstOrDefault();
+            if (encontrada is not null)
+            {
+                local.IdTareaServer = encontrada.IdTarea;
+                return;
+            }
+
+            throw new InvalidOperationException(
+                "El servidor aceptó la tarea pero no devolvió su identificador.");
+        }
+
+        private async Task ActualizarEnServidorAsync(TareaLocal local)
+        {
+            try
+            {
+                await _supabase.From<Tarea>()
+                    .Where(x => x.IdTarea == local.IdTareaServer!.Value)
+                    .Set(x => x.Titulo, local.Titulo)
+                    .Set(x => x.Descripcion, local.Descripcion)
+                    .Set(x => x.FechaVencimiento, local.FechaVencimiento)
+                    .Set(x => x.FrecuenciaRecordatorioHoras, local.FrecuenciaRecordatorioHoras)
+                    .Set(x => x.Estado, EstadoTarea.Normalizar(local.Estado))
+                    .Update();
+            }
+            catch (Exception ex) when (EsColumnaDesconocida(ex))
+            {
+                // "frecuencia_recordatorio_horas" es propia de Asistente: si la
+                // tabla compartida no la tiene, se reintenta sin ella para que el
+                // resto de los campos (título, fecha y estado) sí lleguen a
+                // Proyectito en vez de quedarse toda la tarea sin sincronizar.
+                System.Diagnostics.Debug.WriteLine(
+                    $"SyncService: la tabla del servidor no admite la frecuencia; se envía sin ella ({ex.Message})");
+                _frecuenciaNoSoportada = true;
+
+                await _supabase.From<Tarea>()
+                    .Where(x => x.IdTarea == local.IdTareaServer!.Value)
+                    .Set(x => x.Titulo, local.Titulo)
+                    .Set(x => x.Descripcion, local.Descripcion)
+                    .Set(x => x.FechaVencimiento, local.FechaVencimiento)
+                    .Set(x => x.Estado, EstadoTarea.Normalizar(local.Estado))
+                    .Update();
+            }
+        }
+
+        /// <summary>
+        /// PostgREST responde con un 400 y menciona la columna cuando la petición
+        /// incluye un campo que no existe en la tabla.
+        /// </summary>
+        private static bool EsColumnaDesconocida(Exception ex)
+        {
+            string mensaje = ex.ToString();
+            return mensaje.Contains("column", StringComparison.OrdinalIgnoreCase) &&
+                   (mensaje.Contains("frecuencia_recordatorio_horas", StringComparison.OrdinalIgnoreCase) ||
+                    mensaje.Contains("does not exist", StringComparison.OrdinalIgnoreCase) ||
+                    mensaje.Contains("not exist", StringComparison.OrdinalIgnoreCase));
+        }
+
+        #endregion
+
+        #region PULL
+
+        /// <summary>
+        /// Trae el estado del servidor a SQLite. Inserta lo que aún no existe y
+        /// actualiza lo que cambió en el otro dispositivo. Si el servidor no
+        /// devuelve una tarea que ya estaba sincronizada, es que la borraron en
+        /// otro lado: también se borra aquí.
+        /// </summary>
+        private async Task TraerDelServidorAsync(SQLiteAsyncConnection db, int idUsuario)
+        {
+            var respuesta = await _supabase.From<Tarea>()
+                .Where(t => t.IdUsuario == idUsuario)
+                .Get();
+
+            var locales = await db.Table<TareaLocal>()
+                .Where(t => t.IdUsuario == idUsuario && !t.IsDeleted)
+                .ToListAsync();
+
+            var porIdServidor = new Dictionary<int, TareaLocal>();
+            var duplicadasEliminadas = new HashSet<int>();
+            foreach (var grupo in locales
+                         .Where(t => t.IdTareaServer.HasValue)
+                         .GroupBy(t => t.IdTareaServer!.Value))
+            {
+                porIdServidor[grupo.Key] = grupo.First();
+
+                // Si el mismo id de servidor quedó en dos filas locales (por una
+                // versión anterior o por un id mal guardado), se queda una sola:
+                // si no, la tarea aparecería duplicada en la lista.
+                foreach (var duplicada in grupo.Skip(1))
+                {
+                    await db.DeleteAsync(duplicada);
+                    duplicadasEliminadas.Add(duplicada.IdLocal);
+                }
+            }
+
+            var idsDelServidor = new HashSet<int>();
+
+            foreach (var delServidor in respuesta.Models)
+            {
+                if (delServidor.IdTarea <= 0) continue;
+                idsDelServidor.Add(delServidor.IdTarea);
+
+                if (!porIdServidor.TryGetValue(delServidor.IdTarea, out var local))
+                {
+                    await db.InsertAsync(new TareaLocal
                     {
-                        var page = Application.Current?.Windows.FirstOrDefault()?.Page;
-                        if (page != null)
-                        {
-                            await page.DisplayAlertAsync("Error de sincronización",
-                                "No se pudo sincronizar las tareas con el servidor.\n\nDetalle: " + ex.Message,
-                                "OK");
-                        }
+                        IdTareaServer = delServidor.IdTarea,
+                        IdUsuario = delServidor.IdUsuario,
+                        Titulo = delServidor.Titulo ?? string.Empty,
+                        Descripcion = delServidor.Descripcion,
+                        FechaVencimiento = delServidor.FechaVencimiento,
+                        FrecuenciaRecordatorioHoras = _frecuenciaNoSoportada
+                            ? null
+                            : delServidor.FrecuenciaRecordatorioHoras,
+                        Estado = EstadoTarea.Normalizar(delServidor.Estado),
+                        IsSynced = true,
+                        UltimaModificacion = DateTime.Now
                     });
+                    continue;
                 }
-                catch (Exception ex2)
+
+                // Hay cambios locales sin enviar: mandan ellos, no el servidor.
+                if (!local.IsSynced) continue;
+
+                if (AplicarServidorSobreLocal(local, delServidor))
                 {
-                    System.Diagnostics.Debug.WriteLine($"No se pudo mostrar el aviso de error: {ex2.Message}");
+                    // UltimaModificacion es la ancla de los recordatorios
+                    // cíclicos, así que se refresca para que el aviso siga el
+                    // ritmo del nuevo plazo, igual que al editar la tarea aquí.
+                    local.UltimaModificacion = DateTime.Now;
+                    await db.UpdateAsync(local);
+
+                    ServicioFondo.ReiniciarRecordatorio(local.IdLocal);
                 }
+            }
+
+            foreach (var local in locales)
+            {
+                if (duplicadasEliminadas.Contains(local.IdLocal)) continue;
+
+                // Solo se propaga la baja de lo que el servidor ya conoce. Una fila
+                // con cambios sin enviar puede estar ausente porque su push falló
+                // (por ejemplo, sin internet a media subida): borrarla aquí tiraría
+                // el trabajo del usuario, así que se conserva y se reintenta.
+                if (!local.IsSynced) continue;
+
+                if (local.IdTareaServer.HasValue && !idsDelServidor.Contains(local.IdTareaServer.Value))
+                {
+                    await db.DeleteAsync(local);
+                    ServicioFondo.ReiniciarRecordatorio(local.IdLocal);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copia los valores del servidor sobre la fila local. Devuelve true si
+        /// algo cambió de verdad (para no reescribir la fila en cada sincronización).
+        /// </summary>
+        private static bool AplicarServidorSobreLocal(TareaLocal local, Tarea delServidor)
+        {
+            bool cambio = false;
+
+            string titulo = delServidor.Titulo ?? string.Empty;
+            if (!string.Equals(local.Titulo, titulo, StringComparison.Ordinal))
+            {
+                local.Titulo = titulo;
+                cambio = true;
+            }
+
+            if (!string.Equals(local.Descripcion, delServidor.Descripcion, StringComparison.Ordinal))
+            {
+                local.Descripcion = delServidor.Descripcion;
+                cambio = true;
+            }
+
+            if (!MismaFecha(local.FechaVencimiento, delServidor.FechaVencimiento))
+            {
+                local.FechaVencimiento = delServidor.FechaVencimiento;
+                cambio = true;
+            }
+
+            if (!_frecuenciaNoSoportada
+                && local.FrecuenciaRecordatorioHoras != delServidor.FrecuenciaRecordatorioHoras)
+            {
+                local.FrecuenciaRecordatorioHoras = delServidor.FrecuenciaRecordatorioHoras;
+                cambio = true;
+            }
+
+            string estado = EstadoTarea.Normalizar(delServidor.Estado);
+            if (!string.Equals(EstadoTarea.Normalizar(local.Estado), estado, StringComparison.Ordinal))
+            {
+                local.Estado = estado;
+                cambio = true;
+            }
+
+            return cambio;
+        }
+
+        /// <summary>
+        /// Compara fechas sin que el viaje por Supabase (que devuelve UTC) haga
+        /// parecer que algo cambió cuando no. Se tolera un minuto de diferencia
+        /// porque el servidor puede recortar los segundos.
+        /// </summary>
+        private static bool MismaFecha(DateTime? local, DateTime? delServidor)
+        {
+            if (!local.HasValue || !delServidor.HasValue) return local.HasValue == delServidor.HasValue;
+
+            var a = AFechaLocal(local.Value);
+            var b = AFechaLocal(delServidor.Value);
+
+            return Math.Abs((a - b).TotalMinutes) < 1;
+        }
+
+        private static DateTime AFechaLocal(DateTime fecha)
+            => fecha.Kind == DateTimeKind.Utc ? fecha.ToLocalTime() : fecha;
+
+        #endregion
+
+        private static async Task AvisarErrorAsync(Exception ex)
+        {
+            // El aviso solo se muestra si el usuario está mirando la app.
+            // Si la app está oculta en la bandeja, saltar un aviso a pantalla
+            // completa sería molesto (y puede quedar detrás de cualquier otra
+            // ventana), así que en ese caso solo se deja en el log.
+            System.Diagnostics.Debug.WriteLine($"Error al sincronizar con el servidor: {ex.Message}");
+
+            if (!ServicioFondo.EnPrimerPlano) return;
+
+            try
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    var page = Application.Current?.Windows.FirstOrDefault()?.Page;
+                    if (page != null)
+                    {
+                        await page.DisplayAlertAsync("Error de sincronización",
+                            "No se pudo sincronizar las tareas con el servidor.\n\nDetalle: " + ex.Message,
+                            "OK");
+                    }
+                });
+            }
+            catch (Exception ex2)
+            {
+                System.Diagnostics.Debug.WriteLine($"No se pudo mostrar el aviso de error: {ex2.Message}");
             }
         }
     }

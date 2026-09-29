@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.AdminDetallePage"
+             BackgroundColor="#0B1120"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="12">
+
+        <!-- Cabecera con la ficha de la cuenta -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="12"
+              Padding="20,20,20,0">
+
+            <Button Grid.Column="0"
+                    Text="‹"
+                    FontSize="24"
+                    BackgroundColor="#111C30"
+                    BorderColor="#245B78"
+                    BorderWidth="1"
+                    TextColor="#22D3EE"
+                    WidthRequest="46"
+                    HeightRequest="46"
+                    Padding="0,0"
+                    CornerRadius="23"
+                    VerticalOptions="Center"
+                    Clicked="OnVolverClicked"
+                    ToolTipProperties.Text="Volver" />
+
+            <Border Grid.Column="1"
+                    WidthRequest="46"
+                    HeightRequest="46"
+                    StrokeThickness="0"
+                    BackgroundColor="#1E3A5F"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="23" />
+                </Border.StrokeShape>
+                <Label x:Name="LblInicialesDet"
+                       Text="?"
+                       TextColor="#E2E8F0"
+                       FontSize="15"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
+                <Label x:Name="LblNombreDet"
+                       Text="Cuenta"
+                       TextColor="#E2E8F0"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Spacing="8">
+                    <Label x:Name="LblCorreoDet"
+                           Text=""
+                           TextColor="#64748B"
+                           FontSize="12"
+                           LineBreakMode="TailTruncation" />
+                    <Border x:Name="BordeRol"
+                            Padding="7,2"
+                            StrokeThickness="0"
+                            BackgroundColor="#1E3A5F">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label x:Name="LblRolDet"
+                               Text="Usuario"
+                               TextColor="#E2E8F0"
+                               FontSize="10"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Border>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Acciones de la cuenta -->
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,*,*"
+              ColumnSpacing="8"
+              Margin="20,0">
+
+            <Button Grid.Column="0"
+                    Text="✎ Nombre"
+                    FontSize="12"
+                    BackgroundColor="#111C30"
+                    BorderColor="#245B78"
+                    BorderWidth="1"
+                    TextColor="#38BDF8"
+                    CornerRadius="8"
+                    Clicked="OnEditarNombreClicked" />
+
+            <Button x:Name="BtnCambiarRol"
+                    Grid.Column="1"
+                    Text="★ Rol"
+                    FontSize="12"
+                    BackgroundColor="#111C30"
+                    BorderColor="#245B78"
+                    BorderWidth="1"
+                    TextColor="#FBBF24"
+                    CornerRadius="8"
+                    Clicked="OnCambiarRolClicked" />
+
+            <Button Grid.Column="2"
+                    Text="🗑 Cuenta"
+                    FontSize="12"
+                    BackgroundColor="#450A0A"
+                    BorderColor="#F87171"
+                    BorderWidth="1"
+                    TextColor="#F87171"
+                    CornerRadius="8"
+                    Clicked="OnEliminarCuentaClicked" />
+        </Grid>
+
+        <!-- Tareas de la cuenta -->
+        <ScrollView Grid.Row="2" Margin="20,0">
+            <VerticalStackLayout x:Name="Contenido" Spacing="8" Padding="0,0,0,10" />
+        </ScrollView>
+
+        <!-- Agregar tarea -->
+        <Button Grid.Row="3"
+                x:Name="BtnAgregar"
+                Text="＋ Agregar tarea"
+                Margin="20,0,20,20"
+                BackgroundColor="#2563EB"
+                TextColor="#E2E8F0"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                Clicked="OnAgregarClicked" />
+
+        <ActivityIndicator x:Name="Indicador"
+                           Grid.Row="2"
+                           Color="#22D3EE"
+                           IsVisible="False"
+                           IsRunning="False"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+    </Grid>
+</ContentPage>

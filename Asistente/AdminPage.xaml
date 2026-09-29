@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asistente.AdminPage"
+             BackgroundColor="#0B1120"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="14">
+
+        <!-- Cabecera -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="12"
+              Padding="20,20,20,0">
+
+            <Button Grid.Column="0"
+                    Text="‹"
+                    FontSize="24"
+                    BackgroundColor="#111C30"
+                    BorderColor="#245B78"
+                    BorderWidth="1"
+                    TextColor="#22D3EE"
+                    WidthRequest="46"
+                    HeightRequest="46"
+                    Padding="0,0"
+                    CornerRadius="23"
+                    VerticalOptions="Center"
+                    Clicked="OnVolverClicked"
+                    ToolTipProperties.Text="Volver" />
+
+            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                <Label Text="Panel de administración"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="#E2E8F0" />
+                <Label x:Name="LblSubtitulo"
+                       Text="Cargando cuentas..."
+                       FontSize="13"
+                       TextColor="#64748B"
+                       LineBreakMode="TailTruncation" />
+            </VerticalStackLayout>
+
+            <Button Grid.Column="2"
+                    Text="⟳"
+                    FontSize="20"
+                    BackgroundColor="#111C30"
+                    BorderColor="#245B78"
+                    BorderWidth="1"
+                    TextColor="#E2E8F0"
+                    WidthRequest="46"
+                    HeightRequest="46"
+                    Padding="0,0"
+                    CornerRadius="23"
+                    VerticalOptions="Center"
+                    Clicked="OnRefrescarClicked"
+                    ToolTipProperties.Text="Actualizar" />
+        </Grid>
+
+        <!-- Aviso de conexión -->
+        <Border Grid.Row="1"
+                x:Name="AvisoOffline"
+                IsVisible="False"
+                Margin="20,0"
+                Padding="12"
+                BackgroundColor="#1C120D"
+                Stroke="#F59E0B"
+                StrokeThickness="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Label Text="Sin conexión: el panel de administración necesita internet para hablar con el servidor."
+                   FontSize="12"
+                   TextColor="#FBBF24"
+                   LineBreakMode="WordWrap" />
+        </Border>
+
+        <!-- Buscador -->
+        <Border Grid.Row="2"
+                Margin="20,0"
+                Padding="12,0,12,0"
+                HeightRequest="46"
+                BackgroundColor="#111C30"
+                Stroke="#245B78"
+                StrokeThickness="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="🔍" FontSize="14" VerticalOptions="Center" />
+                <Entry x:Name="TxtBuscar"
+                       Grid.Column="1"
+                       Placeholder="Buscar por nombre o correo..."
+                       PlaceholderColor="#64748B"
+                       BackgroundColor="Transparent"
+                       TextColor="#E2E8F0"
+                       VerticalOptions="Center"
+                       TextChanged="OnBuscarChanged" />
+            </Grid>
+        </Border>
+
+        <!-- Lista de cuentas -->
+        <Grid Grid.Row="3">
+            <CollectionView x:Name="ListaUsuarios"
+                            SelectionMode="Single"
+                            SelectionChanged="OnUsuarioSeleccionado"
+                            Margin="20,0,20,10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,4"
+                               Padding="14"
+                               CornerRadius="14"
+                               BackgroundColor="#111827"
+                               BorderColor="#245B78"
+                               HasShadow="False">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+
+                                <Border Grid.Column="0"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        StrokeThickness="0"
+                                        BackgroundColor="{Binding BadgeColor}"
+                                        VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="22" />
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding Iniciales}"
+                                           TextColor="#E2E8F0"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                    <Label Text="{Binding Nombre}"
+                                           TextColor="#E2E8F0"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Correo}"
+                                           TextColor="#64748B"
+                                           FontSize="13"
+                                           LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
+
+                                <Grid Grid.Column="2"
+                                      ColumnDefinitions="Auto,Auto"
+                                      ColumnSpacing="6"
+                                      VerticalOptions="Center">
+                                    <Border Padding="8,3"
+                                            StrokeThickness="0"
+                                            BackgroundColor="{Binding BadgeColor}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12" />
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding DescripcionRol}"
+                                               TextColor="#E2E8F0"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Grid.Column="1"
+                                           Text="›"
+                                           FontSize="22"
+                                           TextColor="#64748B"
+                                           VerticalOptions="Center" />
+                                </Grid>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label x:Name="LblVacio"
+                   Text="No se encontraron cuentas."
+                   TextColor="#64748B"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   IsVisible="False" />
+
+            <ActivityIndicator x:Name="Indicador"
+                               Grid.Row="3"
+                               Color="#22D3EE"
+                               IsVisible="False"
+                               IsRunning="False"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -77,6 +77,12 @@
 		<PackageReference Include="Supabase" Version="8.0.0" />
 	</ItemGroup>
 
+	<!-- Solo Windows: icono en la bandeja del sistema. Mantiene el proceso vivo
+	     al cerrar la ventana para que los recordatorios sigan saliendo. -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
+	</ItemGroup>
+
 	<ItemGroup>
 	  <MauiXaml Update="LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>

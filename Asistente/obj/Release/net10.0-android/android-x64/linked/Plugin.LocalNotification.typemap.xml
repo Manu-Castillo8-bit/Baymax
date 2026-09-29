@@ -1,0 +1,9 @@
+<api type="release" assembly-name="Plugin.LocalNotification" mvid="ed9d684b34fd4d52b32a2e04b1774e3c">
+  <module assembly-name="Plugin.LocalNotification" mvid="ed9d684b34fd4d52b32a2e04b1774e3c" mvid-bytes="S2id7f00Uk2zKi4EsXdOPA==">
+    <types-scratch>
+      <entry key="plugin/LocalNotification/NotificationActionReceiver" java-name="plugin/LocalNotification/NotificationActionReceiver" managed-type-name="Plugin.LocalNotification.Platforms.NotificationActionReceiver" token="33554444" />
+      <entry key="plugin/LocalNotification/NotificationForegroundService" java-name="plugin/LocalNotification/NotificationForegroundService" managed-type-name="Plugin.LocalNotification.Platforms.NotificationForegroundService" token="33554445" />
+      <entry key="plugin/LocalNotification/ScheduledAlarmReceiver" java-name="plugin/LocalNotification/ScheduledAlarmReceiver" managed-type-name="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver" token="33554462" />
+    </types-scratch>
+  </module>
+</api>

@@ -27,17 +27,25 @@ namespace Asistente
 
         /// <summary>
         /// Programa un recordatorio puntual a nivel de SO para una hora futura.
-        /// Devuelve true si se programó (o ya no hacía falta) y false si falla.
+        /// Devuelve true solo si el aviso quedó realmente en la cola del sistema;
+        /// false si no se agendó (para que el temporizador de ServicioFondo lo
+        /// muestre él, en vez de creerse que el sistema ya lo entregó).
         /// </summary>
         public static bool Programar(int id, string titulo, DateTimeOffset cuando)
         {
             try
             {
                 var retraso = cuando - DateTimeOffset.Now;
-                if (retraso <= TimeSpan.Zero) return true; // ya venció: no hay nada que programar
-                if (retraso < TimeSpan.FromSeconds(10)) return true; // muy próximo: se descarta (evita errores del SO)
+                if (retraso <= TimeSpan.Zero) return false; // ya venció: no hay nada que agendar
+                if (retraso < TimeSpan.FromSeconds(10)) return false; // demasiado cerca: lo muestra el temporizador
 
                 if (!ObtenerNotifier(out var notifier) || notifier is null) return false;
+
+                // AddToSchedule solo AÑADE: si este mismo aviso ya estuviera en la
+                // cola, se acumularían copias y el usuario recibiría el recordatorio
+                // varias veces. Se retira antes cualquier copia previa del mismo id,
+                // dejando como mucho un aviso en cola por tarea.
+                Cancelar(id);
 
                 var xml = ConstruirXml(id, "⏰ Recordatorio: Tarea Próxima", $"La tarea: '{titulo}' está pendiente.");
                 if (xml is null) return false;
@@ -121,6 +129,47 @@ namespace Asistente
         }
 
         /// <summary>
+        /// Devuelve la hora para la que el sistema tiene en cola un aviso de este
+        /// id, o null si no hay ninguno.
+        ///
+        /// Es la clave para no duplicar avisos: lo que se agenda desaparece de la
+        /// cola en cuanto el sistema lo muestra, así que la ausencia del aviso
+        /// significa que ya se notificó (y no que quedara pendiente).
+        /// </summary>
+        public static DateTimeOffset? ObtenerProgramada(int id)
+        {
+            try
+            {
+                if (!ObtenerNotifier(out var notifier) || notifier is null) return null;
+
+                var objetivo = $"notificationId={id.ToString(CultureInfo.InvariantCulture)}";
+                var programadas = notifier.GetScheduledToastNotifications().ToList();
+
+                foreach (var programada in programadas)
+                {
+                    try
+                    {
+                        if (programada.Content.GetXml().Contains(objetivo, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return programada.DeliveryTime;
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"NotificadorWindows.ObtenerProgramada: {ex.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Cancela todo lo programado a nivel de SO para esta aplicación.
         /// </summary>
         public static void CancelarTodo()
@@ -181,6 +230,12 @@ namespace Asistente
         /// (HKCU) para apps no empaquetadas. El instalador hace lo mismo.
         /// Así Windows sabe mostrar y activar los toasts programados incluso
         /// con la app cerrada del todo.
+        ///
+        /// Las rutas se refrescan siempre para que apunten al ejecutable que se
+        /// está ejecutando de verdad. Si la app se movió de sitio (por ejemplo al
+        /// instalar una versión nueva), dejar la ruta anterior haría que Windows
+        /// no pudiera mostrar los avisos y que al pulsar uno se abriera el
+        /// ejecutable viejo.
         /// </summary>
         private static void AsegurarRegistro()
         {
@@ -199,24 +254,19 @@ namespace Asistente
                             aumidKey.SetValue("DisplayName", "Asistente");
                         }
 
-                        if (aumidKey.GetValue("IconUri") == null && !string.IsNullOrWhiteSpace(exePath))
+                        if (!string.IsNullOrWhiteSpace(exePath))
                         {
                             aumidKey.SetValue("IconUri", $"{exePath},0");
                         }
 
-                        if (aumidKey.GetValue("CustomActivator") == null)
-                        {
-                            aumidKey.SetValue("CustomActivator", ClsidActivador);
-                        }
+                        aumidKey.SetValue("CustomActivator", ClsidActivador);
                     }
                 }
 
-                using (var clsidKey = Registry.CurrentUser.CreateSubKey($@"Software\Classes\CLSID\{ClsidActivador}\LocalServer32", true))
+                if (!string.IsNullOrWhiteSpace(exePath))
                 {
-                    if (clsidKey != null && !string.IsNullOrWhiteSpace(exePath) && clsidKey.GetValue(string.Empty) == null)
-                    {
-                        clsidKey.SetValue(string.Empty, exePath);
-                    }
+                    using var clsidKey = Registry.CurrentUser.CreateSubKey($@"Software\Classes\CLSID\{ClsidActivador}\LocalServer32", true);
+                    clsidKey?.SetValue(string.Empty, exePath);
                 }
 
                 _registroAsegurado = true;

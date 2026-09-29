@@ -20,6 +20,22 @@ namespace Asistente.WinUI
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        {
+            base.OnLaunched(args);
+
+            // La bandeja del sistema se encarga de que la "X" solo oculte la
+            // ventana en vez de cerrar el proceso. Asi el servicio de fondo sigue
+            // vivo y los recordatorios continue saliendo con la ventana cerrada.
+            try
+            {
+                var ventanaMaui = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault();
+                if (ventanaMaui?.Handler?.PlatformView is Microsoft.UI.Xaml.Window ventana)
+                    BandejaSistema.Configurar(ventana);
+            }
+            catch { }
+        }
     }
 
 }

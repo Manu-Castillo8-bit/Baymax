@@ -380,25 +380,46 @@
 
 
         <!-- ========================================= -->
-        <!-- BOTÓN CERRAR SESIÓN (ESQUINA SUP. IZQUIERDA) -->
+        <!-- ACCESO ADMIN (ESQUINA SUP. IZQUIERDA)   -->
         <!-- ========================================= -->
 
-        <Button Text="SALIR"
-                Clicked="OnLogoutClicked"
-                BackgroundColor="#450A0A"
-                BorderColor="#F87171"
-                BorderWidth="1"
-                TextColor="#F87171"
-                FontAttributes="Bold"
-                FontSize="14"
-                WidthRequest="54"
-                HeightRequest="34"
-                Padding="0,0"
-                CornerRadius="17"
+        <HorizontalStackLayout
+                Spacing="8"
                 Margin="12,12,0,0"
                 HorizontalOptions="Start"
-                VerticalOptions="Start"
-                ToolTipProperties.Text="Cerrar sesión"/>
+                VerticalOptions="Start">
+
+            <Button x:Name="AdminBoton"
+                    Text="ADMIN"
+                    IsVisible="False"
+                    Clicked="OnAdminClicked"
+                    BackgroundColor="#111C30"
+                    BorderColor="#FBBF24"
+                    BorderWidth="1"
+                    TextColor="#FBBF24"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    WidthRequest="72"
+                    HeightRequest="34"
+                    Padding="0,0"
+                    CornerRadius="17"
+                    ToolTipProperties.Text="Panel de administración"/>
+
+            <Button Text="SALIR"
+                    Clicked="OnLogoutClicked"
+                    BackgroundColor="#450A0A"
+                    BorderColor="#F87171"
+                    BorderWidth="1"
+                    TextColor="#F87171"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    WidthRequest="54"
+                    HeightRequest="34"
+                    Padding="0,0"
+                    CornerRadius="17"
+                    ToolTipProperties.Text="Cerrar sesión"/>
+
+        </HorizontalStackLayout>
 
 
         <!-- ========================================= -->

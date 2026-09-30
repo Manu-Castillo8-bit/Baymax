@@ -47,6 +47,7 @@ namespace Asistente
             {
                 _datos = await AdminService.ObtenerDatosUsuarioAsync(_usuario.Id);
 
+
                 // El servidor es la fuente de la verdad: si alguien cambió el
                 // nombre o el rol por otra vía, se refleja aquí.
                 if (_datos.Usuario is { } remoto)

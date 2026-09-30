@@ -107,6 +107,22 @@ namespace Asistente
             PropertyNameCaseInsensitive = true
         };
 
+        /// <summary>
+        /// Refrescar el rol y las llamadas del panel tocan a la vez el cliente de
+        /// Supabase desde varios frentes (el temporizador de segundo plano, el
+        /// arranque de la ventana y la propia pantalla). InitializeAsync y Rpc no
+        /// son seguros ante llamadas simultáneas y se quedaban bloqueando la
+        /// interfaz. Con este candado solo corre una a la vez; si otra ya está en
+        /// marcha, esta se salta sin esperar, porque dentro de un minuto volverá a
+        /// dentro de un minuto volverá a intentarlo.
+        /// </summary>
+        private static readonly SemaphoreSlim SincronizacionEnCurso = new(1, 1);
+
+        // Ventana de validez de la respuesta del servidor para el rol.
+        private static readonly TimeSpan TiempoValidoRol = TimeSpan.FromSeconds(20);
+        private static readonly TimeSpan EsperaMaximaRol = TimeSpan.FromSeconds(15);
+        private static DateTime _ultimaConsultaRol = DateTime.MinValue;
+
         public static bool EsAdmin => UserSession.EsAdmin;
 
         private static async Task VerificarAsync()
@@ -134,6 +150,8 @@ namespace Asistente
         {
             await VerificarAsync();
 
+            if (!await SincronizacionEnCurso.WaitAsync(0)) return default;
+
             try
             {
                 var cliente = ServicioFondo.ClienteSupabase;
@@ -150,11 +168,18 @@ namespace Asistente
                 TraducirError(ex);
                 throw;
             }
+            finally
+            {
+                SincronizacionEnCurso.Release();
+            }
         }
 
         private static async Task RpcSinResultadoAsync(string funcion, Dictionary<string, object> parametros)
         {
             await VerificarAsync();
+
+            if (!await SincronizacionEnCurso.WaitAsync(0))
+                throw new InvalidOperationException("Ya hay una operación del panel en marcha. Inténtalo de nuevo en un momento.");
 
             try
             {
@@ -168,6 +193,10 @@ namespace Asistente
             {
                 TraducirError(ex);
                 throw;
+            }
+            finally
+            {
+                SincronizacionEnCurso.Release();
             }
         }
 
@@ -300,15 +329,36 @@ namespace Asistente
             if (UserSession.CurrentUserId == 0) return;
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
 
+            // Se llama desde varios sitios (arranque, temporizador de 60 s, retorno
+            // de la conexión, la propia pantalla). Si la respuesta llegó hace poco
+            // no se vuelve a preguntar: así se evitan esperas en cadena cuando
+            // varias llamadas se solapan.
+            if (DateTime.UtcNow - _ultimaConsultaRol < TiempoValidoRol) return;
+
+            // Aquí sí se espera a que termine la otra llamada en vez de saltarla.
+            // El rol decide qué pantalla se abre al arrancar, así que descartar
+            // esta comprobación dejaría al administrador en la pantalla equivocada
+            // hasta el siguiente ciclo.
+            if (!await SincronizacionEnCurso.WaitAsync(EsperaMaximaRol)) return;
+
             try
             {
                 var cliente = ServicioFondo.ClienteSupabase;
                 await cliente.InitializeAsync();
 
-                string? rol = await ConsultarRolConEsAdminAsync(cliente)
-                               ?? await ConsultarRolEnTablaAsync(cliente);
+                // La tabla es la fuente del rol. es_admin() va después como
+                // respaldo, nunca antes: si el cliente todavía no tiene sesión
+                // activa devuelve false y se acabaría guardando "usuario" encima
+                // del admin real, que es justo lo que hace desaparecer el botón.
+                string? rol = await ConsultarRolEnTablaAsync(cliente)
+                               ?? await ConsultarRolConEsAdminAsync(cliente);
 
+                // La marca se pone solo con una respuesta válida: si la consulta
+                // falló, se reintenta en la siguiente llamada en vez de esperar 20 s
+                // con un rol que quizá ya no vale.
                 if (rol is null) return;
+
+                _ultimaConsultaRol = DateTime.UtcNow;
 
                 if (string.Equals(rol, UserSession.CurrentRol, StringComparison.OrdinalIgnoreCase)) return;
 
@@ -338,17 +388,27 @@ namespace Asistente
                 // Sin conexión efectiva o error del servidor: se conserva el rol actual.
                 System.Diagnostics.Debug.WriteLine($"AdminService: no se pudo refrescar el rol: {ex.Message}");
             }
+            finally
+            {
+                SincronizacionEnCurso.Release();
+            }
         }
 
         /// <summary>
-        /// es_admin() es la misma comprobación que usan las funciones del panel, así
-        /// que no depende de que la tabla "usuario" sea legible desde la app (por
-        /// ejemplo, si alguien activa RLS sobre ella más adelante).
+        /// Respaldo cuando la tabla no es legible. OJO: es_admin() decide a partir
+        /// del JWT, así que devuelve false si la sesión no está activa todavía
+        /// (por ejemplo al arrancar con la sesión guardada y el token a punto de
+        /// renovarse). Por eso su "usuario" no se toma como cierto si ya teníamos
+        /// un rol conocido: se devuelve null y se conserva lo anterior.
         /// </summary>
         private static async Task<string?> ConsultarRolConEsAdminAsync(Supabase.Client cliente)
         {
             try
             {
+                // Sin sesión activa el JWT no identifica a nadie y el resultado
+                // no significa nada. Se sale sin tocar el rol que ya tenemos.
+                if (cliente.Auth.CurrentSession is null) return null;
+
                 var respuesta = await cliente.Rpc("es_admin", new Dictionary<string, object>());
                 var contenido = await LeerContenidoAsync(respuesta);
 
@@ -365,8 +425,9 @@ namespace Asistente
         }
 
         /// <summary>
-        /// Respaldo: si es_admin() no está disponible en el proyecto, se lee la
-        /// fila de la cuenta activa.
+        /// Lee la columna "rol" de la fila de la cuenta activa. Es la fuente que se
+        /// usa primero porque no depende del token: al arrancar con la sesión
+        /// guardada el JWT puede aún no estar renovándose y es_admin() mentiría.
         /// </summary>
         private static async Task<string?> ConsultarRolEnTablaAsync(Supabase.Client cliente)
         {

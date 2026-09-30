@@ -254,6 +254,11 @@ namespace Asistente
         private IDispatcherTimer _syncTimer;
         private bool _isSyncing = false;
 
+        // Un administrador abre la app justo en el panel. La marca evita que el
+        // panel vuelva a apilarse cada vez que se regrese desde él con el botón
+        // "atrás", porque OnAppearing se dispara también al volver.
+        private bool _panelAdminMostrado = false;
+
         // Consola del asistente IA
         private IDispatcherTimer? _agenteRelojEtapas;
         private IDispatcherTimer? _agenteRelojPuntos;
@@ -350,6 +355,7 @@ namespace Asistente
                 return;
             }
 
+            _panelAdminMostrado = true;
             await Navigation.PushAsync(new AdminPage());
         }
 
@@ -399,6 +405,20 @@ private void OnDatosSincronizados()
     {
         System.Diagnostics.Debug.WriteLine($"MainPage: error al refrescar tras sincronizar: {ex.Message}");
     }
+}
+
+/// <summary>
+/// Si el rol de administrador llegó mientras la app ya estaba abierta, se entra al
+/// panel sin obligar a reiniciar. La marca evita reapilarlo cada vez que se
+/// regrese desde él, porque OnAppearing se dispara también al volver.
+/// </summary>
+private async void AbrirPanelSiSeConcedioAdmin()
+{
+    if (!AdminService.EsAdmin || _panelAdminMostrado) return;
+    if (Navigation.NavigationStack.Count == 0) return;
+
+    _panelAdminMostrado = true;
+    await Navigation.PushAsync(new AdminPage());
 }
 
 private async void OnAutoSyncTick(object sender, EventArgs e)
@@ -514,6 +534,12 @@ private async Task InitializeAndSyncAsync()
             // Si el usuario entró con sesión offline, re-autenticar ahora que hay
             // conexión para que el token JWT quede activo y la IA funcione sin relogin.
             await ServicioFondo.AsegurarSesionSupabaseAsync();
+
+            // Consultar el rol antes de decidir qué pantalla se muestra. Si el
+            // administrador acaba de recibir el rol desde otro sitio, la sesión
+            // guardada todavía diría "usuario" y el panel no se abriría hasta el
+            // siguiente ciclo.
+            await AdminService.RefrescarRolAsync();
 
             // Sincronizar en segundo plano
             _ = _syncService.SincronizarTareasAsync().ContinueWith(_ => 
@@ -778,6 +804,7 @@ private async Task RefreshAllAsync()
             // El rol puede haber cambiado en el servidor desde el último refresco.
             await AdminService.RefrescarRolAsync();
             ActualizarAccesoAdmin();
+            AbrirPanelSiSeConcedioAdmin();
         }
         else
         {

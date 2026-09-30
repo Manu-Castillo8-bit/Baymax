@@ -15,19 +15,20 @@
               Padding="20,20,20,0">
 
             <Button Grid.Column="0"
-                    Text="‹"
-                    FontSize="24"
-                    BackgroundColor="#111C30"
-                    BorderColor="#245B78"
+                    Text="SALIR"
+                    FontSize="13"
+                    FontAttributes="Bold"
+                    BackgroundColor="#450A0A"
+                    BorderColor="#F87171"
                     BorderWidth="1"
-                    TextColor="#22D3EE"
-                    WidthRequest="46"
-                    HeightRequest="46"
+                    TextColor="#F87171"
+                    WidthRequest="58"
+                    HeightRequest="42"
                     Padding="0,0"
-                    CornerRadius="23"
+                    CornerRadius="21"
                     VerticalOptions="Center"
-                    Clicked="OnVolverClicked"
-                    ToolTipProperties.Text="Volver" />
+                    Clicked="OnSalirClicked"
+                    ToolTipProperties.Text="Cerrar sesión" />
 
             <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                 <Label Text="Panel de administración"

@@ -24,11 +24,32 @@ namespace Asistente
             if (!AdminService.EsAdmin)
             {
                 await DisplayAlertAsync("Aviso", "No tienes permisos de administrador.", "OK");
-                await Navigation.PopAsync();
+
+                // Si el panel es la pantalla de inicio no hay a qué volver: se
+                // avisa al servidor y se regresa al login, que es donde se decide
+                // qué pantalla corresponde a la cuenta.
+                if (Navigation.NavigationStack.Count > 1)
+                    await Navigation.PopAsync();
+                else
+                    App.IrA(new NavigationPage(new LoginPage()));
+
                 return;
             }
 
-            AvisoOffline.IsVisible = Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
+            bool hayRed = Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
+            AvisoOffline.IsVisible = !hayRed;
+
+            // Sin conexión el panel queda en pausa con el aviso visible. Se sigue
+            // abriendo porque es la pantalla de inicio del administrador, pero sin
+            // un error por cada intento de carga.
+            if (!hayRed)
+            {
+                LblSubtitulo.Text = "Sin conexión: los datos se cargarán al recuperar la red.";
+                LblVacio.IsVisible = false;
+                ListaUsuarios.IsVisible = false;
+                return;
+            }
+
             await CargarUsuariosAsync();
         }
 
@@ -81,11 +102,30 @@ namespace Asistente
 
         private async void OnRefrescarClicked(object sender, EventArgs e)
         {
-            AvisoOffline.IsVisible = Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
+            bool hayRed = Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
+            AvisoOffline.IsVisible = !hayRed;
+
+            if (!hayRed) return;
+
             await CargarUsuariosAsync();
         }
 
-        private async void OnVolverClicked(object sender, EventArgs e) => await Navigation.PopAsync();
+        private async void OnSalirClicked(object sender, EventArgs e)
+        {
+            bool confirmado = await DisplayAlertAsync("Cerrar sesión",
+                "¿Seguro que deseas cerrar sesión?",
+                "Cerrar sesión", "Cancelar");
+
+            if (!confirmado) return;
+
+            // El panel es la pantalla de inicio de esta cuenta, así que aquí no hay
+            // una pantalla anterior a la que volver: se detiene el servicio y se
+            // vuelve al login, igual que hace MainPage.
+            await ServicioFondo.DetenerTodoAsync();
+            UserSession.LimpiarSesion();
+
+            App.IrA(new NavigationPage(new LoginPage()));
+        }
 
         private async void OnUsuarioSeleccionado(object sender, SelectionChangedEventArgs e)
         {

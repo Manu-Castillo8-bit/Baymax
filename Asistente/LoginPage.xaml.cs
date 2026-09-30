@@ -103,7 +103,7 @@ namespace Asistente
                             // C. Guardar la sesión para entrar directo la próxima vez
                             UserSession.GuardarSesion();
 
-                            App.IrA(new NavigationPage(new MainPage()));
+                            App.IrA(App.CrearPantallaDeInicio());
                         }
                         else
                         {
@@ -150,7 +150,7 @@ namespace Asistente
                             // Guardar la sesión para entrar directo la próxima vez
                             UserSession.GuardarSesion();
 
-                            App.IrA(new NavigationPage(new MainPage()));
+                            App.IrA(App.CrearPantallaDeInicio());
                         }
                         else
                         {

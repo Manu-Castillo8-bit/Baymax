@@ -37,8 +37,12 @@ namespace Asistente
         private static IDispatcherTimer? _temporizadorSync;
         private static readonly object Cerradura = new();
 
-        private static bool _evaluando;
-        private static bool _sincronizando;
+    private static bool _evaluando;
+    private static bool _sincronizando;
+
+    // Renovar el token de Supabase solo puede ocurrir una vez a la vez: las
+    // llamadas que pierdan la carrera se saltan esta ronda en lugar de esperar.
+    private static readonly SemaphoreSlim _renovandoSesion = new(1, 1);
         private static bool _arrancado;
 
         /// <summary>
@@ -203,6 +207,12 @@ namespace Asistente
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
 
+            // Se la llama desde el arranque de la ventana, el temporizador, el
+            // retorno de la conexión y el propio panel. Renovar el token a la vez
+            // desde varios frentes dejaba la interfaz esperando, así que si ya hay
+            // una renovación en marcha esta se salta: la otra está haciéndola.
+            if (!await _renovandoSesion.WaitAsync(0)) return;
+
             try
             {
                 var cliente = ClienteSupabase;
@@ -247,6 +257,10 @@ namespace Asistente
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"ServicioFondo: error al renovar la sesión: {ex.Message}");
+            }
+            finally
+            {
+                _renovandoSesion.Release();
             }
         }
 

@@ -39,6 +39,17 @@
             gestión, no algo que deba quedar disponible sin internet.
             </summary>
         </member>
+        <member name="F:Asistente.AdminService.SincronizacionEnCurso">
+            <summary>
+            Refrescar el rol y las llamadas del panel tocan a la vez el cliente de
+            Supabase desde varios frentes (el temporizador de segundo plano, el
+            arranque de la ventana y la propia pantalla). InitializeAsync y Rpc no
+            son seguros ante llamadas simultáneas y se quedaban bloqueando la
+            interfaz. Con este candado solo corre una a la vez; si otra ya está en
+            marcha, esta se salta sin esperar, porque dentro de un minuto volverá a
+            dentro de un minuto volverá a intentarlo.
+            </summary>
+        </member>
         <member name="M:Asistente.AdminService.RpcAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>
             Ejecuta un RPC que devuelve datos y los convierte al tipo pedido.
@@ -67,15 +78,18 @@
         </member>
         <member name="M:Asistente.AdminService.ConsultarRolConEsAdminAsync(Supabase.Client)">
             <summary>
-            es_admin() es la misma comprobación que usan las funciones del panel, así
-            que no depende de que la tabla "usuario" sea legible desde la app (por
-            ejemplo, si alguien activa RLS sobre ella más adelante).
+            Respaldo cuando la tabla no es legible. OJO: es_admin() decide a partir
+            del JWT, así que devuelve false si la sesión no está activa todavía
+            (por ejemplo al arrancar con la sesión guardada y el token a punto de
+            renovarse). Por eso su "usuario" no se toma como cierto si ya teníamos
+            un rol conocido: se devuelve null y se conserva lo anterior.
             </summary>
         </member>
         <member name="M:Asistente.AdminService.ConsultarRolEnTablaAsync(Supabase.Client)">
             <summary>
-            Respaldo: si es_admin() no está disponible en el proyecto, se lee la
-            fila de la cuenta activa.
+            Lee la columna "rol" de la fila de la cuenta activa. Es la fuente que se
+            usa primero porque no depende del token: al arrancar con la sesión
+            guardada el JWT puede aún no estar renovándose y es_admin() mentiría.
             </summary>
         </member>
         <member name="M:Asistente.AgenteIAServicio.ObtenerTokenValidoAsync">
@@ -157,6 +171,24 @@
              continua aunque la app no este a la vista.
              </summary>
         </member>
+        <member name="M:Asistente.App.CorregirPantallaSiEsAdminAsync">
+            <summary>
+            Reconfirma el rol con el servidor y mueve la ventana al panel si la
+            cuenta resultó ser administradora. Se ejecuta al arrancar, cuando la
+            sesión guardada aún puede tener el rol de antes.
+            </summary>
+        </member>
+        <member name="M:Asistente.App.CrearPantallaDeInicio">
+             <summary>
+             Pantalla a la que entra una sesión ya iniciada. La cuenta de
+             administrador abre directamente en el panel y no pasa por la lista de
+             tareas, porque su trabajo está en el panel. Cualquier otra cuenta entra
+             a sus tareas de siempre.
+            
+             Centralizarlo aquí evita que el login, el arranque y el registro
+             decidedan cada uno por su cuenta y se desincronicen.
+             </summary>
+        </member>
         <member name="M:Asistente.App.IrA(Microsoft.Maui.Controls.Page)">
             <summary>
             Cambia la pantalla actual. Reemplaza al uso de Application.MainPage, que
@@ -190,6 +222,13 @@
         </member>
         <member name="M:Asistente.MainPage.OnDatosSincronizados">
             <summary>La sincronización en segundo plano trajo cambios: se repinta la lista.</summary>
+        </member>
+        <member name="M:Asistente.MainPage.AbrirPanelSiSeConcedioAdmin">
+            <summary>
+            Si el rol de administrador llegó mientras la app ya estaba abierta, se entra al
+            panel sin obligar a reiniciar. La marca evita reapilarlo cada vez que se
+            regrese desde él, porque OnAppearing se dispara también al volver.
+            </summary>
         </member>
         <member name="M:Asistente.MainPage.PrepararConsola">
             <summary>Deja la consola en su estado inicial para un nuevo análisis.</summary>

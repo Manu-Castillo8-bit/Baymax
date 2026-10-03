@@ -10,11 +10,28 @@
     <ScrollView VerticalOptions="Center">
             <VerticalStackLayout Padding="30" Spacing="20" MaximumWidthRequest="400">
 
-                <!-- LOGO / ICONO HUD -->
-                <Grid HeightRequest="120" WidthRequest="120" HorizontalOptions="Center">
-                <Ellipse Stroke="#81fcfe" StrokeThickness="2" StrokeDashArray="4,4"/>
-                <Ellipse WidthRequest="80" HeightRequest="80" Fill="#0038a3" Opacity="0.2"/>
-                    <Label Text="⚡" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <!-- LOGO: tarjeta blanca con el glifo y halo cian -->
+                <Grid WidthRequest="150" HeightRequest="150" HorizontalOptions="Center">
+                    <Ellipse WidthRequest="150" HeightRequest="150">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                                <GradientStop Color="#22D3EE" Offset="0.30"/>
+                                <GradientStop Color="Transparent" Offset="1.0"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Border WidthRequest="104" HeightRequest="104"
+                            BackgroundColor="#FFFFFF"
+                            Stroke="#22D3EE"
+                            StrokeThickness="1"
+                            Padding="0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="24"/>
+                        </Border.StrokeShape>
+                        <Image Source="appiconfg.png" Aspect="AspectFit" Margin="11"/>
+                    </Border>
                 </Grid>
 
                 <Label Text="AUTENTICACIÓN DE SISTEMA" 

@@ -329,3 +329,6 @@ C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatal
 C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\Asistente.pdb
 C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\Asistente.genruntimeconfig.cache
 C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\ref\Asistente.dll
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg@3x.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg@2x.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg.png

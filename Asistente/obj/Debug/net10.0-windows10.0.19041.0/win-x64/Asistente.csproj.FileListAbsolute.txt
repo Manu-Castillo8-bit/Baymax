@@ -565,3 +565,13 @@ C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\
 C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\H.GeneratedIcons.System.Drawing.dll
 C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\H.NotifyIcon.dll
 C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\H.NotifyIcon.WinUI.dll
+C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\appiconfg.scale-100.png
+C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\appiconfg.scale-125.png
+C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\appiconfg.scale-150.png
+C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\appiconfg.scale-200.png
+C:\Users\User\Desktop\Asistente\Asistente\bin\Debug\net10.0-windows10.0.19041.0\win-x64\appiconfg.scale-400.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\appiconfg.scale-100.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\appiconfg.scale-125.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\appiconfg.scale-150.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\appiconfg.scale-200.png
+C:\Users\User\Desktop\Asistente\Asistente\obj\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\appiconfg.scale-400.png

@@ -2,10 +2,36 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Asistente.RegisterPage"
-             BackgroundColor="#0B1120">
+             BackgroundColor="#0B1120"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView VerticalOptions="Center">
         <VerticalStackLayout Padding="30" Spacing="15" MaximumWidthRequest="400">
+
+            <!-- LOGO: tarjeta blanca con el glifo y halo cian -->
+            <Grid WidthRequest="150" HeightRequest="150" HorizontalOptions="Center">
+                <Ellipse WidthRequest="150" HeightRequest="150">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                            <GradientStop Color="#22D3EE" Offset="0.30"/>
+                            <GradientStop Color="Transparent" Offset="1.0"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Border WidthRequest="104" HeightRequest="104"
+                        BackgroundColor="#FFFFFF"
+                        Stroke="#22D3EE"
+                        StrokeThickness="1"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Image Source="appiconfg.png" Aspect="AspectFit" Margin="11"/>
+                </Border>
+            </Grid>
 
             <!-- TÍTULO -->
             <Label Text="REGISTRO DE NUEVO USUARIO"

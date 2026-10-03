@@ -54,6 +54,12 @@
 				  Color="#FFFFFF"
 				  ForegroundScale="0.65"
 				  BaseSize="512,512" />
+
+		<!-- Logo mostrable dentro de la app (Login / Register).
+		     Se usa appiconfg.png porque es la version con canal alfa: el glifo es
+		     azul marino sobre fondo transparente, mientras appicon.png es un cuadro
+		     blanco opaco que solo sirve como capa de fondo del icono del lanzador. -->
+		<MauiImage Include="Resources\AppIcon\appiconfg.png" Resize="True" BaseSize="256,256" />
 		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#172554" BaseSize="128,128" />

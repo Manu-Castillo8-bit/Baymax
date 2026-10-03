@@ -4,6 +4,94 @@
         <name>Asistente</name>
     </assembly>
     <members>
+        <member name="T:Asistente.AdminDetallePage">
+             <summary>
+             Detalle de una cuenta: sus datos, su rol y la lista de tareas.
+            
+             Todo lo que se cambia aquí escribe directamente en la tabla compartida con
+             Proyectito, así que el usuario ve los cambios en su app la próxima vez que
+             sincronice. Si esta cuenta es la del propio administrador, su copia local
+             se refresca al instante al volver a la pantalla principal.
+             </summary>
+        </member>
+        <member name="M:Asistente.AdminDetallePage.RefrescarSiEsMiCuenta">
+            <summary>
+            Si el panel está tocando la cuenta con la que se inició sesión, su copia
+            local puede quedarse desfasada hasta el próximo ciclo. Se adelanta una
+            sincronización para que la lista de la pantalla principal refleje el
+            cambio en cuanto se vuelve atrás.
+            </summary>
+        </member>
+        <member name="T:Asistente.AdminPage">
+             <summary>
+             Lista de cuentas de la base compartida con Proyectito. Desde aquí se entra
+             al detalle de cada usuario para gestionar sus tareas.
+            
+             Esta pantalla solo muestra el botón si la sesión es de administrador, pero
+             la comprobación real está en el servidor: aunque alguien entre a mano, las
+             funciones RPC rechazan la llamada.
+             </summary>
+        </member>
+        <member name="T:Asistente.AdminService">
+            <summary>
+            Acceso a los datos de administración mediante las funciones RPC de
+            Supabase. Solo funciona con conexión: el panel es una herramienta de
+            gestión, no algo que deba quedar disponible sin internet.
+            </summary>
+        </member>
+        <member name="F:Asistente.AdminService.SincronizacionEnCurso">
+            <summary>
+            Refrescar el rol y las llamadas del panel tocan a la vez el cliente de
+            Supabase desde varios frentes (el temporizador de segundo plano, el
+            arranque de la ventana y la propia pantalla). InitializeAsync y Rpc no
+            son seguros ante llamadas simultáneas y se quedaban bloqueando la
+            interfaz. Con este candado solo corre una a la vez; si otra ya está en
+            marcha, esta se salta sin esperar, porque dentro de un minuto volverá a
+            dentro de un minuto volverá a intentarlo.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.RpcAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Ejecuta un RPC que devuelve datos y los convierte al tipo pedido.
+            Traduce el error típico de autorización a un mensaje entendible.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.ComprobarEstado(System.String,Supabase.Postgrest.Responses.BaseResponse)">
+            <summary>
+            Las funciones de escritura devuelven "void", así que no hay cuerpo que
+            revisar: si el servidor las rechazó (permisos, parámetro inválido), el
+            fallo solo aparece en el estado HTTP y sería silencioso sin esto.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.ActualizarUsuarioAsync(System.Int32,System.String,System.String)">
+            <summary>
+            Cambia el nombre y/o el rol de una cuenta. Los parámetros que llegan a
+            null se dejan como están en el servidor.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.RefrescarRolAsync">
+            <summary>
+            Vuelve a leer el rol de la cuenta activa desde el servidor. Si alguien
+            le concedió (o le quitó) el rol de administrador, la app se entera sin
+            necesidad de cerrar sesión.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.ConsultarRolConEsAdminAsync(Supabase.Client)">
+            <summary>
+            Respaldo cuando la tabla no es legible. OJO: es_admin() decide a partir
+            del JWT, así que devuelve false si la sesión no está activa todavía
+            (por ejemplo al arrancar con la sesión guardada y el token a punto de
+            renovarse). Por eso su "usuario" no se toma como cierto si ya teníamos
+            un rol conocido: se devuelve null y se conserva lo anterior.
+            </summary>
+        </member>
+        <member name="M:Asistente.AdminService.ConsultarRolEnTablaAsync(Supabase.Client)">
+            <summary>
+            Lee la columna "rol" de la fila de la cuenta activa. Es la fuente que se
+            usa primero porque no depende del token: al arrancar con la sesión
+            guardada el JWT puede aún no estar renovándose y es_admin() mentiría.
+            </summary>
+        </member>
         <member name="M:Asistente.AgenteIAServicio.ObtenerTokenValidoAsync">
             <summary>
             Devuelve un access token JWT válido para llamar a la Edge Function.
@@ -72,12 +160,74 @@
         <member name="M:Asistente.AgenteViewModel.Reiniciar">
             <summary>Reinicia la consola para un nuevo análisis.</summary>
         </member>
-        <member name="M:Asistente.MainPage.ReautenticarSiNecesarioAsync">
+        <member name="M:Asistente.App.CreateWindow(Microsoft.Maui.IActivationState)">
+             <summary>
+             Crea la ventana principal y arranca el servicio en segundo plano.
+            
+             El servicio se arranca aqui (y no en una pagina) a proposito: asi sigue
+             vivo cuando el usuario cierra la ventana, que en Windows la "X" lo
+             unico que hace es ocultarla en la bandeja del sistema. De esa forma los
+             recordatorios se siguen mostrando y la sincronizacion con Supabase
+             continua aunque la app no este a la vista.
+             </summary>
+        </member>
+        <member name="M:Asistente.App.CorregirPantallaSiEsAdminAsync">
             <summary>
-            Si hay conexión, asegura un JWT válido para Supabase:
-            A) usuario que entró offline (sin JWT): inicia sesión real para activar el token.
-            B) JWT guardado pero cliente sin sesión viva: lo renueva con el refresh token
-               para que la IA y los servicios online funcionen tras reabrir la app.
+            Reconfirma el rol con el servidor y mueve la ventana al panel si la
+            cuenta resultó ser administradora. Se ejecuta al arrancar, cuando la
+            sesión guardada aún puede tener el rol de antes.
+            </summary>
+        </member>
+        <member name="M:Asistente.App.CrearPantallaDeInicio">
+             <summary>
+             Pantalla a la que entra una sesión ya iniciada. La cuenta de
+             administrador abre directamente en el panel y no pasa por la lista de
+             tareas, porque su trabajo está en el panel. Cualquier otra cuenta entra
+             a sus tareas de siempre.
+            
+             Centralizarlo aquí evita que el login, el arranque y el registro
+             decidedan cada uno por su cuenta y se desincronicen.
+             </summary>
+        </member>
+        <member name="M:Asistente.App.IrA(Microsoft.Maui.Controls.Page)">
+            <summary>
+            Cambia la pantalla actual. Reemplaza al uso de Application.MainPage, que
+            esta obsoleto y ademas no funciona bien cuando la ventana esta oculta
+            en la bandeja del sistema.
+            </summary>
+        </member>
+        <member name="T:Asistente.BaseDatos">
+             <summary>
+             Punto único de acceso a la base de datos local (SQLite), que es la fuente
+             de verdad de la app: todo se lee de aquí, con o sin conexión a internet.
+            
+             Antes cada clase abría su propia conexión al mismo archivo
+             (asistente.db3). Al centralizarla se evita que dos conexiones compitan
+             por crear las tablas al mismo tiempo y se reduce el riesgo de bloqueos.
+             </summary>
+        </member>
+        <member name="M:Asistente.BaseDatos.ObtenerAsync">
+            <summary>
+            Devuelve la conexión con todas las tablas locales ya creadas. Es
+            idempotente y seguro de llamar desde varios hilos a la vez: solo la
+            primera llamada hace el trabajo, el resto espera a la misma tarea.
+            </summary>
+        </member>
+        <member name="M:Asistente.MainPage.ActualizarAccesoAdmin">
+            <summary>
+            Muestra el botón de administración solo a las cuentas con ese rol. Como
+            el rol se relee del servidor en cada sincronización, el botón aparece o
+            desaparece solo, sin necesidad de reiniciar sesión.
+            </summary>
+        </member>
+        <member name="M:Asistente.MainPage.OnDatosSincronizados">
+            <summary>La sincronización en segundo plano trajo cambios: se repinta la lista.</summary>
+        </member>
+        <member name="M:Asistente.MainPage.AbrirPanelSiSeConcedioAdmin">
+            <summary>
+            Si el rol de administrador llegó mientras la app ya estaba abierta, se entra al
+            panel sin obligar a reiniciar. La marca evita reapilarlo cada vez que se
+            regrese desde él, porque OnAppearing se dispara también al volver.
             </summary>
         </member>
         <member name="M:Asistente.MainPage.PrepararConsola">
@@ -100,30 +250,364 @@
             </summary>
         </member>
         <member name="T:Asistente.NotificadorTareas">
+             <summary>
+             Utilidades para mostrar y cancelar los avisos de las tareas.
+            
+             Todas las notificaciones son locales: no pasan por internet y por tanto
+             se muestran igual sin conexión.
+            
+             En Windows hay dos capas que cooperate para que el aviso llegue siempre:
+               - <see cref="P:Asistente.NotificadorTareas.ElSistemaRepiteElAviso"/> es false, así que el aviso lo
+                 dispara <see cref="T:Asistente.ServicioFondo"/> (mientras el proceso está vivo,
+                 aunque la ventana esté oculta en la bandeja) y además se deja una copia
+                 agendada en el sistema operativo por si el proceso muere.
+               - En Android, iOS y Mac el sistema se encarga de repetir el aviso aunque
+                 la app esté cerrada del todo, así que ahí no hay nada que hacer.
+             </summary>
+        </member>
+        <member name="F:Asistente.NotificadorTareas.BaseIdAvisoPuntual">
             <summary>
-            Utilidades compartidas para programar notificaciones de recordatorio de tareas.
+            Los ids de tarea (TareaLocal.IdLocal) son números cortos y correlativos.
+            Los avisos que no pertenecen a una tarea (confirmaciones, pruebas) usan
+            esta base, para que un aviso puntual nunca pueda pisar ni cancelar el
+            recordatorio de una tarea.
             </summary>
         </member>
-        <member name="M:Asistente.NotificadorTareas.ReprogramarRecordatoriosPendientesAsync">
+        <member name="P:Asistente.NotificadorTareas.ElSistemaRepiteElAviso">
             <summary>
-            Reprograma en el sistema operativo todas las notificaciones de las tareas
-            pendientes guardadas en la BD local. Debe ejecutarse al abrir la app para
-            restaurar recordatorios que el SO pudo haber limpiado al cerrar la app.
-            Funciona sin conexión (las notificaciones son locales, no requieren internet).
+            True cuando el sistema operativo ya repite el aviso por sí solo
+            (Android, iOS, MacCatalyst). En Windows es false porque allí el
+            Windows App SDK no agenda notificaciones repetidas.
             </summary>
         </member>
-        <member name="M:Asistente.NotificadorTareas.ProgramarRecordatorioCiclico(System.Int32,System.String,System.Int32,System.DateTime)">
+        <member name="M:Asistente.NotificadorTareas.MostrarRecordatorio(Asistente.TareaLocal)">
             <summary>
-            Programa un recordatorio cíclico respetando la cadencia original:
-            calcula la siguiente ocurrencia futura alineada al intervalo elegido,
-            partiendo de la última modificación de la tarea.
+            Muestra el recordatorio de una tarea. Lo llama
+            <see cref="T:Asistente.ServicioFondo"/> cuando la ocurrencia toca.
             </summary>
         </member>
         <member name="M:Asistente.NotificadorTareas.MostrarNotificacionInmediata(System.String,System.String)">
             <summary>
-            Muestra una notificación inmediata de confirmación (por ejemplo al crear
-            o editar una tarea). Funciona sin conexión: en Windows usa el toast nativo
-            del SO y en el resto de plataformas el centro de notificaciones local.
+            Muestra un aviso puntual (por ejemplo al crear o editar una tarea).
+            No colisiona con los ids de recordatorio de las tareas.
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.MostrarConPlugin(System.Int32,System.String,System.String)">
+            <summary>
+            Muestra el aviso a través del centro de notificaciones local, que es lo
+            que se usa en móvil y como respaldo en Windows.
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.ProgramarRecordatorio(System.Int32,System.String,System.Nullable{System.DateTime},System.Int32)">
+            <summary>
+            Deja el recordatorio de una tarea agendado. En Windows el aviso lo
+            lleva <see cref="T:Asistente.ServicioFondo"/> (que además guarda una copia en el
+            sistema operativo), así que aquí solo se cancela lo anterior para que
+            el cambio surja de inmediato. En el resto de plataformas se agenda en
+            el sistema con repetición, que sobrevive al cierre de la app.
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.ProgramarCopiaEnSistema(System.Int32,System.String,System.DateTimeOffset)">
+             <summary>
+             Deja una copia del próximo aviso de una tarea agendada en el sistema
+             operativo, para que salte aunque el proceso esté cerrado. Devuelve
+             true si el aviso quedó de verdad en la cola.
+            
+             Solo tiene efecto en Windows: en el resto de plataformas el sistema
+             ya se ocupa de repetir el aviso sin necesitar que el proceso siga vivo.
+             </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.CopiaEnSistemaExiste(System.Int32)">
+            <summary>
+            Indica si el sistema operativo tiene en cola el aviso de esta tarea.
+            Si estaba agendado y ya no está, es que el sistema ya lo mostró.
+            </summary>
+        </member>
+        <member name="M:Asistente.NotificadorTareas.CancelarRecordatorio(System.Int32)">
+            <summary>
+            Cancela el recordatorio de una tarea, tanto en el sistema operativo
+            como en el centro de notificaciones local.
+            </summary>
+        </member>
+        <member name="T:Asistente.RecordatorioEstado">
+             <summary>
+             Estado del ciclo de recordatorios de una tarea.
+            
+             Existe porque conviven dos mecanismos de aviso que pueden disparar la
+             misma ocurrencia:
+               1. El temporizador en segundo plano (mientras el proceso está vivo).
+               2. La notificación programada en el sistema operativo (si el proceso muere).
+            
+             Guardando la ocurrencia "pendiente" en disco, ambos mecanismos saben
+             que se trata del mismo aviso y no lo muestran dos veces. Al comprobar
+             que el toast programado por el SO ya no está en la cola, se deduce que
+             el sistema ya lo mostró y se avanza a la siguiente ocurrencia.
+             </summary>
+        </member>
+        <member name="P:Asistente.RecordatorioEstado.IdTarea">
+            <summary>Id local de la tarea (TareaLocal.IdLocal).</summary>
+        </member>
+        <member name="P:Asistente.RecordatorioEstado.ProximaOcurrencia">
+            <summary>Momento en que debe saltar el próximo aviso.</summary>
+        </member>
+        <member name="P:Asistente.RecordatorioEstado.ProgramadoEnSistema">
+            <summary>
+            True si el sistema operativo tiene un toast en cola para
+            <see cref="P:Asistente.RecordatorioEstado.ProximaOcurrencia"/>. Si está en cola y ya pasó la hora,
+            significa que el SO ya lo mostró y no hay que repetirlo.
+            </summary>
+        </member>
+        <member name="P:Asistente.RecordatorioEstado.UltimoAviso">
+            <summary>Último aviso que se mostró de esta tarea (para diagnóstico).</summary>
+        </member>
+        <member name="T:Asistente.ServicioFondo">
+             <summary>
+             Servicio en segundo plano con la vida de la APLICACIÓN (no de la página).
+            
+             Antes el temporizador de sincronización y el aviso de recordatorios vivían
+             en MainPage, así que al cerrar la ventana se acababan los dos. Este servicio
+             se arranca desde App.CreateWindow y sigue funcionando con la ventana oculta
+             en la bandeja del sistema, de modo que los recordatorios siguen saliendo.
+            
+             Hace tres cosas, todas sin depender de internet:
+               1. Evaluar los recordatorios de las tareas y mostrar los avisos que toquen.
+               2. Dejar una copia del próximo aviso programado en el sistema operativo,
+                  para que también salte si el proceso muere.
+               3. Sincronizar con Supabase en cuanto hay red (y avisar a la interfaz).
+             </summary>
+        </member>
+        <member name="F:Asistente.ServicioFondo.VentanaCortesia">
+            <summary>
+            Margen de cortesía para dar por bueno un aviso que entregó el sistema
+            operativo. Si el toast ya no está en su cola pero aún no ha pasado
+            mucho tiempo desde su hora, se considera mostrado y no se repite.
+            Pasado ese margen se vuelve a avisar, por si el sistema lo perdió.
+            </summary>
+        </member>
+        <member name="P:Asistente.ServicioFondo.EnPrimerPlano">
+            <summary>
+            True mientras el usuario tiene la ventana a la vista. Se usa para no
+            lanzar avisos a pantalla cuando la app está oculta en la bandeja.
+            </summary>
+        </member>
+        <member name="E:Asistente.ServicioFondo.DatosSincronizados">
+            <summary>
+            Se dispara (en el hilo principal) cuando la sincronización en segundo
+            plano ha traido cambios, para que la interfaz se refresque sola.
+            </summary>
+        </member>
+        <member name="P:Asistente.ServicioFondo.ClienteSupabase">
+            <summary>
+            Cliente de Supabase único para toda la app. Antes cada pantalla creaba el
+            suyo, así que quedaban varios clientes con sesiones distintas.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.Arrancar">
+            <summary>
+            Arranca el servicio. Es idempotente: llamarlo varias veces no duplica
+            los temporizadores.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.SincronizarEnSegundoPlanoAsync">
+            <summary>
+            Sincroniza con Supabase si hay red y avisa a la interfaz. No hace nada
+            (y no es un error) cuando no hay conexión: la app sigue con SQLite.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.AsegurarSesionSupabaseAsync">
+            <summary>
+            Deja un JWT válido en Supabase sin obligar al usuario a volver a
+            iniciar sesión:
+              A) Entró sin conexión (no hay JWT): inicia sesión con las credenciales
+                 guardadas para activar el token.
+              B) Hay JWT guardado pero caducado: lo renueva con el refresh token.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.EvaluarRecordatoriosAsync">
+            <summary>
+            Recorre las tareas pendientes de la BD local y muestra los recordatorios
+            que toquen. Lee siempre de SQLite, así que funciona sin conexión.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.SincronizarEstadoSinMostrarAsync(SQLite.SQLiteAsyncConnection,Asistente.TareaLocal,Asistente.RecordatorioEstado)">
+             <summary>
+             En plataformas donde el sistema repite el aviso por su cuenta (Android,
+             iOS, MacCatalyst) solo se actualiza el estado, sin mostrar nada: el
+             aviso ya lo pone el SO.
+            
+             Al crear el estado por primera vez se agenda la notificación en el
+             sistema, que es lo que garantiza que siga llegando con la app cerrada
+             o el móvil bloqueado. Solo se agenda una vez por tarea: si se
+             re-agendara en cada comprobación, la hora del aviso se iría desplazando
+             y acabaría saltando siempre "dentro de 5 segundos".
+             </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.CalcularProximaOcurrencia(Asistente.TareaLocal,System.DateTime,System.Boolean)">
+             <summary>
+             Calcula el instante del próximo aviso de una tarea.
+            
+             Con frecuencia (recordatorio cíclico) devuelve la primera ocurrencia de
+             la serie "ancla + N x frecuencia" que aún no se ha avisado. Sin
+             frecuencia devuelve el aviso único del día anterior al vencimiento, y
+             solo si ese momento todavía está por llegar.
+            
+             Devuelve null si a la tarea ya no le queda ningún aviso pendiente.
+             </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.AsegurarCopiaEnSistemaAsync(SQLite.SQLiteAsyncConnection,Asistente.TareaLocal,Asistente.RecordatorioEstado)">
+             <summary>
+             Mantiene agendada en el sistema operativo la copia del próximo aviso,
+             para que salte aunque el proceso esté cerrado.
+            
+             El estado "hay copia en cola" se guarda en disco porque es lo que
+             permite, al reiniciar, distinguir dos casos que desde dentro se ven
+             igual: el sistema ya mostró el aviso, o simplemente lo perdimos. Sin
+             ese dato el proceso nuevo no podría saber si tiene que avisar o no.
+            
+             También sirve para recuperar la copia si el sistema la borra de la cola
+             sin llegar a mostrar (pasa al reiniciar el equipo): si ya no está, se
+             vuelve a agendar.
+             </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.ElSistemaYaMostroElAviso(Asistente.TareaLocal,Asistente.RecordatorioEstado)">
+             <summary>
+             Decide si el sistema operativo ya mostró el aviso de esta ocurrencia.
+            
+             La pista es que el toast desaparecer de la cola del sistema: lo que se
+             agenda desaparece porque se mostró, no porque se haya cancelado (eso lo
+             hace esta misma clase). Solo se acepta como válido si el aviso era
+             reciente; si el sistema lo hubiera perdido de la cola hace tiempo, se
+             vuelve a avisar para que el usuario no se quede sin el recordatorio.
+             </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.LimpiarEstadosHuerfanosAsync(SQLite.SQLiteAsyncConnection,System.Collections.Generic.List{Asistente.TareaLocal})">
+            <summary>
+            Borra el estado de recordatorio de tareas que ya no están (borradas,
+            completadas o de otro usuario), junto con sus avisos en el sistema.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.ReiniciarRecordatorio(System.Int32)">
+            <summary>
+            Olvida el estado de recordatorio de una tarea para que se vuelva a
+            calcular desde cero. Se llama al crear, editar, completar o borrar una
+            tarea: si no, el estado guardado seguiría apuntando a la frecuencia
+            anterior y el nuevo intervalo no se aplicaría hasta el reinicio.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.DetenerTodoAsync">
+            <summary>
+            Cancela todos los avisos y olvida el estado de recordatorios. Se usa al
+            cerrar sesión, para que el usuario no siga recibiendo avisos de unas
+            tareas a las que ya no tiene acceso.
+            </summary>
+        </member>
+        <member name="M:Asistente.ServicioFondo.ArmarRecordatoriosParaProcesoMuerto">
+             <summary>
+             Deja agendados en el sistema operativo todos los recordatorios
+             pendientes. Se invoca justo antes de cerrar el proceso (opción "Salir"
+             de la bandeja) para que el usuario siga recibiendo avisos aunque la
+             aplicación esté cerrada del todo.
+            
+             Windows permite como máximo 64 notificaciones en cola, así que se
+             priorizan los avisos más próximos.
+             </summary>
+        </member>
+        <member name="T:Asistente.SyncService">
+             <summary>
+             Sincroniza las tareas entre SQLite (la fuente de verdad local) y Supabase,
+             la tabla "tarea" que comparte con Proyectito.
+            
+             El orden importa: primero se sube lo que el usuario hizo en esta app y
+             después se baja lo que cambió en el otro lado. Así, un cambio hecho en
+             Proyectito (completar, editar, borrar) aparece en Asistente, y al revés.
+            
+             Reglas de conflicto, ya que la tabla no lleva marca de tiempo:
+               - Si la fila local tiene cambios sin enviar (IsSynced = false), manda el
+                 cambio local y la fila no se sobrescribe al bajar del servidor.
+               - Si la fila local ya está sincronizada, manda el servidor.
+               - Los borrados locales se propagan al servidor y se limpian de SQLite.
+               - Las filas que el servidor ya no tiene (borradas en otro dispositivo)
+                 se borran también de SQLite.
+             </summary>
+        </member>
+        <member name="F:Asistente.SyncService.SincronizacionEnCurso">
+            <summary>
+            Evita que dos sincronizaciones se pisen: la de segundo plano, el
+            temporizador de la ventana y el botón de actualizar pueden pedirla a
+            la vez. Quien pierde la carrera simplemente no hace nada esta ronda.
+            </summary>
+        </member>
+        <member name="F:Asistente.SyncService._frecuenciaNoSoportada">
+            <summary>
+            Se activa cuando el servidor rechaza "frecuencia_recordatorio_horas".
+            Mientras dure la sesión ya no se compara ni se manda ese campo: si se
+            siguiera comparando, el PULL vería siempre "local con valor, servidor
+            sin columna" y borraría la frecuencia del usuario en cada ronda.
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.PropagarBorradosAsync(SQLite.SQLiteAsyncConnection,System.Int32)">
+            <summary>
+            Borra en Supabase las tareas marcadas como eliminadas y, si el servidor
+            confirma, las quita también de SQLite. Si la llamada falla la fila se
+            queda marcada para reintentar en la próxima ronda.
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.PropagarCambiosAsync(SQLite.SQLiteAsyncConnection,System.Int32)">
+            <summary>
+            Sube las tareas nuevas y las editadas. Cada fila va por separado: si una
+            falla (por ejemplo, una columna que el servidor no tiene) las demás
+            siguen subiendo y esa queda pendiente para el siguiente intento.
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.EsColumnaDesconocida(System.Exception)">
+            <summary>
+            PostgREST responde con un 400 y menciona la columna cuando la petición
+            incluye un campo que no existe en la tabla.
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.TraerDelServidorAsync(SQLite.SQLiteAsyncConnection,System.Int32)">
+            <summary>
+            Trae el estado del servidor a SQLite. Inserta lo que aún no existe y
+            actualiza lo que cambió en el otro dispositivo. Si el servidor no
+            devuelve una tarea que ya estaba sincronizada, es que la borraron en
+            otro lado: también se borra aquí.
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.AplicarServidorSobreLocal(Asistente.TareaLocal,Asistente.Tarea)">
+            <summary>
+            Copia los valores del servidor sobre la fila local. Devuelve true si
+            algo cambió de verdad (para no reescribir la fila en cada sincronización).
+            </summary>
+        </member>
+        <member name="M:Asistente.SyncService.MismaFecha(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Compara fechas sin que el viaje por Supabase (que devuelve UTC) haga
+            parecer que algo cambió cuando no. Se tolera un minuto de diferencia
+            porque el servidor puede recortar los segundos.
+            </summary>
+        </member>
+        <member name="T:Asistente.TareaSinFrecuencia">
+            <summary>
+            La misma tabla "tarea" sin la columna de frecuencia. Existe porque
+            "frecuencia_recordatorio_horas" es una exclusive de Asistente: si la base
+            compartida se montó sin ella, cualquier INSERT o UPDATE que la incluya
+            rebota con un 400 y la tarea se quedaría sin subir nunca. Con este modelo
+            se envía el resto de los campos y la frecuencia queda solo en local.
+            </summary>
+        </member>
+        <member name="T:Asistente.EstadoTarea">
+            <summary>
+            Estados de una tarea. La columna "estado" de Supabase es texto libre y
+            Proyectito escribe valores como "completada" o "completado", así que
+            aquí se normalizan a los dos valores canónicos que ambas apps usan.
+            </summary>
+        </member>
+        <member name="P:Asistente.UserSession.CurrentRol">
+            <summary>
+            Rol de la cuenta ('usuario' o 'admin'). Vive en la sesión para que el
+            panel de administración pueda mostrarse sin volver a iniciar sesión.
+            Solo decide qué se ve en la app: el servidor revalida el rol en cada
+            llamada, así que un rol falso aquí no concede ningún permiso.
             </summary>
         </member>
         <member name="T:Asistente.Resource">

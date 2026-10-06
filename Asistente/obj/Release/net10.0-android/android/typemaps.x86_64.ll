@@ -341,89 +341,89 @@ target triple = "x86_64-unknown-linux-android21"
 		ptr null; uint8_t* java_map
 	}, ; 27
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xb6, i8 u0xef, i8 u0x02, i8 u0xfe, i8 u0xa5, i8 u0x9a, i8 u0xc3, i8 u0x45, i8 u0xb1, i8 u0x5b, i8 u0xb5, i8 u0xf3, i8 u0xf6, i8 u0x0e, i8 u0x08, i8 u0x6c ], ; module_uuid: fe02efb6-9aa5-45c3-b15b-b5f3f60e086c
-		i32 1, ; uint32_t entry_count
+		[16 x i8] [ i8 u0xaf, i8 u0xaa, i8 u0xc6, i8 u0xd0, i8 u0xa7, i8 u0x77, i8 u0x77, i8 u0x46, i8 u0xbf, i8 u0xe4, i8 u0xd3, i8 u0xed, i8 u0x2b, i8 u0xdb, i8 u0x06, i8 u0xf8 ], ; module_uuid: d0c6aaaf-77a7-4677-bfe4-d3ed2bdb06f8
+		i32 2, ; uint32_t entry_count
 		i32 0, ; uint32_t duplicate_count
 		ptr @module28_managed_to_java, ; TypeMapModuleEntry* map
 		ptr null, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.28_assembly_name, ; assembly_name: Xamarin.AndroidX.Collection.Jvm
+		ptr @.TypeMapModule.28_assembly_name, ; assembly_name: Asistente
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 28
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xca, i8 u0x03, i8 u0xe6, i8 u0xb1, i8 u0xa0, i8 u0x40, i8 u0x80, i8 u0x4f, i8 u0x9f, i8 u0xcd, i8 u0xa2, i8 u0xcf, i8 u0xcd, i8 u0x63, i8 u0xe1, i8 u0x8d ], ; module_uuid: b1e603ca-40a0-4f80-9fcd-a2cfcd63e18d
-		i32 2, ; uint32_t entry_count
-		i32 1, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xb6, i8 u0xef, i8 u0x02, i8 u0xfe, i8 u0xa5, i8 u0x9a, i8 u0xc3, i8 u0x45, i8 u0xb1, i8 u0x5b, i8 u0xb5, i8 u0xf3, i8 u0xf6, i8 u0x0e, i8 u0x08, i8 u0x6c ], ; module_uuid: fe02efb6-9aa5-45c3-b15b-b5f3f60e086c
+		i32 1, ; uint32_t entry_count
+		i32 0, ; uint32_t duplicate_count
 		ptr @module29_managed_to_java, ; TypeMapModuleEntry* map
-		ptr @module29_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.29_assembly_name, ; assembly_name: Xamarin.AndroidX.SavedState.SavedState.Android
+		ptr null, ; TypeMapModuleEntry* duplicate_map
+		ptr @.TypeMapModule.29_assembly_name, ; assembly_name: Xamarin.AndroidX.Collection.Jvm
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 29
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xcc, i8 u0x8f, i8 u0xfa, i8 u0x92, i8 u0xc6, i8 u0x88, i8 u0xb7, i8 u0x48, i8 u0x89, i8 u0x87, i8 u0x04, i8 u0x61, i8 u0x2d, i8 u0x73, i8 u0x2f, i8 u0xb4 ], ; module_uuid: 92fa8fcc-88c6-48b7-8987-04612d732fb4
-		i32 10, ; uint32_t entry_count
-		i32 0, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xca, i8 u0x03, i8 u0xe6, i8 u0xb1, i8 u0xa0, i8 u0x40, i8 u0x80, i8 u0x4f, i8 u0x9f, i8 u0xcd, i8 u0xa2, i8 u0xcf, i8 u0xcd, i8 u0x63, i8 u0xe1, i8 u0x8d ], ; module_uuid: b1e603ca-40a0-4f80-9fcd-a2cfcd63e18d
+		i32 2, ; uint32_t entry_count
+		i32 1, ; uint32_t duplicate_count
 		ptr @module30_managed_to_java, ; TypeMapModuleEntry* map
-		ptr null, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.30_assembly_name, ; assembly_name: Microsoft.Maui.Essentials
+		ptr @module30_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
+		ptr @.TypeMapModule.30_assembly_name, ; assembly_name: Xamarin.AndroidX.SavedState.SavedState.Android
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 30
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xce, i8 u0x54, i8 u0xa5, i8 u0xd1, i8 u0xd5, i8 u0x7b, i8 u0x9d, i8 u0x47, i8 u0xb4, i8 u0x0b, i8 u0x7f, i8 u0x8d, i8 u0x8b, i8 u0xe4, i8 u0x4a, i8 u0x8c ], ; module_uuid: d1a554ce-7bd5-479d-b40b-7f8d8be44a8c
-		i32 2, ; uint32_t entry_count
+		[16 x i8] [ i8 u0xcc, i8 u0x8f, i8 u0xfa, i8 u0x92, i8 u0xc6, i8 u0x88, i8 u0xb7, i8 u0x48, i8 u0x89, i8 u0x87, i8 u0x04, i8 u0x61, i8 u0x2d, i8 u0x73, i8 u0x2f, i8 u0xb4 ], ; module_uuid: 92fa8fcc-88c6-48b7-8987-04612d732fb4
+		i32 10, ; uint32_t entry_count
 		i32 0, ; uint32_t duplicate_count
 		ptr @module31_managed_to_java, ; TypeMapModuleEntry* map
 		ptr null, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.31_assembly_name, ; assembly_name: Xamarin.AndroidX.AppCompat.AppCompatResources
+		ptr @.TypeMapModule.31_assembly_name, ; assembly_name: Microsoft.Maui.Essentials
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 31
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xcf, i8 u0x31, i8 u0x8e, i8 u0x1b, i8 u0xb5, i8 u0x71, i8 u0xe7, i8 u0x4b, i8 u0x89, i8 u0x6b, i8 u0x01, i8 u0xf3, i8 u0x12, i8 u0xb7, i8 u0xfb, i8 u0x4c ], ; module_uuid: 1b8e31cf-71b5-4be7-896b-01f312b7fb4c
-		i32 1, ; uint32_t entry_count
-		i32 1, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xce, i8 u0x54, i8 u0xa5, i8 u0xd1, i8 u0xd5, i8 u0x7b, i8 u0x9d, i8 u0x47, i8 u0xb4, i8 u0x0b, i8 u0x7f, i8 u0x8d, i8 u0x8b, i8 u0xe4, i8 u0x4a, i8 u0x8c ], ; module_uuid: d1a554ce-7bd5-479d-b40b-7f8d8be44a8c
+		i32 2, ; uint32_t entry_count
+		i32 0, ; uint32_t duplicate_count
 		ptr @module32_managed_to_java, ; TypeMapModuleEntry* map
-		ptr @module32_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.32_assembly_name, ; assembly_name: Xamarin.AndroidX.VersionedParcelable
+		ptr null, ; TypeMapModuleEntry* duplicate_map
+		ptr @.TypeMapModule.32_assembly_name, ; assembly_name: Xamarin.AndroidX.AppCompat.AppCompatResources
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 32
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xdd, i8 u0x02, i8 u0xe3, i8 u0xe6, i8 u0x21, i8 u0xff, i8 u0x4d, i8 u0x44, i8 u0x97, i8 u0xfd, i8 u0x3a, i8 u0x22, i8 u0x81, i8 u0x55, i8 u0x0f, i8 u0xf1 ], ; module_uuid: e6e302dd-ff21-444d-97fd-3a2281550ff1
-		i32 24, ; uint32_t entry_count
-		i32 19, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xcf, i8 u0x31, i8 u0x8e, i8 u0x1b, i8 u0xb5, i8 u0x71, i8 u0xe7, i8 u0x4b, i8 u0x89, i8 u0x6b, i8 u0x01, i8 u0xf3, i8 u0x12, i8 u0xb7, i8 u0xfb, i8 u0x4c ], ; module_uuid: 1b8e31cf-71b5-4be7-896b-01f312b7fb4c
+		i32 1, ; uint32_t entry_count
+		i32 1, ; uint32_t duplicate_count
 		ptr @module33_managed_to_java, ; TypeMapModuleEntry* map
 		ptr @module33_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.33_assembly_name, ; assembly_name: Xamarin.Kotlin.StdLib
+		ptr @.TypeMapModule.33_assembly_name, ; assembly_name: Xamarin.AndroidX.VersionedParcelable
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 33
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xe1, i8 u0x31, i8 u0x18, i8 u0x91, i8 u0xe1, i8 u0x34, i8 u0x00, i8 u0x41, i8 u0x80, i8 u0xb3, i8 u0xcc, i8 u0xbd, i8 u0x33, i8 u0x0c, i8 u0xf7, i8 u0xa9 ], ; module_uuid: 911831e1-34e1-4100-80b3-ccbd330cf7a9
-		i32 7, ; uint32_t entry_count
-		i32 5, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xdd, i8 u0x02, i8 u0xe3, i8 u0xe6, i8 u0x21, i8 u0xff, i8 u0x4d, i8 u0x44, i8 u0x97, i8 u0xfd, i8 u0x3a, i8 u0x22, i8 u0x81, i8 u0x55, i8 u0x0f, i8 u0xf1 ], ; module_uuid: e6e302dd-ff21-444d-97fd-3a2281550ff1
+		i32 24, ; uint32_t entry_count
+		i32 19, ; uint32_t duplicate_count
 		ptr @module34_managed_to_java, ; TypeMapModuleEntry* map
 		ptr @module34_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.34_assembly_name, ; assembly_name: Xamarin.AndroidX.ViewPager2
+		ptr @.TypeMapModule.34_assembly_name, ; assembly_name: Xamarin.Kotlin.StdLib
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
 	}, ; 34
 	%struct.TypeMapModule {
-		[16 x i8] [ i8 u0xe8, i8 u0x8a, i8 u0xba, i8 u0x15, i8 u0x55, i8 u0x73, i8 u0x76, i8 u0x4f, i8 u0x97, i8 u0xc6, i8 u0x19, i8 u0x4a, i8 u0xbc, i8 u0x66, i8 u0x85, i8 u0x23 ], ; module_uuid: 15ba8ae8-7355-4f76-97c6-194abc668523
-		i32 2, ; uint32_t entry_count
-		i32 0, ; uint32_t duplicate_count
+		[16 x i8] [ i8 u0xe1, i8 u0x31, i8 u0x18, i8 u0x91, i8 u0xe1, i8 u0x34, i8 u0x00, i8 u0x41, i8 u0x80, i8 u0xb3, i8 u0xcc, i8 u0xbd, i8 u0x33, i8 u0x0c, i8 u0xf7, i8 u0xa9 ], ; module_uuid: 911831e1-34e1-4100-80b3-ccbd330cf7a9
+		i32 7, ; uint32_t entry_count
+		i32 5, ; uint32_t duplicate_count
 		ptr @module35_managed_to_java, ; TypeMapModuleEntry* map
-		ptr null, ; TypeMapModuleEntry* duplicate_map
-		ptr @.TypeMapModule.35_assembly_name, ; assembly_name: Asistente
+		ptr @module35_managed_to_java_duplicates, ; TypeMapModuleEntry* duplicate_map
+		ptr @.TypeMapModule.35_assembly_name, ; assembly_name: Xamarin.AndroidX.ViewPager2
 		ptr null, ; MonoImage* image
 		i32 0, ; uint32_t java_name_width
 		ptr null; uint8_t* java_map
@@ -7180,14 +7180,25 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 1
 ], align 16
 
-@module28_managed_to_java = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
+@module28_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
+	%struct.TypeMapModuleEntry {
+		i32 u0x0200001a, ; uint32_t type_token_id
+		i32 649; uint32_t java_map_index
+	}, ; 0
+	%struct.TypeMapModuleEntry {
+		i32 u0x0200001b, ; uint32_t type_token_id
+		i32 880; uint32_t java_map_index
+	} ; 1
+], align 16
+
+@module29_managed_to_java = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000012, ; uint32_t type_token_id
 		i32 243; uint32_t java_map_index
 	} ; 0
 ], align 4
 
-@module29_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
+@module30_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000003, ; uint32_t type_token_id
 		i32 190; uint32_t java_map_index
@@ -7198,14 +7209,14 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 1
 ], align 16
 
-@module29_managed_to_java_duplicates = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
+@module30_managed_to_java_duplicates = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000005, ; uint32_t type_token_id
 		i32 700; uint32_t java_map_index
 	} ; 0
 ], align 4
 
-@module30_managed_to_java = internal dso_local constant [10 x %struct.TypeMapModuleEntry] [
+@module31_managed_to_java = internal dso_local constant [10 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x0200000b, ; uint32_t type_token_id
 		i32 542; uint32_t java_map_index
@@ -7248,7 +7259,7 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 9
 ], align 16
 
-@module31_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
+@module32_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000008, ; uint32_t type_token_id
 		i32 894; uint32_t java_map_index
@@ -7259,21 +7270,21 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 1
 ], align 16
 
-@module32_managed_to_java = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
+@module33_managed_to_java = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000004, ; uint32_t type_token_id
 		i32 697; uint32_t java_map_index
 	} ; 0
 ], align 4
 
-@module32_managed_to_java_duplicates = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
+@module33_managed_to_java_duplicates = internal dso_local constant [1 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000005, ; uint32_t type_token_id
 		i32 697; uint32_t java_map_index
 	} ; 0
 ], align 4
 
-@module33_managed_to_java = internal dso_local constant [24 x %struct.TypeMapModuleEntry] [
+@module34_managed_to_java = internal dso_local constant [24 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000010, ; uint32_t type_token_id
 		i32 737; uint32_t java_map_index
@@ -7372,7 +7383,7 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 23
 ], align 16
 
-@module33_managed_to_java_duplicates = internal dso_local constant [19 x %struct.TypeMapModuleEntry] [
+@module34_managed_to_java_duplicates = internal dso_local constant [19 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x02000011, ; uint32_t type_token_id
 		i32 737; uint32_t java_map_index
@@ -7451,7 +7462,7 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 18
 ], align 16
 
-@module34_managed_to_java = internal dso_local constant [7 x %struct.TypeMapModuleEntry] [
+@module35_managed_to_java = internal dso_local constant [7 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x0200000c, ; uint32_t type_token_id
 		i32 477; uint32_t java_map_index
@@ -7482,7 +7493,7 @@ target triple = "x86_64-unknown-linux-android21"
 	} ; 6
 ], align 16
 
-@module34_managed_to_java_duplicates = internal dso_local constant [5 x %struct.TypeMapModuleEntry] [
+@module35_managed_to_java_duplicates = internal dso_local constant [5 x %struct.TypeMapModuleEntry] [
 	%struct.TypeMapModuleEntry {
 		i32 u0x0200000e, ; uint32_t type_token_id
 		i32 468; uint32_t java_map_index
@@ -7503,17 +7514,6 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 u0x02000016, ; uint32_t type_token_id
 		i32 543; uint32_t java_map_index
 	} ; 4
-], align 16
-
-@module35_managed_to_java = internal dso_local constant [2 x %struct.TypeMapModuleEntry] [
-	%struct.TypeMapModuleEntry {
-		i32 u0x0200001a, ; uint32_t type_token_id
-		i32 649; uint32_t java_map_index
-	}, ; 0
-	%struct.TypeMapModuleEntry {
-		i32 u0x0200001b, ; uint32_t type_token_id
-		i32 880; uint32_t java_map_index
-	} ; 1
 ], align 16
 
 @module36_managed_to_java = internal dso_local constant [4 x %struct.TypeMapModuleEntry] [
@@ -8543,9 +8543,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 911; uint32_t java_name_index
 	}, ; 99
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1032; uint32_t java_name_index
+		i32 1034; uint32_t java_name_index
 	}, ; 100
 	%struct.TypeMapJava {
 		i32 25, ; uint32_t module_index
@@ -8563,9 +8563,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 15; uint32_t java_name_index
 	}, ; 103
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1036; uint32_t java_name_index
+		i32 1038; uint32_t java_name_index
 	}, ; 104
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -8648,9 +8648,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 930; uint32_t java_name_index
 	}, ; 120
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1020; uint32_t java_name_index
+		i32 1022; uint32_t java_name_index
 	}, ; 121
 	%struct.TypeMapJava {
 		i32 21, ; uint32_t module_index
@@ -8803,9 +8803,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 340; uint32_t java_name_index
 	}, ; 151
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1051; uint32_t java_name_index
+		i32 1053; uint32_t java_name_index
 	}, ; 152
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -8993,9 +8993,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 289; uint32_t java_name_index
 	}, ; 189
 	%struct.TypeMapJava {
-		i32 29, ; uint32_t module_index
+		i32 30, ; uint32_t module_index
 		i32 u0x02000003, ; uint32_t type_token_id
-		i32 1014; uint32_t java_name_index
+		i32 1016; uint32_t java_name_index
 	}, ; 190
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -9098,9 +9098,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 210; uint32_t java_name_index
 	}, ; 210
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1031; uint32_t java_name_index
+		i32 1033; uint32_t java_name_index
 	}, ; 211
 	%struct.TypeMapJava {
 		i32 23, ; uint32_t module_index
@@ -9258,9 +9258,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 518; uint32_t java_name_index
 	}, ; 242
 	%struct.TypeMapJava {
-		i32 28, ; uint32_t module_index
+		i32 29, ; uint32_t module_index
 		i32 u0x02000012, ; uint32_t type_token_id
-		i32 1013; uint32_t java_name_index
+		i32 1015; uint32_t java_name_index
 	}, ; 243
 	%struct.TypeMapJava {
 		i32 10, ; uint32_t module_index
@@ -9513,9 +9513,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 36; uint32_t java_name_index
 	}, ; 293
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1048; uint32_t java_name_index
+		i32 1050; uint32_t java_name_index
 	}, ; 294
 	%struct.TypeMapJava {
 		i32 17, ; uint32_t module_index
@@ -9538,9 +9538,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 989; uint32_t java_name_index
 	}, ; 298
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1055; uint32_t java_name_index
+		i32 1057; uint32_t java_name_index
 	}, ; 299
 	%struct.TypeMapJava {
 		i32 25, ; uint32_t module_index
@@ -9558,9 +9558,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 254; uint32_t java_name_index
 	}, ; 302
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x02000028, ; uint32_t type_token_id
-		i32 1019; uint32_t java_name_index
+		i32 1021; uint32_t java_name_index
 	}, ; 303
 	%struct.TypeMapJava {
 		i32 25, ; uint32_t module_index
@@ -9668,9 +9668,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 945; uint32_t java_name_index
 	}, ; 324
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x02000027, ; uint32_t type_token_id
-		i32 1041; uint32_t java_name_index
+		i32 1043; uint32_t java_name_index
 	}, ; 325
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -9733,9 +9733,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 565; uint32_t java_name_index
 	}, ; 337
 	%struct.TypeMapJava {
-		i32 31, ; uint32_t module_index
+		i32 32, ; uint32_t module_index
 		i32 u0x02000009, ; uint32_t type_token_id
-		i32 1027; uint32_t java_name_index
+		i32 1029; uint32_t java_name_index
 	}, ; 338
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -10073,9 +10073,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 201; uint32_t java_name_index
 	}, ; 405
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1046; uint32_t java_name_index
+		i32 1048; uint32_t java_name_index
 	}, ; 406
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -10383,9 +10383,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 424; uint32_t java_name_index
 	}, ; 467
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x0200000d, ; uint32_t type_token_id
-		i32 1054; uint32_t java_name_index
+		i32 1056; uint32_t java_name_index
 	}, ; 468
 	%struct.TypeMapJava {
 		i32 10, ; uint32_t module_index
@@ -10428,9 +10428,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 976; uint32_t java_name_index
 	}, ; 476
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x0200000c, ; uint32_t type_token_id
-		i32 1053; uint32_t java_name_index
+		i32 1055; uint32_t java_name_index
 	}, ; 477
 	%struct.TypeMapJava {
 		i32 25, ; uint32_t module_index
@@ -10658,9 +10658,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 753; uint32_t java_name_index
 	}, ; 522
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x02000021, ; uint32_t type_token_id
-		i32 1018; uint32_t java_name_index
+		i32 1020; uint32_t java_name_index
 	}, ; 523
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -10698,9 +10698,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 291; uint32_t java_name_index
 	}, ; 530
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1039; uint32_t java_name_index
+		i32 1041; uint32_t java_name_index
 	}, ; 531
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -10723,9 +10723,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 324; uint32_t java_name_index
 	}, ; 535
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1052; uint32_t java_name_index
+		i32 1054; uint32_t java_name_index
 	}, ; 536
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -10753,14 +10753,14 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 1139; uint32_t java_name_index
 	}, ; 541
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x0200000b, ; uint32_t type_token_id
-		i32 1016; uint32_t java_name_index
+		i32 1018; uint32_t java_name_index
 	}, ; 542
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x02000011, ; uint32_t type_token_id
-		i32 1056; uint32_t java_name_index
+		i32 1058; uint32_t java_name_index
 	}, ; 543
 	%struct.TypeMapJava {
 		i32 17, ; uint32_t module_index
@@ -11033,9 +11033,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 720; uint32_t java_name_index
 	}, ; 597
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1045; uint32_t java_name_index
+		i32 1047; uint32_t java_name_index
 	}, ; 598
 	%struct.TypeMapJava {
 		i32 37, ; uint32_t module_index
@@ -11183,9 +11183,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 403; uint32_t java_name_index
 	}, ; 627
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x02000054, ; uint32_t type_token_id
-		i32 1021; uint32_t java_name_index
+		i32 1023; uint32_t java_name_index
 	}, ; 628
 	%struct.TypeMapJava {
 		i32 10, ; uint32_t module_index
@@ -11288,9 +11288,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 101; uint32_t java_name_index
 	}, ; 648
 	%struct.TypeMapJava {
-		i32 35, ; uint32_t module_index
+		i32 28, ; uint32_t module_index
 		i32 u0x0200001a, ; uint32_t type_token_id
-		i32 1060; uint32_t java_name_index
+		i32 1013; uint32_t java_name_index
 	}, ; 649
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -11378,9 +11378,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 61; uint32_t java_name_index
 	}, ; 666
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x0200006e, ; uint32_t type_token_id
-		i32 1025; uint32_t java_name_index
+		i32 1027; uint32_t java_name_index
 	}, ; 667
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -11438,9 +11438,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 581; uint32_t java_name_index
 	}, ; 678
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x0200002a, ; uint32_t type_token_id
-		i32 1044; uint32_t java_name_index
+		i32 1046; uint32_t java_name_index
 	}, ; 679
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -11528,9 +11528,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 441; uint32_t java_name_index
 	}, ; 696
 	%struct.TypeMapJava {
-		i32 32, ; uint32_t module_index
+		i32 33, ; uint32_t module_index
 		i32 u0x02000004, ; uint32_t type_token_id
-		i32 1028; uint32_t java_name_index
+		i32 1030; uint32_t java_name_index
 	}, ; 697
 	%struct.TypeMapJava {
 		i32 3, ; uint32_t module_index
@@ -11543,9 +11543,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 673; uint32_t java_name_index
 	}, ; 699
 	%struct.TypeMapJava {
-		i32 29, ; uint32_t module_index
+		i32 30, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1015; uint32_t java_name_index
+		i32 1017; uint32_t java_name_index
 	}, ; 700
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -11588,9 +11588,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 96; uint32_t java_name_index
 	}, ; 708
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1035; uint32_t java_name_index
+		i32 1037; uint32_t java_name_index
 	}, ; 709
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -11728,9 +11728,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 866; uint32_t java_name_index
 	}, ; 736
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1029; uint32_t java_name_index
+		i32 1031; uint32_t java_name_index
 	}, ; 737
 	%struct.TypeMapJava {
 		i32 17, ; uint32_t module_index
@@ -11808,9 +11808,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 540; uint32_t java_name_index
 	}, ; 752
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x02000029, ; uint32_t type_token_id
-		i32 1043; uint32_t java_name_index
+		i32 1045; uint32_t java_name_index
 	}, ; 753
 	%struct.TypeMapJava {
 		i32 17, ; uint32_t module_index
@@ -11848,9 +11848,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 49; uint32_t java_name_index
 	}, ; 760
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x0200006d, ; uint32_t type_token_id
-		i32 1024; uint32_t java_name_index
+		i32 1026; uint32_t java_name_index
 	}, ; 761
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -12048,9 +12048,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 1089; uint32_t java_name_index
 	}, ; 800
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1030; uint32_t java_name_index
+		i32 1032; uint32_t java_name_index
 	}, ; 801
 	%struct.TypeMapJava {
 		i32 10, ; uint32_t module_index
@@ -12068,9 +12068,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 371; uint32_t java_name_index
 	}, ; 804
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x0200001c, ; uint32_t type_token_id
-		i32 1017; uint32_t java_name_index
+		i32 1019; uint32_t java_name_index
 	}, ; 805
 	%struct.TypeMapJava {
 		i32 3, ; uint32_t module_index
@@ -12233,9 +12233,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 411; uint32_t java_name_index
 	}, ; 837
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x02000017, ; uint32_t type_token_id
-		i32 1059; uint32_t java_name_index
+		i32 1061; uint32_t java_name_index
 	}, ; 838
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -12288,9 +12288,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 615; uint32_t java_name_index
 	}, ; 848
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x02000020, ; uint32_t type_token_id
-		i32 1037; uint32_t java_name_index
+		i32 1039; uint32_t java_name_index
 	}, ; 849
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -12323,9 +12323,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 944; uint32_t java_name_index
 	}, ; 855
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x02000055, ; uint32_t type_token_id
-		i32 1022; uint32_t java_name_index
+		i32 1024; uint32_t java_name_index
 	}, ; 856
 	%struct.TypeMapJava {
 		i32 37, ; uint32_t module_index
@@ -12443,9 +12443,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 583; uint32_t java_name_index
 	}, ; 879
 	%struct.TypeMapJava {
-		i32 35, ; uint32_t module_index
+		i32 28, ; uint32_t module_index
 		i32 u0x0200001b, ; uint32_t type_token_id
-		i32 1061; uint32_t java_name_index
+		i32 1014; uint32_t java_name_index
 	}, ; 880
 	%struct.TypeMapJava {
 		i32 26, ; uint32_t module_index
@@ -12458,9 +12458,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 497; uint32_t java_name_index
 	}, ; 882
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1034; uint32_t java_name_index
+		i32 1036; uint32_t java_name_index
 	}, ; 883
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -12473,9 +12473,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 686; uint32_t java_name_index
 	}, ; 885
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1038; uint32_t java_name_index
+		i32 1040; uint32_t java_name_index
 	}, ; 886
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -12513,9 +12513,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 56; uint32_t java_name_index
 	}, ; 893
 	%struct.TypeMapJava {
-		i32 31, ; uint32_t module_index
+		i32 32, ; uint32_t module_index
 		i32 u0x02000008, ; uint32_t type_token_id
-		i32 1026; uint32_t java_name_index
+		i32 1028; uint32_t java_name_index
 	}, ; 894
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -12683,9 +12683,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 652; uint32_t java_name_index
 	}, ; 927
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1058; uint32_t java_name_index
+		i32 1060; uint32_t java_name_index
 	}, ; 928
 	%struct.TypeMapJava {
 		i32 26, ; uint32_t module_index
@@ -12873,9 +12873,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 997; uint32_t java_name_index
 	}, ; 965
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1040; uint32_t java_name_index
+		i32 1042; uint32_t java_name_index
 	}, ; 966
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -13133,9 +13133,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 129; uint32_t java_name_index
 	}, ; 1017
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x02000028, ; uint32_t type_token_id
-		i32 1042; uint32_t java_name_index
+		i32 1044; uint32_t java_name_index
 	}, ; 1018
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -13178,9 +13178,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 43; uint32_t java_name_index
 	}, ; 1026
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1050; uint32_t java_name_index
+		i32 1052; uint32_t java_name_index
 	}, ; 1027
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -13288,9 +13288,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 644; uint32_t java_name_index
 	}, ; 1048
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1033; uint32_t java_name_index
+		i32 1035; uint32_t java_name_index
 	}, ; 1049
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -13298,9 +13298,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 196; uint32_t java_name_index
 	}, ; 1050
 	%struct.TypeMapJava {
-		i32 30, ; uint32_t module_index
+		i32 31, ; uint32_t module_index
 		i32 u0x02000063, ; uint32_t type_token_id
-		i32 1023; uint32_t java_name_index
+		i32 1025; uint32_t java_name_index
 	}, ; 1051
 	%struct.TypeMapJava {
 		i32 20, ; uint32_t module_index
@@ -13513,9 +13513,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 413; uint32_t java_name_index
 	}, ; 1093
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1047; uint32_t java_name_index
+		i32 1049; uint32_t java_name_index
 	}, ; 1094
 	%struct.TypeMapJava {
 		i32 37, ; uint32_t module_index
@@ -13603,9 +13603,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 338; uint32_t java_name_index
 	}, ; 1111
 	%struct.TypeMapJava {
-		i32 34, ; uint32_t module_index
+		i32 35, ; uint32_t module_index
 		i32 u0x02000012, ; uint32_t type_token_id
-		i32 1057; uint32_t java_name_index
+		i32 1059; uint32_t java_name_index
 	}, ; 1112
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -13733,9 +13733,9 @@ target triple = "x86_64-unknown-linux-android21"
 		i32 271; uint32_t java_name_index
 	}, ; 1137
 	%struct.TypeMapJava {
-		i32 33, ; uint32_t module_index
+		i32 34, ; uint32_t module_index
 		i32 u0x00000000, ; uint32_t type_token_id
-		i32 1049; uint32_t java_name_index
+		i32 1051; uint32_t java_name_index
 	}, ; 1138
 	%struct.TypeMapJava {
 		i32 16, ; uint32_t module_index
@@ -14869,55 +14869,55 @@ target triple = "x86_64-unknown-linux-android21"
 	ptr @.tmr.1010, ; 1010 ('net/dot/jni/internal/JavaProxyObject')
 	ptr @.tmr.1011, ; 1011 ('net/dot/jni/internal/JavaProxyThrowable')
 	ptr @.tmr.1012, ; 1012 ('net/dot/jni/ManagedPeer')
-	ptr @.tmr.1013, ; 1013 ('androidx/collection/SparseArrayCompat')
-	ptr @.tmr.1014, ; 1014 ('androidx/savedstate/SavedStateRegistry')
-	ptr @.tmr.1015, ; 1015 ('androidx/savedstate/SavedStateRegistry$SavedStateProvider')
-	ptr @.tmr.1016, ; 1016 ('crc6468b6408a11370c2f/WebAuthenticatorIntermediateActivity')
-	ptr @.tmr.1017, ; 1017 ('microsoft/maui/essentials/fileProvider')
-	ptr @.tmr.1018, ; 1018 ('crc64e53d2f592022988e/ConnectivityImplementation_EssentialsNetworkCallback')
-	ptr @.tmr.1019, ; 1019 ('crc64e53d2f592022988e/ConnectivityBroadcastReceiver')
-	ptr @.tmr.1020, ; 1020 ('crc64ba438d8f48cf7e75/ActivityResultCallback_1')
-	ptr @.tmr.1021, ; 1021 ('crc64ba438d8f48cf7e75/ActivityLifecycleContextListener')
-	ptr @.tmr.1022, ; 1022 ('crc64ba438d8f48cf7e75/IntermediateActivity')
-	ptr @.tmr.1023, ; 1023 ('crc640a8d9a12ddbf2cf2/DeviceDisplayImplementation_Listener')
-	ptr @.tmr.1024, ; 1024 ('crc640a8d9a12ddbf2cf2/BatteryBroadcastReceiver')
-	ptr @.tmr.1025, ; 1025 ('crc640a8d9a12ddbf2cf2/EnergySaverBroadcastReceiver')
-	ptr @.tmr.1026, ; 1026 ('androidx/appcompat/content/res/AppCompatResources')
-	ptr @.tmr.1027, ; 1027 ('androidx/appcompat/graphics/drawable/DrawableWrapperCompat')
-	ptr @.tmr.1028, ; 1028 ('androidx/versionedparcelable/CustomVersionedParcelable')
-	ptr @.tmr.1029, ; 1029 ('kotlin/Function')
-	ptr @.tmr.1030, ; 1030 ('kotlin/sequences/Sequence')
-	ptr @.tmr.1031, ; 1031 ('kotlin/reflect/KAnnotatedElement')
-	ptr @.tmr.1032, ; 1032 ('kotlin/reflect/KCallable')
-	ptr @.tmr.1033, ; 1033 ('kotlin/reflect/KClass')
-	ptr @.tmr.1034, ; 1034 ('kotlin/reflect/KClassifier')
-	ptr @.tmr.1035, ; 1035 ('kotlin/reflect/KDeclarationContainer')
-	ptr @.tmr.1036, ; 1036 ('kotlin/reflect/KFunction')
-	ptr @.tmr.1037, ; 1037 ('kotlin/reflect/KParameter$Kind')
-	ptr @.tmr.1038, ; 1038 ('kotlin/reflect/KParameter')
-	ptr @.tmr.1039, ; 1039 ('kotlin/reflect/KType')
-	ptr @.tmr.1040, ; 1040 ('kotlin/reflect/KTypeParameter')
-	ptr @.tmr.1041, ; 1041 ('kotlin/reflect/KTypeProjection')
-	ptr @.tmr.1042, ; 1042 ('kotlin/reflect/KTypeProjection$Companion')
-	ptr @.tmr.1043, ; 1043 ('kotlin/reflect/KVariance')
-	ptr @.tmr.1044, ; 1044 ('kotlin/reflect/KVisibility')
-	ptr @.tmr.1045, ; 1045 ('kotlin/jvm/internal/markers/KMappedMarker')
-	ptr @.tmr.1046, ; 1046 ('kotlin/jvm/functions/Function0')
-	ptr @.tmr.1047, ; 1047 ('kotlin/jvm/functions/Function1')
-	ptr @.tmr.1048, ; 1048 ('kotlin/jvm/functions/Function2')
-	ptr @.tmr.1049, ; 1049 ('kotlin/enums/EnumEntries')
-	ptr @.tmr.1050, ; 1050 ('kotlin/coroutines/Continuation')
-	ptr @.tmr.1051, ; 1051 ('kotlin/coroutines/CoroutineContext$Key')
-	ptr @.tmr.1052, ; 1052 ('kotlin/coroutines/CoroutineContext')
-	ptr @.tmr.1053, ; 1053 ('androidx/viewpager2/widget/ViewPager2')
-	ptr @.tmr.1054, ; 1054 ('androidx/viewpager2/widget/ViewPager2$OnPageChangeCallback')
-	ptr @.tmr.1055, ; 1055 ('androidx/viewpager2/widget/ViewPager2$PageTransformer')
-	ptr @.tmr.1056, ; 1056 ('androidx/viewpager2/adapter/FragmentStateAdapter')
-	ptr @.tmr.1057, ; 1057 ('androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback')
-	ptr @.tmr.1058, ; 1058 ('androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback$OnPostEventListener')
-	ptr @.tmr.1059, ; 1059 ('androidx/viewpager2/adapter/FragmentViewHolder')
-	ptr @.tmr.1060, ; 1060 ('crc64ce4bcd770eab3382/MainActivity')
-	ptr @.tmr.1061, ; 1061 ('crc64ce4bcd770eab3382/MainApplication')
+	ptr @.tmr.1013, ; 1013 ('crc64ce4bcd770eab3382/MainActivity')
+	ptr @.tmr.1014, ; 1014 ('crc64ce4bcd770eab3382/MainApplication')
+	ptr @.tmr.1015, ; 1015 ('androidx/collection/SparseArrayCompat')
+	ptr @.tmr.1016, ; 1016 ('androidx/savedstate/SavedStateRegistry')
+	ptr @.tmr.1017, ; 1017 ('androidx/savedstate/SavedStateRegistry$SavedStateProvider')
+	ptr @.tmr.1018, ; 1018 ('crc6468b6408a11370c2f/WebAuthenticatorIntermediateActivity')
+	ptr @.tmr.1019, ; 1019 ('microsoft/maui/essentials/fileProvider')
+	ptr @.tmr.1020, ; 1020 ('crc64e53d2f592022988e/ConnectivityImplementation_EssentialsNetworkCallback')
+	ptr @.tmr.1021, ; 1021 ('crc64e53d2f592022988e/ConnectivityBroadcastReceiver')
+	ptr @.tmr.1022, ; 1022 ('crc64ba438d8f48cf7e75/ActivityResultCallback_1')
+	ptr @.tmr.1023, ; 1023 ('crc64ba438d8f48cf7e75/ActivityLifecycleContextListener')
+	ptr @.tmr.1024, ; 1024 ('crc64ba438d8f48cf7e75/IntermediateActivity')
+	ptr @.tmr.1025, ; 1025 ('crc640a8d9a12ddbf2cf2/DeviceDisplayImplementation_Listener')
+	ptr @.tmr.1026, ; 1026 ('crc640a8d9a12ddbf2cf2/BatteryBroadcastReceiver')
+	ptr @.tmr.1027, ; 1027 ('crc640a8d9a12ddbf2cf2/EnergySaverBroadcastReceiver')
+	ptr @.tmr.1028, ; 1028 ('androidx/appcompat/content/res/AppCompatResources')
+	ptr @.tmr.1029, ; 1029 ('androidx/appcompat/graphics/drawable/DrawableWrapperCompat')
+	ptr @.tmr.1030, ; 1030 ('androidx/versionedparcelable/CustomVersionedParcelable')
+	ptr @.tmr.1031, ; 1031 ('kotlin/Function')
+	ptr @.tmr.1032, ; 1032 ('kotlin/sequences/Sequence')
+	ptr @.tmr.1033, ; 1033 ('kotlin/reflect/KAnnotatedElement')
+	ptr @.tmr.1034, ; 1034 ('kotlin/reflect/KCallable')
+	ptr @.tmr.1035, ; 1035 ('kotlin/reflect/KClass')
+	ptr @.tmr.1036, ; 1036 ('kotlin/reflect/KClassifier')
+	ptr @.tmr.1037, ; 1037 ('kotlin/reflect/KDeclarationContainer')
+	ptr @.tmr.1038, ; 1038 ('kotlin/reflect/KFunction')
+	ptr @.tmr.1039, ; 1039 ('kotlin/reflect/KParameter$Kind')
+	ptr @.tmr.1040, ; 1040 ('kotlin/reflect/KParameter')
+	ptr @.tmr.1041, ; 1041 ('kotlin/reflect/KType')
+	ptr @.tmr.1042, ; 1042 ('kotlin/reflect/KTypeParameter')
+	ptr @.tmr.1043, ; 1043 ('kotlin/reflect/KTypeProjection')
+	ptr @.tmr.1044, ; 1044 ('kotlin/reflect/KTypeProjection$Companion')
+	ptr @.tmr.1045, ; 1045 ('kotlin/reflect/KVariance')
+	ptr @.tmr.1046, ; 1046 ('kotlin/reflect/KVisibility')
+	ptr @.tmr.1047, ; 1047 ('kotlin/jvm/internal/markers/KMappedMarker')
+	ptr @.tmr.1048, ; 1048 ('kotlin/jvm/functions/Function0')
+	ptr @.tmr.1049, ; 1049 ('kotlin/jvm/functions/Function1')
+	ptr @.tmr.1050, ; 1050 ('kotlin/jvm/functions/Function2')
+	ptr @.tmr.1051, ; 1051 ('kotlin/enums/EnumEntries')
+	ptr @.tmr.1052, ; 1052 ('kotlin/coroutines/Continuation')
+	ptr @.tmr.1053, ; 1053 ('kotlin/coroutines/CoroutineContext$Key')
+	ptr @.tmr.1054, ; 1054 ('kotlin/coroutines/CoroutineContext')
+	ptr @.tmr.1055, ; 1055 ('androidx/viewpager2/widget/ViewPager2')
+	ptr @.tmr.1056, ; 1056 ('androidx/viewpager2/widget/ViewPager2$OnPageChangeCallback')
+	ptr @.tmr.1057, ; 1057 ('androidx/viewpager2/widget/ViewPager2$PageTransformer')
+	ptr @.tmr.1058, ; 1058 ('androidx/viewpager2/adapter/FragmentStateAdapter')
+	ptr @.tmr.1059, ; 1059 ('androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback')
+	ptr @.tmr.1060, ; 1060 ('androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback$OnPostEventListener')
+	ptr @.tmr.1061, ; 1061 ('androidx/viewpager2/adapter/FragmentViewHolder')
 	ptr @.tmr.1062, ; 1062 ('androidx/drawerlayout/widget/DrawerLayout')
 	ptr @.tmr.1063, ; 1063 ('androidx/drawerlayout/widget/DrawerLayout$DrawerListener')
 	ptr @.tmr.1064, ; 1064 ('mono/androidx/drawerlayout/widget/DrawerLayout_DrawerListenerImplementor')
@@ -16034,55 +16034,55 @@ target triple = "x86_64-unknown-linux-android21"
 @.tmr.1010 = private unnamed_addr constant [37 x i8] c"net/dot/jni/internal/JavaProxyObject\00", align 16
 @.tmr.1011 = private unnamed_addr constant [40 x i8] c"net/dot/jni/internal/JavaProxyThrowable\00", align 16
 @.tmr.1012 = private unnamed_addr constant [24 x i8] c"net/dot/jni/ManagedPeer\00", align 16
-@.tmr.1013 = private unnamed_addr constant [38 x i8] c"androidx/collection/SparseArrayCompat\00", align 16
-@.tmr.1014 = private unnamed_addr constant [39 x i8] c"androidx/savedstate/SavedStateRegistry\00", align 16
-@.tmr.1015 = private unnamed_addr constant [58 x i8] c"androidx/savedstate/SavedStateRegistry$SavedStateProvider\00", align 16
-@.tmr.1016 = private unnamed_addr constant [59 x i8] c"crc6468b6408a11370c2f/WebAuthenticatorIntermediateActivity\00", align 16
-@.tmr.1017 = private unnamed_addr constant [39 x i8] c"microsoft/maui/essentials/fileProvider\00", align 16
-@.tmr.1018 = private unnamed_addr constant [75 x i8] c"crc64e53d2f592022988e/ConnectivityImplementation_EssentialsNetworkCallback\00", align 16
-@.tmr.1019 = private unnamed_addr constant [52 x i8] c"crc64e53d2f592022988e/ConnectivityBroadcastReceiver\00", align 16
-@.tmr.1020 = private unnamed_addr constant [47 x i8] c"crc64ba438d8f48cf7e75/ActivityResultCallback_1\00", align 16
-@.tmr.1021 = private unnamed_addr constant [55 x i8] c"crc64ba438d8f48cf7e75/ActivityLifecycleContextListener\00", align 16
-@.tmr.1022 = private unnamed_addr constant [43 x i8] c"crc64ba438d8f48cf7e75/IntermediateActivity\00", align 16
-@.tmr.1023 = private unnamed_addr constant [59 x i8] c"crc640a8d9a12ddbf2cf2/DeviceDisplayImplementation_Listener\00", align 16
-@.tmr.1024 = private unnamed_addr constant [47 x i8] c"crc640a8d9a12ddbf2cf2/BatteryBroadcastReceiver\00", align 16
-@.tmr.1025 = private unnamed_addr constant [51 x i8] c"crc640a8d9a12ddbf2cf2/EnergySaverBroadcastReceiver\00", align 16
-@.tmr.1026 = private unnamed_addr constant [50 x i8] c"androidx/appcompat/content/res/AppCompatResources\00", align 16
-@.tmr.1027 = private unnamed_addr constant [59 x i8] c"androidx/appcompat/graphics/drawable/DrawableWrapperCompat\00", align 16
-@.tmr.1028 = private unnamed_addr constant [55 x i8] c"androidx/versionedparcelable/CustomVersionedParcelable\00", align 16
-@.tmr.1029 = private unnamed_addr constant [16 x i8] c"kotlin/Function\00", align 16
-@.tmr.1030 = private unnamed_addr constant [26 x i8] c"kotlin/sequences/Sequence\00", align 16
-@.tmr.1031 = private unnamed_addr constant [33 x i8] c"kotlin/reflect/KAnnotatedElement\00", align 16
-@.tmr.1032 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KCallable\00", align 16
-@.tmr.1033 = private unnamed_addr constant [22 x i8] c"kotlin/reflect/KClass\00", align 16
-@.tmr.1034 = private unnamed_addr constant [27 x i8] c"kotlin/reflect/KClassifier\00", align 16
-@.tmr.1035 = private unnamed_addr constant [37 x i8] c"kotlin/reflect/KDeclarationContainer\00", align 16
-@.tmr.1036 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KFunction\00", align 16
-@.tmr.1037 = private unnamed_addr constant [31 x i8] c"kotlin/reflect/KParameter$Kind\00", align 16
-@.tmr.1038 = private unnamed_addr constant [26 x i8] c"kotlin/reflect/KParameter\00", align 16
-@.tmr.1039 = private unnamed_addr constant [21 x i8] c"kotlin/reflect/KType\00", align 16
-@.tmr.1040 = private unnamed_addr constant [30 x i8] c"kotlin/reflect/KTypeParameter\00", align 16
-@.tmr.1041 = private unnamed_addr constant [31 x i8] c"kotlin/reflect/KTypeProjection\00", align 16
-@.tmr.1042 = private unnamed_addr constant [41 x i8] c"kotlin/reflect/KTypeProjection$Companion\00", align 16
-@.tmr.1043 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KVariance\00", align 16
-@.tmr.1044 = private unnamed_addr constant [27 x i8] c"kotlin/reflect/KVisibility\00", align 16
-@.tmr.1045 = private unnamed_addr constant [42 x i8] c"kotlin/jvm/internal/markers/KMappedMarker\00", align 16
-@.tmr.1046 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function0\00", align 16
-@.tmr.1047 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function1\00", align 16
-@.tmr.1048 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function2\00", align 16
-@.tmr.1049 = private unnamed_addr constant [25 x i8] c"kotlin/enums/EnumEntries\00", align 16
-@.tmr.1050 = private unnamed_addr constant [31 x i8] c"kotlin/coroutines/Continuation\00", align 16
-@.tmr.1051 = private unnamed_addr constant [39 x i8] c"kotlin/coroutines/CoroutineContext$Key\00", align 16
-@.tmr.1052 = private unnamed_addr constant [35 x i8] c"kotlin/coroutines/CoroutineContext\00", align 16
-@.tmr.1053 = private unnamed_addr constant [38 x i8] c"androidx/viewpager2/widget/ViewPager2\00", align 16
-@.tmr.1054 = private unnamed_addr constant [59 x i8] c"androidx/viewpager2/widget/ViewPager2$OnPageChangeCallback\00", align 16
-@.tmr.1055 = private unnamed_addr constant [54 x i8] c"androidx/viewpager2/widget/ViewPager2$PageTransformer\00", align 16
-@.tmr.1056 = private unnamed_addr constant [49 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter\00", align 16
-@.tmr.1057 = private unnamed_addr constant [77 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback\00", align 16
-@.tmr.1058 = private unnamed_addr constant [97 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback$OnPostEventListener\00", align 16
-@.tmr.1059 = private unnamed_addr constant [47 x i8] c"androidx/viewpager2/adapter/FragmentViewHolder\00", align 16
-@.tmr.1060 = private unnamed_addr constant [35 x i8] c"crc64ce4bcd770eab3382/MainActivity\00", align 16
-@.tmr.1061 = private unnamed_addr constant [38 x i8] c"crc64ce4bcd770eab3382/MainApplication\00", align 16
+@.tmr.1013 = private unnamed_addr constant [35 x i8] c"crc64ce4bcd770eab3382/MainActivity\00", align 16
+@.tmr.1014 = private unnamed_addr constant [38 x i8] c"crc64ce4bcd770eab3382/MainApplication\00", align 16
+@.tmr.1015 = private unnamed_addr constant [38 x i8] c"androidx/collection/SparseArrayCompat\00", align 16
+@.tmr.1016 = private unnamed_addr constant [39 x i8] c"androidx/savedstate/SavedStateRegistry\00", align 16
+@.tmr.1017 = private unnamed_addr constant [58 x i8] c"androidx/savedstate/SavedStateRegistry$SavedStateProvider\00", align 16
+@.tmr.1018 = private unnamed_addr constant [59 x i8] c"crc6468b6408a11370c2f/WebAuthenticatorIntermediateActivity\00", align 16
+@.tmr.1019 = private unnamed_addr constant [39 x i8] c"microsoft/maui/essentials/fileProvider\00", align 16
+@.tmr.1020 = private unnamed_addr constant [75 x i8] c"crc64e53d2f592022988e/ConnectivityImplementation_EssentialsNetworkCallback\00", align 16
+@.tmr.1021 = private unnamed_addr constant [52 x i8] c"crc64e53d2f592022988e/ConnectivityBroadcastReceiver\00", align 16
+@.tmr.1022 = private unnamed_addr constant [47 x i8] c"crc64ba438d8f48cf7e75/ActivityResultCallback_1\00", align 16
+@.tmr.1023 = private unnamed_addr constant [55 x i8] c"crc64ba438d8f48cf7e75/ActivityLifecycleContextListener\00", align 16
+@.tmr.1024 = private unnamed_addr constant [43 x i8] c"crc64ba438d8f48cf7e75/IntermediateActivity\00", align 16
+@.tmr.1025 = private unnamed_addr constant [59 x i8] c"crc640a8d9a12ddbf2cf2/DeviceDisplayImplementation_Listener\00", align 16
+@.tmr.1026 = private unnamed_addr constant [47 x i8] c"crc640a8d9a12ddbf2cf2/BatteryBroadcastReceiver\00", align 16
+@.tmr.1027 = private unnamed_addr constant [51 x i8] c"crc640a8d9a12ddbf2cf2/EnergySaverBroadcastReceiver\00", align 16
+@.tmr.1028 = private unnamed_addr constant [50 x i8] c"androidx/appcompat/content/res/AppCompatResources\00", align 16
+@.tmr.1029 = private unnamed_addr constant [59 x i8] c"androidx/appcompat/graphics/drawable/DrawableWrapperCompat\00", align 16
+@.tmr.1030 = private unnamed_addr constant [55 x i8] c"androidx/versionedparcelable/CustomVersionedParcelable\00", align 16
+@.tmr.1031 = private unnamed_addr constant [16 x i8] c"kotlin/Function\00", align 16
+@.tmr.1032 = private unnamed_addr constant [26 x i8] c"kotlin/sequences/Sequence\00", align 16
+@.tmr.1033 = private unnamed_addr constant [33 x i8] c"kotlin/reflect/KAnnotatedElement\00", align 16
+@.tmr.1034 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KCallable\00", align 16
+@.tmr.1035 = private unnamed_addr constant [22 x i8] c"kotlin/reflect/KClass\00", align 16
+@.tmr.1036 = private unnamed_addr constant [27 x i8] c"kotlin/reflect/KClassifier\00", align 16
+@.tmr.1037 = private unnamed_addr constant [37 x i8] c"kotlin/reflect/KDeclarationContainer\00", align 16
+@.tmr.1038 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KFunction\00", align 16
+@.tmr.1039 = private unnamed_addr constant [31 x i8] c"kotlin/reflect/KParameter$Kind\00", align 16
+@.tmr.1040 = private unnamed_addr constant [26 x i8] c"kotlin/reflect/KParameter\00", align 16
+@.tmr.1041 = private unnamed_addr constant [21 x i8] c"kotlin/reflect/KType\00", align 16
+@.tmr.1042 = private unnamed_addr constant [30 x i8] c"kotlin/reflect/KTypeParameter\00", align 16
+@.tmr.1043 = private unnamed_addr constant [31 x i8] c"kotlin/reflect/KTypeProjection\00", align 16
+@.tmr.1044 = private unnamed_addr constant [41 x i8] c"kotlin/reflect/KTypeProjection$Companion\00", align 16
+@.tmr.1045 = private unnamed_addr constant [25 x i8] c"kotlin/reflect/KVariance\00", align 16
+@.tmr.1046 = private unnamed_addr constant [27 x i8] c"kotlin/reflect/KVisibility\00", align 16
+@.tmr.1047 = private unnamed_addr constant [42 x i8] c"kotlin/jvm/internal/markers/KMappedMarker\00", align 16
+@.tmr.1048 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function0\00", align 16
+@.tmr.1049 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function1\00", align 16
+@.tmr.1050 = private unnamed_addr constant [31 x i8] c"kotlin/jvm/functions/Function2\00", align 16
+@.tmr.1051 = private unnamed_addr constant [25 x i8] c"kotlin/enums/EnumEntries\00", align 16
+@.tmr.1052 = private unnamed_addr constant [31 x i8] c"kotlin/coroutines/Continuation\00", align 16
+@.tmr.1053 = private unnamed_addr constant [39 x i8] c"kotlin/coroutines/CoroutineContext$Key\00", align 16
+@.tmr.1054 = private unnamed_addr constant [35 x i8] c"kotlin/coroutines/CoroutineContext\00", align 16
+@.tmr.1055 = private unnamed_addr constant [38 x i8] c"androidx/viewpager2/widget/ViewPager2\00", align 16
+@.tmr.1056 = private unnamed_addr constant [59 x i8] c"androidx/viewpager2/widget/ViewPager2$OnPageChangeCallback\00", align 16
+@.tmr.1057 = private unnamed_addr constant [54 x i8] c"androidx/viewpager2/widget/ViewPager2$PageTransformer\00", align 16
+@.tmr.1058 = private unnamed_addr constant [49 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter\00", align 16
+@.tmr.1059 = private unnamed_addr constant [77 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback\00", align 16
+@.tmr.1060 = private unnamed_addr constant [97 x i8] c"androidx/viewpager2/adapter/FragmentStateAdapter$FragmentTransactionCallback$OnPostEventListener\00", align 16
+@.tmr.1061 = private unnamed_addr constant [47 x i8] c"androidx/viewpager2/adapter/FragmentViewHolder\00", align 16
 @.tmr.1062 = private unnamed_addr constant [42 x i8] c"androidx/drawerlayout/widget/DrawerLayout\00", align 16
 @.tmr.1063 = private unnamed_addr constant [57 x i8] c"androidx/drawerlayout/widget/DrawerLayout$DrawerListener\00", align 16
 @.tmr.1064 = private unnamed_addr constant [73 x i8] c"mono/androidx/drawerlayout/widget/DrawerLayout_DrawerListenerImplementor\00", align 16
@@ -16213,14 +16213,14 @@ target triple = "x86_64-unknown-linux-android21"
 @.TypeMapModule.25_assembly_name = private unnamed_addr constant [30 x i8] c"Xamarin.AndroidX.RecyclerView\00", align 16
 @.TypeMapModule.26_assembly_name = private unnamed_addr constant [26 x i8] c"Xamarin.AndroidX.Fragment\00", align 16
 @.TypeMapModule.27_assembly_name = private unnamed_addr constant [13 x i8] c"Java.Interop\00", align 1
-@.TypeMapModule.28_assembly_name = private unnamed_addr constant [32 x i8] c"Xamarin.AndroidX.Collection.Jvm\00", align 16
-@.TypeMapModule.29_assembly_name = private unnamed_addr constant [47 x i8] c"Xamarin.AndroidX.SavedState.SavedState.Android\00", align 16
-@.TypeMapModule.30_assembly_name = private unnamed_addr constant [26 x i8] c"Microsoft.Maui.Essentials\00", align 16
-@.TypeMapModule.31_assembly_name = private unnamed_addr constant [46 x i8] c"Xamarin.AndroidX.AppCompat.AppCompatResources\00", align 16
-@.TypeMapModule.32_assembly_name = private unnamed_addr constant [37 x i8] c"Xamarin.AndroidX.VersionedParcelable\00", align 16
-@.TypeMapModule.33_assembly_name = private unnamed_addr constant [22 x i8] c"Xamarin.Kotlin.StdLib\00", align 16
-@.TypeMapModule.34_assembly_name = private unnamed_addr constant [28 x i8] c"Xamarin.AndroidX.ViewPager2\00", align 16
-@.TypeMapModule.35_assembly_name = private unnamed_addr constant [10 x i8] c"Asistente\00", align 1
+@.TypeMapModule.28_assembly_name = private unnamed_addr constant [10 x i8] c"Asistente\00", align 1
+@.TypeMapModule.29_assembly_name = private unnamed_addr constant [32 x i8] c"Xamarin.AndroidX.Collection.Jvm\00", align 16
+@.TypeMapModule.30_assembly_name = private unnamed_addr constant [47 x i8] c"Xamarin.AndroidX.SavedState.SavedState.Android\00", align 16
+@.TypeMapModule.31_assembly_name = private unnamed_addr constant [26 x i8] c"Microsoft.Maui.Essentials\00", align 16
+@.TypeMapModule.32_assembly_name = private unnamed_addr constant [46 x i8] c"Xamarin.AndroidX.AppCompat.AppCompatResources\00", align 16
+@.TypeMapModule.33_assembly_name = private unnamed_addr constant [37 x i8] c"Xamarin.AndroidX.VersionedParcelable\00", align 16
+@.TypeMapModule.34_assembly_name = private unnamed_addr constant [22 x i8] c"Xamarin.Kotlin.StdLib\00", align 16
+@.TypeMapModule.35_assembly_name = private unnamed_addr constant [28 x i8] c"Xamarin.AndroidX.ViewPager2\00", align 16
 @.TypeMapModule.36_assembly_name = private unnamed_addr constant [30 x i8] c"Xamarin.AndroidX.DrawerLayout\00", align 16
 @.TypeMapModule.37_assembly_name = private unnamed_addr constant [22 x i8] c"Xamarin.AndroidX.Core\00", align 16
 

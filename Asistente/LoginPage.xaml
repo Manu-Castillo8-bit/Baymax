@@ -34,7 +34,7 @@
                     </Border>
                 </Grid>
 
-                <Label Text="AUTENTICACIÓN DE SISTEMA" 
+                <Label Text="INICIO DE SESIÓN" 
                    TextColor="#22D3EE" 
                    FontSize="18" 
                    FontAttributes="Bold" 

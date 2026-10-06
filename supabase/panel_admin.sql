@@ -30,7 +30,7 @@
 alter table public.usuario add column if not exists rol text not null default 'usuario';
 
 -- 2) PRIMER ADMIN (descomenta y ponle el correo) -----------------------------
--- update public.usuario set rol = 'admin' where correo = 'TUCORREO@EJEMPLO.COM';
+update public.usuario set rol = 'admin' where correo = 'admin_manu@gmail.com';
 
 -- 3) FUNCIÓN es_admin() ------------------------------------------------------
 -- Comprueba si el usuario autenticado es admin. Compara por auth_user_id y

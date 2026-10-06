@@ -256,6 +256,7 @@ namespace Asistente
             }
             catch (Exception ex)
             {
+                Depurador.Registrar("ServicioFondo.AsegurarSesionSupabaseAsync", ex);
                 System.Diagnostics.Debug.WriteLine($"ServicioFondo: error al renovar la sesión: {ex.Message}");
             }
             finally

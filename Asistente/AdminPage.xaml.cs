@@ -68,6 +68,7 @@ namespace Asistente
             }
             catch (Exception ex)
             {
+                Depurador.Registrar("AdminPage.CargarUsuariosAsync", ex);
                 LblSubtitulo.Text = "No se pudieron cargar las cuentas.";
                 await DisplayAlertAsync("Error", ex.Message, "OK");
             }

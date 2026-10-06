@@ -165,6 +165,7 @@ namespace Asistente
             }
             catch (Exception ex)
             {
+                Depurador.Registrar($"AdminService.RpcAsync('{funcion}')", ex);
                 TraducirError(ex);
                 throw;
             }
@@ -191,6 +192,7 @@ namespace Asistente
             }
             catch (Exception ex)
             {
+                Depurador.Registrar($"AdminService.RpcSinResultado('{funcion}')", ex);
                 TraducirError(ex);
                 throw;
             }

@@ -117,6 +117,7 @@ namespace Asistente
                 }
                 catch (Exception ex)
                 {
+                    Depurador.Registrar("LoginPage.online", ex);
                     StatusLabel.Text = $"Error de servidor: {ex.Message}";
                 }
             }

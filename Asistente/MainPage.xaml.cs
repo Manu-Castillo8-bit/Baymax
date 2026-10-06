@@ -585,15 +585,11 @@ private async Task InitializeAndSyncAsync()
                 // Mostrar según el filtro activo
                 if (_filtroActual == "Pendientes")
                 {
-                    TasksCollectionView.ItemsSource = pendientes;
-                    EmptyViewLabel.Text = "Sin tareas pendientes";
-                    TareasCountLabel.Text = $"Mostrando: {pendientes.Count} pendiente(s)";
+                    MostrarTareas(pendientes, "Sin tareas pendientes", $"Mostrando: {pendientes.Count} pendiente(s)");
                 }
                 else
                 {
-                    TasksCollectionView.ItemsSource = completadas;
-                    EmptyViewLabel.Text = "Sin tareas completadas";
-                    TareasCountLabel.Text = $"Mostrando: {completadas.Count} completada(s)";
+                    MostrarTareas(completadas, "Sin tareas completadas", $"Mostrando: {completadas.Count} completada(s)");
                 }
 
                 await TriggerCorePulseAsync();
@@ -605,6 +601,18 @@ private async Task InitializeAndSyncAsync()
             {
                 AiMessageLabel.Text = $"Error local: {ex.Message}";
             }
+        }
+
+        // La lista vive dentro del ScrollView de toda la página, así que se
+        // pinta como bloque estático (BindableLayout) en lugar de CollectionView.
+        private void MostrarTareas(List<TareaLocal> tareas, string textoVacio, string textoContador)
+        {
+            BindableLayout.SetItemsSource(TasksStack, tareas);
+
+            EmptyViewLabel.Text = textoVacio;
+            EmptyViewLabel.IsVisible = tareas.Count == 0;
+
+            TareasCountLabel.Text = textoContador;
         }
 
        private void OnAddTaskClicked(object sender, EventArgs e)
@@ -622,14 +630,10 @@ private async Task InitializeAndSyncAsync()
     TareaPopupOverlay.IsVisible = true;
 }
 
-private void OnTaskTapped(object sender, SelectionChangedEventArgs e)
+private void OnTaskTapped(object sender, TappedEventArgs e)
 {
-    if (e.CurrentSelection?.FirstOrDefault() is TareaLocal tarea)
+    if ((sender as BindableObject)?.BindingContext is TareaLocal tarea)
     {
-        if (sender is CollectionView cv)
-        {
-            cv.SelectedItem = null;
-        }
         EditarTareaAsync(tarea);
     }
 }

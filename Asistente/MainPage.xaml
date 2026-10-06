@@ -9,12 +9,63 @@
     <Grid>
 
         <!-- ========================================= -->
-        <!-- CONTENIDO PRINCIPAL                       -->
+        <!-- SCROLL PRINCIPAL: TODO EL CONTENIDO       -->
         <!-- ========================================= -->
 
-        <Grid RowDefinitions="Auto, Auto, *, Auto"
-              Padding="20"
-              RowSpacing="15">
+        <ScrollView x:Name="MainScrollView"
+                    Orientation="Vertical">
+
+            <VerticalStackLayout Spacing="0">
+
+                <!-- ========================================= -->
+                <!-- ACCESO ADMIN (SCROLLEA CON LA PÁGINA)     -->
+                <!-- ========================================= -->
+
+                <HorizontalStackLayout
+                        Spacing="8"
+                        Margin="12,12,20,0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start">
+
+                    <Button x:Name="AdminBoton"
+                            Text="ADMIN"
+                            IsVisible="False"
+                            Clicked="OnAdminClicked"
+                            BackgroundColor="#111C30"
+                            BorderColor="#FBBF24"
+                            BorderWidth="1"
+                            TextColor="#FBBF24"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            WidthRequest="72"
+                            HeightRequest="34"
+                            Padding="0,0"
+                            CornerRadius="17"
+                            ToolTipProperties.Text="Panel de administración"/>
+
+                    <Button Text="SALIR"
+                            Clicked="OnLogoutClicked"
+                            BackgroundColor="#450A0A"
+                            BorderColor="#F87171"
+                            BorderWidth="1"
+                            TextColor="#F87171"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            WidthRequest="54"
+                            HeightRequest="34"
+                            Padding="0,0"
+                            CornerRadius="17"
+                            ToolTipProperties.Text="Cerrar sesión"/>
+
+                </HorizontalStackLayout>
+
+                <!-- ========================================= -->
+                <!-- CONTENIDO PRINCIPAL                       -->
+                <!-- ========================================= -->
+
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+                      Padding="20"
+                      RowSpacing="15">
 
             <!-- 1. NÚCLEO TECNOLÓGICO Y ANILLOS HUD -->
             <Grid Grid.Row="0"
@@ -146,7 +197,7 @@
             <!-- ========================================= -->
 
             <Grid Grid.Row="2"
-                  RowDefinitions="Auto, Auto, *"
+                  RowDefinitions="Auto, Auto, Auto"
                   RowSpacing="8">
 
                 <!-- BOTONES DE FILTRO -->
@@ -207,22 +258,12 @@
                        TextColor="#64748B"
                        HorizontalOptions="Center"/>
 
-                <!-- COLLECTIONVIEW ÚNICO -->
-                <CollectionView x:Name="TasksCollectionView"
-                                Grid.Row="2"
-                                SelectionMode="Single"
-                                SelectionChanged="OnTaskTapped">
+                <!-- LISTA DE TAREAS (bloque estático: scrollea con la página) -->
+                <VerticalStackLayout x:Name="TasksStack"
+                                     Grid.Row="2"
+                                     Spacing="0">
 
-                    <CollectionView.EmptyView>
-                        <Label x:Name="EmptyViewLabel"
-                               Text="Sin tareas pendientes"
-                               FontSize="13"
-                               TextColor="#64748B"
-                               HorizontalTextAlignment="Center"
-                               Margin="0,20"/>
-                    </CollectionView.EmptyView>
-
-                    <CollectionView.ItemTemplate>
+                    <BindableLayout.ItemTemplate>
 
                         <DataTemplate>
 
@@ -234,9 +275,13 @@
 
                                 <Grid ColumnDefinitions="*, Auto">
 
-                                    <!-- Información de tarea -->
+                                    <!-- Información de tarea (toca para editar) -->
                                     <VerticalStackLayout Grid.Column="0"
                                                          Spacing="3">
+
+                                        <VerticalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTaskTapped"/>
+                                        </VerticalStackLayout.GestureRecognizers>
 
                                         <Label Text="{Binding Titulo}"
                                                FontAttributes="Bold"
@@ -312,9 +357,20 @@
 
                         </DataTemplate>
 
-                    </CollectionView.ItemTemplate>
+                    </BindableLayout.ItemTemplate>
 
-                </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- VISTA VACÍA -->
+                <Label x:Name="EmptyViewLabel"
+                       Grid.Row="2"
+                       Text="Sin tareas pendientes"
+                       FontSize="13"
+                       TextColor="#64748B"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       Margin="0,20"
+                       IsVisible="False"/>
 
             </Grid>
 
@@ -376,50 +432,11 @@
 
             </Grid>
 
-        </Grid>
+                </Grid>
 
+            </VerticalStackLayout>
 
-        <!-- ========================================= -->
-        <!-- ACCESO ADMIN (ESQUINA SUP. IZQUIERDA)   -->
-        <!-- ========================================= -->
-
-        <HorizontalStackLayout
-                Spacing="8"
-                Margin="12,12,0,0"
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-
-            <Button x:Name="AdminBoton"
-                    Text="ADMIN"
-                    IsVisible="False"
-                    Clicked="OnAdminClicked"
-                    BackgroundColor="#111C30"
-                    BorderColor="#FBBF24"
-                    BorderWidth="1"
-                    TextColor="#FBBF24"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    WidthRequest="72"
-                    HeightRequest="34"
-                    Padding="0,0"
-                    CornerRadius="17"
-                    ToolTipProperties.Text="Panel de administración"/>
-
-            <Button Text="SALIR"
-                    Clicked="OnLogoutClicked"
-                    BackgroundColor="#450A0A"
-                    BorderColor="#F87171"
-                    BorderWidth="1"
-                    TextColor="#F87171"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    WidthRequest="54"
-                    HeightRequest="34"
-                    Padding="0,0"
-                    CornerRadius="17"
-                    ToolTipProperties.Text="Cerrar sesión"/>
-
-        </HorizontalStackLayout>
+        </ScrollView>
 
 
         <!-- ========================================= -->

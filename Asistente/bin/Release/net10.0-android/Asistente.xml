@@ -213,6 +213,12 @@
             primera llamada hace el trabajo, el resto espera a la misma tarea.
             </summary>
         </member>
+        <member name="M:Asistente.Depurador.Registrar(System.String,System.Exception)">
+            <summary>
+            Registra una excepción en un archivo temporal para diagnosticar fallos
+            del panel de administración sin depurador a mano.
+            </summary>
+        </member>
         <member name="M:Asistente.MainPage.ActualizarAccesoAdmin">
             <summary>
             Muestra el botón de administración solo a las cuentas con ese rol. Como

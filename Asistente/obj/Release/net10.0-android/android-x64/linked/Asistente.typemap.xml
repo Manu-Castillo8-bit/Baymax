@@ -1,8 +1,8 @@
-<api type="release" assembly-name="Asistente" mvid="d0c6aaaf77a74677bfe4d3ed2bdb06f8">
-  <module assembly-name="Asistente" mvid="d0c6aaaf77a74677bfe4d3ed2bdb06f8" mvid-bytes="r6rG0Kd3d0a/5NPtK9sG+A==">
+<api type="release" assembly-name="Asistente" mvid="3b8eddd854f4441384326170fe06d71e">
+  <module assembly-name="Asistente" mvid="3b8eddd854f4441384326170fe06d71e" mvid-bytes="2N2OO/RUE0SEMmFw/gbXHg==">
     <types-scratch>
-      <entry key="crc64ce4bcd770eab3382/MainActivity" java-name="crc64ce4bcd770eab3382/MainActivity" managed-type-name="Asistente.MainActivity" token="33554458" />
-      <entry key="crc64ce4bcd770eab3382/MainApplication" java-name="crc64ce4bcd770eab3382/MainApplication" managed-type-name="Asistente.MainApplication" token="33554459" />
+      <entry key="crc64ce4bcd770eab3382/MainActivity" java-name="crc64ce4bcd770eab3382/MainActivity" managed-type-name="Asistente.MainActivity" token="33554459" />
+      <entry key="crc64ce4bcd770eab3382/MainApplication" java-name="crc64ce4bcd770eab3382/MainApplication" managed-type-name="Asistente.MainApplication" token="33554460" />
     </types-scratch>
   </module>
 </api>

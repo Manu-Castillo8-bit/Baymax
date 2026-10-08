@@ -122,6 +122,10 @@ public static class BandejaSistema
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(_ventana);
             SetForegroundWindow(hwnd);
             _ventana.Activate();
+
+            // Con la ventana visible otra vez, los avisos vuelven a poder
+            // mostrarse como mensaje emergente dentro de la app.
+            ServicioFondo.EnPrimerPlano = true;
         }
         catch { }
     }
@@ -136,6 +140,11 @@ public static class BandejaSistema
             _appWindow?.Hide();
         }
         catch { }
+
+        // Ocultar la ventana no siempre dispara Deactivated/Stopped, así que se
+        // marca aquí: si no, un recordatorio intentaría abrir su cuadro sobre una
+        // ventana invisible y quedaría colgado hasta la siguiente.
+        ServicioFondo.EnPrimerPlano = false;
     }
 
     private static void CrearIcono()

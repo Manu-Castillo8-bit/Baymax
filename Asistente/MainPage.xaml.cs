@@ -359,13 +359,15 @@ namespace Asistente
             await Navigation.PushAsync(new AdminPage());
         }
 
-        private void OnTestNotificationClicked(object sender, EventArgs e)
+        private async void OnTestNotificationClicked(object sender, EventArgs e)
 {
+    // Primero el aviso de la app y, cuando el usuario lo cierra, la
+    // notificación: así el mensaje emergente del propio aviso no queda
+    // debajo del cuadro que confirma la prueba.
+    await DisplayAlertAsync("Prueba en marcha", "La notificación se disparará en unos segundos. Puedes minimizar la app.", "OK");
+
     EnviarNotificacionPC("🧪 Prueba Exitosa",
         "¡Las notificaciones están funcionando correctamente en tu dispositivo!");
-
-    // Aviso visual para el usuario
-    DisplayAlert("Prueba en marcha", "La notificación se disparará en unos segundos. Puedes minimizar la app.", "OK");
 }
 
        protected override async void OnAppearing()

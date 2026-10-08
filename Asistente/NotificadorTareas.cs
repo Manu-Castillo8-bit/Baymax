@@ -1,5 +1,6 @@
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.Core.Models;
+using Plugin.LocalNotification.Core.Models.AndroidOption;
 using SQLite;
 
 namespace Asistente
@@ -30,6 +31,13 @@ namespace Asistente
         private static int _contadorAvisoPuntual;
 
         /// <summary>
+        /// Canal de notificaciones de Android. Alta importancia para que el
+        /// aviso salga como mensaje emergente (banner) con sonido. El mismo
+        /// canal se declara en MauiProgram y se usa aquí al programar cada aviso.
+        /// </summary>
+        public const string CanalRecordatorios = "recordatorios";
+
+        /// <summary>
         /// True cuando el sistema operativo ya repite el aviso por sí solo
         /// (Android, iOS, MacCatalyst). En Windows es false porque allí el
         /// Windows App SDK no agenda notificaciones repetidas.
@@ -47,20 +55,25 @@ namespace Asistente
         /// </summary>
         public static void MostrarRecordatorio(TareaLocal tarea)
         {
+            string titulo = "⏰ Recordatorio: Tarea Próxima";
+            string mensaje = $"La tarea: '{tarea.Titulo}' está pendiente.";
+
+            // Además del aviso del sistema, el usuario que tenga la app a la
+            // vista ve el mensaje emergente en pantalla.
+            AvisosPantalla.Mostrar(titulo, mensaje);
+
             try
             {
                 // En Windows se usa el toast nativo del SO: funciona con la app
                 // oculta en la bandeja y también si el proceso está cerrado.
 #if WINDOWS
                 if (OperatingSystem.IsWindows() &&
-                    NotificadorWindows.Mostrar(tarea.IdLocal, "⏰ Recordatorio: Tarea Próxima",
-                        $"La tarea: '{tarea.Titulo}' está pendiente."))
+                    NotificadorWindows.Mostrar(tarea.IdLocal, titulo, mensaje))
                 {
                     return;
                 }
 #endif
-                MostrarConPlugin(tarea.IdLocal, "⏰ Recordatorio: Tarea Próxima",
-                    $"La tarea: '{tarea.Titulo}' está pendiente.");
+                MostrarConPlugin(tarea.IdLocal, titulo, mensaje);
             }
             catch (Exception ex)
             {
@@ -74,6 +87,10 @@ namespace Asistente
         /// </summary>
         public static void MostrarNotificacionInmediata(string titulo, string mensaje)
         {
+            // El mensaje emergente en pantalla se pide siempre: si la app está
+            // a la vista se muestra el cuadro y, además, sale el toast del SO.
+            AvisosPantalla.Mostrar(titulo, mensaje);
+
             try
             {
                 int id = BaseIdAvisoPuntual + Interlocked.Increment(ref _contadorAvisoPuntual);
@@ -98,7 +115,7 @@ namespace Asistente
         /// </summary>
         private static void MostrarConPlugin(int id, string titulo, string mensaje)
         {
-            LocalNotificationCenter.Current.Show(new NotificationRequest
+            var solicitud = new NotificationRequest
             {
                 NotificationId = id,
                 Title = titulo,
@@ -108,7 +125,14 @@ namespace Asistente
                 {
                     NotifyTime = DateTimeOffset.Now.AddSeconds(2)
                 }
-            });
+            };
+
+            // Canal de alta importancia: sin él Android puede entregar el aviso
+            // sin banner emergente y sin sonido, que es justo lo que no se busca.
+            solicitud.Android.Priority = AndroidPriority.High;
+            solicitud.Android.ChannelId = CanalRecordatorios;
+
+            LocalNotificationCenter.Current.Show(solicitud);
         }
 
         /// <summary>
@@ -139,6 +163,11 @@ namespace Asistente
                     BadgeNumber = 1,
                     Schedule = new NotificationRequestSchedule()
                 };
+
+                // Mismo canal de alta importancia que los avisos inmediatos:
+                // así el recordatorio también sale como banner emergente.
+                request.Android.Priority = AndroidPriority.High;
+                request.Android.ChannelId = CanalRecordatorios;
 
                 if (frecuenciaHoras > 0)
                 {

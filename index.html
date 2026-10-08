@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Asistente — tu asistente virtual de tareas</title>
+<meta name="description" content="Asistente registra tus tareas, te manda recordatorios y arma un plan de lo más importante a lo menos importante.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+<!--
+  PERSONALIZA ESTO:
+  1) Botones de descarga: cambia href="Asistente.exe" y href="Asistente.apk" por la ruta o URL de tus archivos (cada uno aparece 2 veces).
+  2) "Asistente" es un nombre provisional: reemplázalo por el nombre real de tu programa.
+-->
+<style>
+:root{
+  --bg:#0e1230; --panel:#161c47; --line:#2c356e; --ink:#eef0ff; --muted:#a9b0d9;
+  --peri:#8c97ff; --amber:#ffb547; --hi:#ff6b6b; --mid:#ffb547; --lo:#5ee1b0;
+  --head:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:var(--head);margin:0;line-height:1.05;letter-spacing:-.03em}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+/* fondo: cuadrícula de puntos + resplandor */
+.bg{position:absolute;inset:0 0 auto 0;height:760px;pointer-events:none;
+  background:radial-gradient(600px 400px at 85% 20%,rgba(140,151,255,.28),transparent 70%),
+             radial-gradient(rgba(140,151,255,.22) 1px,transparent 1.3px) 0 0/28px 28px;
+  -webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+
+header{padding:24px 0;position:relative}
+.brand{font:800 24px var(--head);letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px}
+.brand svg{width:26px;height:26px}
+
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;padding:28px 0 96px}
+.hero h1{font-size:clamp(42px,6vw,74px);font-weight:800;margin-bottom:22px}
+.lead{font-size:19px;color:var(--muted);max-width:30em;margin:0 0 32px}
+.btn{display:inline-flex;align-items:center;gap:12px;min-height:58px;padding:0 28px;border-radius:14px;background:var(--amber);color:#1b1630;font:800 18px var(--head);letter-spacing:-.01em;text-decoration:none;box-shadow:0 10px 30px -8px rgba(255,181,71,.55);transition:transform .15s,box-shadow .15s}
+.btn svg{width:22px;height:22px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px -8px rgba(255,181,71,.7)}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--peri);box-shadow:none}
+.btn.alt:hover{background:rgba(140,151,255,.16);box-shadow:none}
+.small{font-size:14px;color:var(--muted);margin:16px 0 0;max-width:34em}
+
+/* VENTANA DE LA APP */
+.win{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:0 20px 18px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.bar{display:flex;align-items:center;gap:8px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:18px}
+.bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.bar b{margin-left:10px;font:800 15px var(--head)}
+.state{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
+.list{position:relative;height:332px;margin:0;padding:0;list-style:none}
+.task{position:absolute;left:0;right:0;height:60px;display:flex;align-items:center;gap:12px;padding:0 14px;border-radius:12px;background:rgba(255,255,255,.05);border-left:5px solid var(--line);
+  transform:translateY(var(--y));transition:transform .85s cubic-bezier(.2,.85,.25,1),border-color .5s;transition-delay:calc(var(--i)*70ms),0s}
+.num{width:26px;font:800 20px var(--head);color:var(--muted);opacity:0;transition:opacity .5s .5s}
+.txt{flex:1;min-width:0;line-height:1.25}
+.txt strong{display:block;font-weight:600;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txt span{font-size:13px;color:var(--muted)}
+.tag{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);opacity:0;transition:opacity .5s .5s,color .5s,border-color .5s;display:inline-flex;align-items:center;gap:6px}
+.tag::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.sorted .num,.sorted .tag{opacity:1}
+.sorted .p-hi{border-left-color:var(--hi)} .sorted .p-hi .tag{color:var(--hi);border-color:var(--hi)}
+.sorted .p-mid{border-left-color:var(--mid)} .sorted .p-mid .tag{color:var(--mid);border-color:var(--mid)}
+.sorted .p-lo{border-left-color:var(--lo)} .sorted .p-lo .tag{color:var(--lo);border-color:var(--lo)}
+.sorted .num{color:var(--ink)}
+.toast{display:flex;align-items:center;gap:12px;margin-top:6px;padding:12px 14px;border-radius:12px;background:rgba(255,181,71,.12);border:1px solid rgba(255,181,71,.45);font-size:14.5px;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.toast svg{width:22px;height:22px;flex:none;color:var(--amber)}
+.alert .toast{opacity:1;transform:none}
+.replay{margin:14px 0 0;background:none;border:0;color:var(--peri);font:600 14px system-ui,sans-serif;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+
+/* SECCIONES */
+section{border-top:1px solid var(--line);padding:84px 0}
+section h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;margin-bottom:48px;max-width:16em}
+.feats{display:grid;grid-template-columns:repeat(3,1fr)}
+.feat{padding:0 32px}
+.feat:first-child{padding-left:0}
+.feat+.feat{border-left:1px solid var(--line)}
+.feat svg{width:40px;height:40px;color:var(--peri);margin-bottom:20px}
+.feat h3{font-size:25px;font-weight:800;margin-bottom:10px}
+.feat p{margin:0;color:var(--muted)}
+
+.cta{text-align:left}
+.cta h2{margin-bottom:28px}
+footer{padding:28px 0 44px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:44px;padding-bottom:72px}
+  .feats{grid-template-columns:1fr;gap:36px}
+  .feat,.feat:first-child{padding:0}
+  .feat+.feat{border-left:0;border-top:1px solid var(--line);padding-top:36px}
+  .btn{width:100%;justify-content:center}
+  .state{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;transition-delay:0s!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <span class="brand">
+      <svg viewBox="0 0 32 32" fill="none" stroke="#8c97ff" stroke-width="2.6" aria-hidden="true"><circle cx="16" cy="16" r="13"/><circle cx="16" cy="16" r="7.5"/><circle cx="16" cy="16" r="2.4" fill="#ffb547" stroke="none"/></svg>
+      Asistente
+    </span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Anota todo. El Asistente te dice por dónde empezar.</h1>
+      <p class="lead">Te presentamos un asistente virtual para Windows y Android. Registra tus tareas, te manda recordatorios de tus pendientes y arma un plan que va de lo más importante a lo menos importante.</p>
+      <div class="btns">
+          <a class="btn" href="Installer/Asistente-Setup-1.1.exe" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+            Descargar .exe
+          </a>
+          <a class="btn alt" href="Publicar/Android/Asistente-1.1.apk" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M12 8v6m0 0l-2.5-2.5M12 14l2.5-2.5"/></svg>
+            Descargar .apk para Android
+          </a>
+      </div>
+      <p class="small">En Windows, si aparece una advertencia al abrir el .exe, elige «Más información» y luego «Ejecutar de todas formas». En Android, el sistema puede pedirte permiso para instalar apps de fuera de Google Play.</p>
+    </div>
+
+    <div class="win" id="win" role="group" aria-label="Demostración: Asistente ordena tus tareas por importancia">
+      <div class="bar"><i></i><i></i><i></i><b>Plan de hoy</b><span class="state" id="state"></span></div>
+      <ul class="list" id="list"></ul>
+      <div class="toast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10.3 20a2 2 0 003.4 0"/></svg>
+        <span><strong>Recordatorio:</strong> en 15 minutos, entregar informe de ventas.</span>
+      </div>
+      <button class="replay" id="replay" type="button">Repetir demostración</button>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>Tres cosas que el Asistente hace por ti</h2>
+      <div class="feats">
+        <div class="feat">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="28" height="30" rx="5"/><path d="M12 15l3 3 5-6M24 16h6M12 26l3 3 5-6M24 27h6"/></svg>
+          <h3>Registra tus tareas</h3>
+          <p>Escribe lo que tienes pendiente, con fecha y hora si la tienes. Todo queda en un solo lugar.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17a11 11 0 0122 0c0 12 5 14 5 14H4s5-2 5-14M16 35a4 4 0 008 0"/></svg>
+          <h3>Recibe recordatorios</h3>
+          <p>El Asistente te avisa antes de cada actividad para que ningún pendiente se te pase.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h28M6 20h20M6 30h12"/><circle cx="33" cy="26" r="4"/><path d="M33 30v6"/></svg>
+          <h3>Sigue un plan ordenado</h3>
+          <p>El Asistente genera un plan de lo más importante a lo menos importante, para que sepas qué hacer primero.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <h2>Empieza hoy con tu plan</h2>
+      <div class="btns">
+          <a class="btn" href="Installer/Asistente-Setup-1.1.exe" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+            Descargar .exe
+          </a>
+          <a class="btn alt" href="Publicar/Android/Asistente-1.1.apk" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M12 8v6m0 0l-2.5-2.5M12 14l2.5-2.5"/></svg>
+            Descargar .apk para Android
+          </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Asistente. Un asistente virtual de tareas para Windows y Android, hecho por NEXO.</div></footer>
+
+<script>
+(function(){
+  var tasks=[
+    {t:"Comprar regalo de cumpleaños",d:"Este fin de semana",p:"lo",r:4},
+    {t:"Llamar al dentista",d:"Esta semana",p:"mid",r:3},
+    {t:"Entregar informe de ventas",d:"Ayer, 3:00 p. m.",p:"hi",r:0},
+    {t:"Pagar recibo de luz",d:"Vence mañana",p:"mid",r:2},
+    {t:"Preparar presentación",d:"Ayer, 5:30 p. m.",p:"hi",r:1}
+  ],L={hi:"Vencida",mid:"Pendiente",lo:"pendiente"},GAP=68;
+  var win=document.getElementById("win"),list=document.getElementById("list"),state=document.getElementById("state"),timers=[];
+  list.innerHTML=tasks.map(function(k){
+    return '<li class="task p-'+k.p+'"><span class="num">'+(k.r+1)+'</span><span class="txt"><strong>'+k.t+'</strong><span>'+k.d+'</span></span><span class="tag">'+L[k.p]+'</span></li>';
+  }).join("");
+  var items=list.children;
+  function place(sorted){
+    for(var i=0;i<items.length;i++){
+      items[i].style.setProperty("--y",((sorted?tasks[i].r:i)*GAP)+"px");
+      items[i].style.setProperty("--i",tasks[i].r);
+    }
+  }
+  function reset(){
+    timers.forEach(clearTimeout);timers=[];
+    win.classList.remove("sorted","alert");
+    place(false);
+    state.textContent="Tus tareas, sin ordenar";
+  }
+  function sort(){
+    win.classList.add("sorted");
+    place(true);
+    state.textContent="Plan de mayor a menor importancia";
+    timers.push(setTimeout(function(){win.classList.add("alert");},1700));
+  }
+  function run(delay){reset();timers.push(setTimeout(sort,delay));}
+  document.getElementById("replay").addEventListener("click",function(){run(900);});
+  run(window.matchMedia("(prefers-reduced-motion:reduce)").matches?0:1200);
+})();
+</script>
+</body>
+</html>
